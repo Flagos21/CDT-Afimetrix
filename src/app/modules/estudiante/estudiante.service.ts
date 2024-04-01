@@ -10,7 +10,7 @@ import { Estudiante } from './estudiante';
   providedIn: 'root',
 })
 export class EstudianteService {
-  private apiURL = "http://localhost:3000"; // Aquí debes proporcionar la URL de tu API
+  private apiURL = "http://localhost:3000";
 
   httpOptions = {
     headers: new HttpHeaders({
