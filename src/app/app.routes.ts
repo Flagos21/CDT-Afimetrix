@@ -4,6 +4,7 @@ import { MeVisualEstudianteComponent } from './modules/estudiante/me-visual-estu
 import { MeActualizarEstudianteComponent } from './modules/estudiante/me-actualizar-estudiante/me-actualizar-estudiante.component';
 import { AgregarCursoComponent } from './modules/curso/agregar-curso/agregar-curso.component';
 import { MpAgregarProfesorComponent } from './modules/profesor/mp-agregar-profesor/mp-agregar-profesor.component';
+import { AgregarColegioComponent } from './modules/colegio/agregar-colegio/agregar-colegio.component';
 
 
 export const routes: Routes = [
@@ -19,9 +20,13 @@ export const routes: Routes = [
 
     {path : 'profesor/mp-agregar-profesor', component : MpAgregarProfesorComponent},
 
+        //Rutas Curso
+    
+    {path : 'curso/agregar-curso', component : AgregarCursoComponent},
+
         //Rutas Colegio
     
-    {path : 'curso/agregar-curso', component : AgregarCursoComponent}
+    {path : 'curso/agregar-colegio', component : AgregarColegioComponent}
 
 
 
