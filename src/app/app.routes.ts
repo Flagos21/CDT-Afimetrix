@@ -26,7 +26,7 @@ export const routes: Routes = [
 
         //Rutas Colegio
     
-    {path : 'curso/agregar-colegio', component : AgregarColegioComponent}
+    {path : 'colegio/agregar-colegio', component : AgregarColegioComponent}
 
 
 
