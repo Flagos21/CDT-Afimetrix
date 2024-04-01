@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Agregar estudiante</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="container-top">
+            <div class="blue-stripe"></div>
+        </div>
+        <div class="container-bottom">
+            <div class="image-container"><img src="../../../../assets/img/LogoUnach.png" alt="" class="logo"></div>
+            <div class="form-container">
+                <h2>AGREGAR COLEGIOS</h2>
+                <form [formGroup]="form" (ngSubmit)="submit()">
+                    <input formControlName="idColegio" type="text" class="form-control" placeholder="idColegio" required>
+                    <input formControlName="Nombre" type="text" class="form-control" placeholder="Nombre">
+                    <input formControlName="idCiudad" type="text" class="form-control" placeholder="Id Ciudad" required>
+                    <input formControlName="idFundacion" type="text" class="form-control" placeholder="Id Fundacion" required>
+                    <button type="submit" class="agregar-button" [disabled]="!form.valid">Agregar</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</body>
+
+</html>
