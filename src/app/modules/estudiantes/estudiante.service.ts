@@ -24,7 +24,7 @@ export class EstudianteService {
 
   getAll(): Observable<Estudiante[]> {
     return this.httpClient
-      .get<Estudiante[]>(this.apiURL + '/estudiantes/')
+      .get<Estudiante[]>(this.apiURL + '/estudiante/')
       .pipe(catchError(this.errorHandler));
   }
 
@@ -33,7 +33,7 @@ export class EstudianteService {
   create(estudiante: Estudiante): Observable<Estudiante> {
     return this.httpClient
       .post<Estudiante>(
-        this.apiURL + '/estudiantes/me-agregar-estudiante',
+        this.apiURL + '/estudiante/me-agregar-estudiante',
         JSON.stringify(estudiante),
         this.httpOptions
       )
@@ -42,18 +42,18 @@ export class EstudianteService {
 
   //Buscar un estudiante especifico
 
-  find(id: number): Observable<Estudiante> {
+  find(idEstudiante: string): Observable<Estudiante> {
     return this.httpClient
-      .get<Estudiante>(this.apiURL + '/estudiantes/' + id)
+      .get<Estudiante>(this.apiURL + '/estudiante/' + idEstudiante)
       .pipe(catchError(this.errorHandler));
   }
 
   //Actualizar datos de un  estudiante especifico
 
-  update(id: number, estudiante: Estudiante): Observable<Estudiante> {
+  update(idEstudiante: string, estudiante: Estudiante): Observable<Estudiante> {
     return this.httpClient
       .put<Estudiante>(
-        this.apiURL + '/estudiantes/' + id,
+        this.apiURL + '/estudiante/' + idEstudiante,
         JSON.stringify(estudiante),
         this.httpOptions
       )
@@ -62,9 +62,9 @@ export class EstudianteService {
 
   //Eliminar un estudiante especifico
 
-  delete(id: number): Observable<any> {
+  delete(idEstudiante: string): Observable<any> {
     return this.httpClient
-      .delete<any>(this.apiURL + '/estudiantes/' + id, this.httpOptions)
+      .delete<any>(this.apiURL + '/estudiante/' + idEstudiante, this.httpOptions)
       .pipe(catchError(this.errorHandler));
   }
 

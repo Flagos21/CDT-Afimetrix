@@ -11,7 +11,7 @@ const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: 'Fabi1912',
-  database: 'node_express_mysql_afimetrix'
+  database: 'afimetrix'
 });
   
 db.connect(err => {
@@ -24,7 +24,7 @@ db.connect(err => {
 app.use(bodyParser.json());
 app.use(cors());
   
-app.get('/estudiantes', (req, res) => {
+app.get('/estudiante/', (req, res) => {
   db.query('SELECT * FROM estudiantes', (err, results) => {
     if (err) {
       res.status(500).send('Error fetching estudiantes');
@@ -34,15 +34,15 @@ app.get('/estudiantes', (req, res) => {
   });
 });
 
-app.post('/estudiantes/me-agregar-estudiante', (req, res) => {
-  const { IdEstudiante, Nombre, FechaNacimiento, Sexo } = req.body;
-  db.query('INSERT INTO estudiantes (IdEstudiante, Nombre, FechaNacimiento, Sexo) VALUES (?, ?, ?, ?)', [IdEstudiante, Nombre, FechaNacimiento, Sexo], (err, result) => {
+app.post('/estudiante/me-agregar-estudiante', (req, res) => {
+  const { idEstudiante, Nombre, FechaNacimiento, Sexo } = req.body;
+  db.query('INSERT INTO estudiante (idEstudiante, Nombre, FechaNacimiento, Sexo) VALUES (?, ?, ?, ?)', [idEstudiante, Nombre, FechaNacimiento, Sexo], (err, result) => {
     if (err) {
       res.status(500).send('Error creating estudiante');
       return;
     }
     const estudianteId = result.insertId;
-    db.query('SELECT * FROM estudiantes WHERE id = ?', estudianteId, (err, result) => {
+    db.query('SELECT * FROM estudiante WHERE idEstudiante = ?', estudianteId, (err, result) => {
       if (err) {
         res.status(500).send('Error fetching created estudiante');
         return;
@@ -52,9 +52,9 @@ app.post('/estudiantes/me-agregar-estudiante', (req, res) => {
   });
 });
   
-app.get('/estudiantes/:id', (req, res) => {
-  const estudianteId = req.params.id;
-  db.query('SELECT * FROM estudiantes WHERE id = ?', estudianteId, (err, result) => {
+app.get('/estudiante/:idEstudiante', (req, res) => {
+  const estudianteId = req.params.idEstudiante;
+  db.query('SELECT * FROM estudiante WHERE idEstudiante = ?', estudianteId, (err, result) => {
     if (err) {
       res.status(500).send('Error fetching estudiante');
       return;
@@ -66,16 +66,30 @@ app.get('/estudiantes/:id', (req, res) => {
     res.json(result[0]);
   });
 });
+
   
-app.put('/estudiantes/:id', (req, res) => {
-  const estudianteId = req.params.id;
-  const { IdEstudiante, Nombre, FechaNacimiento, Sexo } = req.body;
-  db.query('UPDATE estudiantes SET IdEstudiante = ?, Nombre = ?, FechaNacimiento = ?, Sexo = ? WHERE id = ?', [IdEstudiante, Nombre, FechaNacimiento, Sexo, estudianteId], err => {
+// Cambiar DELETE FROM estudiantes a DELETE FROM estudiante
+app.delete('/estudiante/:idEstudiante', (req, res) => {
+  const estudianteId = req.params.idEstudiante;
+  db.query('DELETE FROM estudiante WHERE idEstudiante = ?', estudianteId, err => {
+    if (err) {
+      res.status(500).send('Error deleting estudiante');
+      return;
+    }
+    res.status(200).json({ msg: 'Estudiante deleted successfully' });
+  });
+});
+
+// Cambiar req.params.id a req.params.idEstudiante en la ruta PUT
+app.put('/estudiante/:idEstudiante', (req, res) => {
+  const estudianteId = req.params.idEstudiante;
+  const { Nombre, FechaNacimiento, Sexo } = req.body; // Eliminar idEstudiante del cuerpo de la solicitud
+  db.query('UPDATE estudiante SET Nombre = ?, FechaNacimiento = ?, Sexo = ? WHERE idEstudiante = ?', [Nombre, FechaNacimiento, Sexo, estudianteId], err => {
     if (err) {
       res.status(500).send('Error updating estudiante');
       return;
     }
-    db.query('SELECT * FROM estudiantes WHERE id = ?', estudianteId, (err, result) => {
+    db.query('SELECT * FROM estudiante WHERE idEstudiante = ?', estudianteId, (err, result) => {
       if (err) {
         res.status(500).send('Error fetching updated estudiante');
         return;
@@ -84,17 +98,14 @@ app.put('/estudiantes/:id', (req, res) => {
     });
   });
 });
-  
-app.delete('/estudiantes/:id', (req, res) => {
-  const estudianteId = req.params.id;
-  db.query('DELETE FROM estudiantes WHERE id = ?', estudianteId, err => {
-    if (err) {
-      res.status(500).send('Error deleting estudiante');
-      return;
-    }
-    res.status(200).json({ msg: 'Estudiante deleted successfully' });
-  });
-});
+
+
+
+
+
+
+
+
   /* EndPoins Profesor */
   app.get('/profesores', (req, res) => {
     db.query('SELECT * FROM profesores', (err, results) => {

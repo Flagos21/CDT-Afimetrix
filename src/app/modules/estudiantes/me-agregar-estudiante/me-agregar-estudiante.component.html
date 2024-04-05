@@ -16,7 +16,7 @@
                 <h2>AGREGAR ESTUDIANTES</h2>
                 <form [formGroup]="form" (ngSubmit)="submit()">
                     <input formControlName="Nombre" type="text" class="form-control" placeholder="Nombre">
-                    <input formControlName="IdEstudiante" type="text" class="form-control" placeholder="Rut" required>
+                    <input formControlName="idEstudiante" type="text" class="form-control" placeholder="Rut" required>
                     <input formControlName="FechaNacimiento" type="date" class="form-control" placeholder="" required>
                     <select formControlName="Sexo" name="genero" class="form-control" id="genero" required>
                         <option value="">Género</option>

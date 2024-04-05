@@ -14,7 +14,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './me-actualizar-estudiante.component.css',
 })
 export class MeActualizarEstudianteComponent {
-  id!: number;
+  idEstudiante!: string;
   estudiante!: Estudiante;
   form!: FormGroup;
 
@@ -25,13 +25,13 @@ export class MeActualizarEstudianteComponent {
   ) {}
 
   ngOnInit(): void {
-    this.id = this.route.snapshot.params['estudianteId'];
-    this.estudianteService.find(this.id).subscribe((data: Estudiante) => {
+    this.idEstudiante = this.route.snapshot.params['estudianteId'];
+    this.estudianteService.find(this.idEstudiante).subscribe((data: Estudiante) => {
       this.estudiante = data;
     });
 
     this.form = new FormGroup({
-      IdEstudiante: new FormControl('', [Validators.required]),
+      idEstudiante: new FormControl('', [Validators.required]),
       Nombre: new FormControl('', Validators.required),
       FechaNacimiento: new FormControl('', Validators.required),
       Sexo: new FormControl('', Validators.required),
@@ -45,10 +45,10 @@ export class MeActualizarEstudianteComponent {
   submit() {
     console.log(this.form.value);
     this.estudianteService
-      .update(this.id, this.form.value)
+      .update(this.idEstudiante, this.form.value)
       .subscribe((res: any) => {
         console.log('Estudiante updated successfully!');
-        this.router.navigateByUrl('estudiante/me-visual-estudiante');
+        this.router.navigateByUrl('estudiantes/me-visual-estudiante');
       });
   }
 }

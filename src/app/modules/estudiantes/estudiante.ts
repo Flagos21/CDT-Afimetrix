@@ -1,6 +1,5 @@
 export interface Estudiante {
-    id: number;
-    IdEstudiante: string;
+    idEstudiante: string;
     Nombre: string;
     FechaNacimiento: string;
     Sexo: string

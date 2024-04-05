@@ -25,17 +25,17 @@ export class MeVisualEstudianteComponent implements OnInit {
     });
   }
 
-  deleteEstudiante(id: number) {
-    this.estudianteService.delete(id).subscribe((res: any) => {
-      this.estudiantes = this.estudiantes.filter((item) => item.id !== id);
+  deleteEstudiante(idEstudiante: string) {
+    this.estudianteService.delete(idEstudiante).subscribe((res: any) => {
+      this.estudiantes = this.estudiantes.filter((item) => item.idEstudiante !== idEstudiante);
       console.log('Estudiante eliminado exitosamente');
     });
   }
 
   agregarEstudiante(){
-    this.router.navigateByUrl('estudiante/me-agregar-estudiante');
+    this.router.navigateByUrl('estudiantes/me-agregar-estudiante');
   }
   editarEstudiante(){
-    this.router.navigateByUrl('estudiante/me-actualizar-estudiante');
+    this.router.navigateByUrl('estudiantes/me-actualizar-estudiante');
   }
 }

@@ -23,7 +23,7 @@ export class MeAgregarEstudianteComponent {
 
   ngOnInit(): void{
     this.form = new FormGroup({
-      IdEstudiante: new FormControl('', [Validators.required]),
+      idEstudiante: new FormControl('', [Validators.required]),
       Nombre: new FormControl('', Validators.required),
       FechaNacimiento: new FormControl('', Validators.required),
       Sexo: new FormControl('', Validators.required)
@@ -38,7 +38,7 @@ export class MeAgregarEstudianteComponent {
     console.log(this.form.value);
     this.estudianteService.create(this.form.value).subscribe((res:any) => {
       console.log('Estudiante creado con exito!');
-      this.router.navigateByUrl('estudiante/me-visual-estudiante'); //Poner Ruta
+      this.router.navigateByUrl('estudiantes/me-visual-estudiante'); //Poner Ruta
     })
   }
 
