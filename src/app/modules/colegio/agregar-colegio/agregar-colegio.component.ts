@@ -37,7 +37,7 @@ export class AgregarColegioComponent {
   submit() {
     console.log(this.form.value);
     this.colegioService.create(this.form.value).subscribe((res:any) => {
-      console.log('Estudiante creado con exito!');
+      console.log('Colegio Creado');
       this.router.navigateByUrl(''); //Poner Ruta
     })
   }

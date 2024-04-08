@@ -24,7 +24,7 @@ export class ColegioService {
 
   getAll(): Observable<Colegio[]> {
     return this.httpClient
-      .get<Colegio[]>(`${this.apiURL}/colegios`)
+      .get<Colegio[]>(`${this.apiURL}/colegio`)
       .pipe(catchError(this.errorHandler));
   }
 
@@ -33,7 +33,7 @@ export class ColegioService {
   create(colegio: Colegio): Observable<Colegio> {
     return this.httpClient
       .post<Colegio>(
-        `${this.apiURL}/colegios/agregar-colegios`,
+        `${this.apiURL}/colegio/agregar-colegio`,
         JSON.stringify(colegio),
         this.httpOptions
       )
@@ -42,18 +42,18 @@ export class ColegioService {
 
   //Buscar un estudiante especifico
 
-  find(id: number): Observable<Colegio> {
+  find(idColegio: number): Observable<Colegio> {
     return this.httpClient
-      .get<Colegio>(this.apiURL + '/colegios/' + id)
+      .get<Colegio>(this.apiURL + '/colegio/' + idColegio)
       .pipe(catchError(this.errorHandler));
   }
 
   //Actualizar datos de un  estudiante especifico
 
-  update(id: number, colegio: Colegio): Observable<Colegio> {
+  update(idColegio: number, colegio: Colegio): Observable<Colegio> {
     return this.httpClient
       .put<Colegio>(
-        this.apiURL + '/colegios/' + id,
+        this.apiURL + '/colegio/' + idColegio,
         JSON.stringify(colegio),
         this.httpOptions
       )
@@ -62,9 +62,9 @@ export class ColegioService {
 
   //Eliminar un estudiante especifico
 
-  delete(id: number): Observable<any> {
+  delete(idColegio: number): Observable<any> {
     return this.httpClient
-      .delete<any>(this.apiURL + '/colegios/' + id, this.httpOptions)
+      .delete<any>(this.apiURL + '/colegio/' + idColegio, this.httpOptions)
       .pipe(catchError(this.errorHandler));
   }
 

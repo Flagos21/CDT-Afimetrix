@@ -251,26 +251,45 @@ app.put('/estudiante/:estudianteId', (req, res) => {
     });
   });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   /* EndPoins Colegio */
-  app.get('/colegios', (req, res) => {
-    db.query('SELECT * FROM colegios', (err, results) => {
+  app.get('/colegio', (req, res) => {
+    db.query('SELECT * FROM colegio', (err, results) => {
       if (err) {
-        res.status(500).send('Error fetching colegios');
+        res.status(500).send('Error fetching colegio');
         return;
       }
       res.json(results);
     });
   });
   
-  app.post('/colegios/agregar-colegios', (req, res) => {
+  app.post('/colegio/agregar-colegio', (req, res) => {
     const { idColegio, Nombre, idFundacion, idCiudad } = req.body;
-    db.query('INSERT INTO colegios (idColegio, Nombre, idCiudad, idFundacion) VALUES (?, ?, ?, ?)', [idColegio, Nombre, idFundacion, idCiudad], (err, result) => {
+    db.query('INSERT INTO colegio (idColegio, Nombre, idCiudad, idFundacion) VALUES (?, ?, ?, ?)', [idColegio, Nombre, idFundacion, idCiudad], (err, result) => {
       if (err) {
         res.status(500).send('Error creating colegio');
         return;
       }
       const colegioId = result.insertId;
-      db.query('SELECT * FROM colegios WHERE id = ?', colegioId, (err, result) => {
+      db.query('SELECT * FROM colegio WHERE idColegio = ?', colegioId, (err, result) => {
         if (err) {
           res.status(500).send('Error fetching created colegio');
           return;
@@ -280,9 +299,9 @@ app.put('/estudiante/:estudianteId', (req, res) => {
     });
   });
   
-  app.get('/colegios/:id', (req, res) => {
-    const colegioId = req.params.id;
-    db.query('SELECT * FROM colegios WHERE id = ?', colegioId, (err, result) => {
+  app.get('/colegio/:idColegio', (req, res) => {
+    const colegioId = req.params.idColegio;
+    db.query('SELECT * FROM colegio WHERE idColegio = ?', colegioId, (err, result) => {
       if (err) {
         res.status(500).send('Error fetching colegio');
         return;
@@ -295,15 +314,15 @@ app.put('/estudiante/:estudianteId', (req, res) => {
     });
   });
   
-  app.put('/colegios/:id', (req, res) => {
-    const colegioId = req.params.id;
+  app.put('/colegio/:idColegio', (req, res) => {
+    const colegioId = req.params.idColegio;
     const { idColegio, Nombre, idCiudad, idFundacion } = req.body;
-    db.query('UPDATE colegios SET idColegio = ?, Nombre = ?, idCiudad = ?, idFundacion = ? WHERE id = ?', [idColegio, Nombre, idCiudad, idFundacion, colegioId], err => {
+    db.query('UPDATE colegio SET idColegio = ?, Nombre = ?, idCiudad = ?, idFundacion = ? WHERE id = ?', [idColegio, Nombre, idCiudad, idFundacion, colegioId], err => {
       if (err) {
         res.status(500).send('Error updating colegio');
         return;
       }
-      db.query('SELECT * FROM colegios WHERE id = ?', colegioId, (err, result) => {
+      db.query('SELECT * FROM colegio WHERE idColegio = ?', colegioId, (err, result) => {
         if (err) {
           res.status(500).send('Error fetching updated colegio');
           return;
@@ -313,9 +332,9 @@ app.put('/estudiante/:estudianteId', (req, res) => {
     });
   });
   
-  app.delete('/colegios/:id', (req, res) => {
+  app.delete('/colegio/:idColegio', (req, res) => {
     const colegioId = req.params.id;
-    db.query('DELETE FROM colegios WHERE id = ?', colegioId, err => {
+    db.query('DELETE FROM colegio WHERE idColegio = ?', colegioId, err => {
       if (err) {
         res.status(500).send('Error deleting colegio');
         return;
