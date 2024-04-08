@@ -25,7 +25,7 @@ app.use(bodyParser.json());
 app.use(cors());
   
 app.get('/estudiante/', (req, res) => {
-  db.query('SELECT * FROM estudiantes', (err, results) => {
+  db.query('SELECT * FROM estudiante', (err, results) => {
     if (err) {
       res.status(500).send('Error fetching estudiantes');
       return;
@@ -80,8 +80,8 @@ app.delete('/estudiante/:idEstudiante', (req, res) => {
   });
 });
 
-// Cambiar req.params.id a req.params.idEstudiante en la ruta PUT
-app.put('/estudiante/:idEstudiante', (req, res) => {
+
+app.put('/estudiante/:estudianteId', (req, res) => {
   const estudianteId = req.params.idEstudiante;
   const { Nombre, FechaNacimiento, Sexo } = req.body; // Eliminar idEstudiante del cuerpo de la solicitud
   db.query('UPDATE estudiante SET Nombre = ?, FechaNacimiento = ?, Sexo = ? WHERE idEstudiante = ?', [Nombre, FechaNacimiento, Sexo, estudianteId], err => {
@@ -107,7 +107,7 @@ app.put('/estudiante/:idEstudiante', (req, res) => {
 
 
   /* EndPoins Profesor */
-  app.get('/profesores', (req, res) => {
+  app.get('/profesores/', (req, res) => {
     db.query('SELECT * FROM profesores', (err, results) => {
       if (err) {
         res.status(500).send('Error fetching profesores');

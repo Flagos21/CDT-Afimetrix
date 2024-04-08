@@ -35,9 +35,7 @@
                     <td>{{ estudiante.FechaNacimiento }}</td>
                     <td>{{ estudiante.Sexo }}</td>
                     <td>
-                        <!--<a href="#" [routerLink]="['/post/', post.id, 'view']" class="btn btn-info">View</a>
-                        <a href="#" [routerLink]="['/post/', post.id, 'edit']" class="btn btn-primary">Edit</a>-->
-                        <a href="#" [routerLink]="['/estudiante/', estudiante.idEstudiante]" class="btn btn-primary">Edit</a>
+                        <a href="#" [routerLink]="['/estudiantes/', estudiante.idEstudiante, 'me-actualizar-estudiante' ]" class="btn btn-primary">Edit</a>         
                         <button type="button" (click)="deleteEstudiante(estudiante.idEstudiante)" class="eliminar-button">Delete</button>
                     </td>
                 </tr>
