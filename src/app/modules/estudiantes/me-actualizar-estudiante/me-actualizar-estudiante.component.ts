@@ -35,6 +35,7 @@ export class MeActualizarEstudianteComponent {
       Nombre: new FormControl('', Validators.required),
       FechaNacimiento: new FormControl('', Validators.required),
       Sexo: new FormControl('', Validators.required),
+      Clave: new FormControl('', Validators.required),
     });
   }
 

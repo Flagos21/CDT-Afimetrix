@@ -26,6 +26,7 @@
                     <th>Nombre</th>
                     <th>Fecha Nacimiento</th>
                     <th>Genero</th>
+                    <th>Clave</th>
                 </tr>
             </thead>
             <tbody>
@@ -34,6 +35,7 @@
                     <td>{{ estudiante.Nombre }}</td>
                     <td>{{ estudiante.FechaNacimiento }}</td>
                     <td>{{ estudiante.Sexo }}</td>
+                    <td>{{ estudiante.Clave }}</td>
                     <td>
                         <a href="#" [routerLink]="['/estudiantes/', estudiante.idEstudiante, 'me-actualizar-estudiante' ]" class="btn btn-primary">Edit</a>         
                         <button type="button" (click)="deleteEstudiante(estudiante.idEstudiante)" class="eliminar-button">Delete</button>

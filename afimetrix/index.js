@@ -10,7 +10,7 @@ const port = 3000;
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'Fabi1912',
+  password: '',
   database: 'afimetrix'
 });
   
@@ -35,8 +35,8 @@ app.get('/estudiante/', (req, res) => {
 });
 
 app.post('/estudiante/me-agregar-estudiante', (req, res) => {
-  const { idEstudiante, Nombre, FechaNacimiento, Sexo } = req.body;
-  db.query('INSERT INTO estudiante (idEstudiante, Nombre, FechaNacimiento, Sexo) VALUES (?, ?, ?, ?)', [idEstudiante, Nombre, FechaNacimiento, Sexo], (err, result) => {
+  const { idEstudiante, Nombre, FechaNacimiento, Sexo, Clave } = req.body;
+  db.query('INSERT INTO estudiante (idEstudiante, Nombre, FechaNacimiento, Sexo, Clave) VALUES (?, ?, ?, ?, ?)', [idEstudiante, Nombre, FechaNacimiento, Sexo, Clave], (err, result) => {
     if (err) {
       res.status(500).send('Error creating estudiante');
       return;
@@ -82,9 +82,9 @@ app.delete('/estudiante/:idEstudiante', (req, res) => {
 
 
 app.put('/estudiante/:estudianteId', (req, res) => {
-  const estudianteId = req.params.idEstudiante;
-  const { Nombre, FechaNacimiento, Sexo } = req.body; // Eliminar idEstudiante del cuerpo de la solicitud
-  db.query('UPDATE estudiante SET Nombre = ?, FechaNacimiento = ?, Sexo = ? WHERE idEstudiante = ?', [Nombre, FechaNacimiento, Sexo, estudianteId], err => {
+  const estudianteId = req.params.estudianteId; // Corregir de req.params.idEstudiante a req.params.estudianteId
+  const { Nombre, FechaNacimiento, Sexo, Clave } = req.body;
+  db.query('UPDATE estudiante SET Nombre = ?, FechaNacimiento = ?, Sexo = ?, Clave = ? WHERE idEstudiante = ?', [Nombre, FechaNacimiento, Sexo, Clave, estudianteId], err => {
     if (err) {
       res.status(500).send('Error updating estudiante');
       return;
@@ -98,6 +98,7 @@ app.put('/estudiante/:estudianteId', (req, res) => {
     });
   });
 });
+
 
 
 
