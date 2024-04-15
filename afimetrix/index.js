@@ -10,8 +10,8 @@ const port = 3000;
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '',
-  database: 'afimetrix'
+  password: 'completoitaliano1',
+  database: 'afimetrixp'
 });
   
 db.connect(err => {
@@ -345,7 +345,62 @@ app.put('/estudiante/:estudianteId', (req, res) => {
   });
   
 
+  //lo de ciudad*/
+  app.get('/ciudad', (req, res) => {
+    db.query('SELECT * FROM ciudad', (err, results) => {
+      if (err) {
+        res.status(500).send('Error fetching ciudad');
+        return;
+      }
+      res.json(results);
+    });
+  });
+
+  app.get('/ciudad/:idCiudad', (req, res) => {
+    const ciudadId = req.params.idCiudad;
+    db.query('SELECT * FROM ciudad WHERE idCiudad = ?', ciudadId, (err, result) => {
+      if (err) {
+        res.status(500).send('Error fetching ciudad');
+        return;
+      }
+      if (result.length === 0) {
+        res.status(404).send('Ciudad not found');
+        return;
+      }
+      res.json(result[0]);
+    });
+  });
+
+  // lo de fundacion
+  app.get('/fundacion', (req, res) => {
+    db.query('SELECT * FROM fundacion', (err, results) => {
+      if (err) {
+        res.status(500).send('Error fetching fundacion');
+        return;
+      }
+      res.json(results);
+    });
+  });
+
+  app.get('/fundacion/:idFundacion', (req, res) => {
+    const fundacionId = req.params.idFundacion;
+    db.query('SELECT * FROM fundacion WHERE idFundacion = ?', fundacionId, (err, result) => {
+      if (err) {
+        res.status(500).send('Error fetching fundacion');
+        return;
+      }
+      if (result.length === 0) {
+        res.status(404).send('Fundacion not found');
+        return;
+      }
+      res.json(result[0]);
+    });
+  });
+
+
 /* Start server */
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
+
+
