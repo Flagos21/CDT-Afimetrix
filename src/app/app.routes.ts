@@ -5,6 +5,7 @@ import { MeActualizarEstudianteComponent } from './modules/estudiantes/me-actual
 import { AgregarCursoComponent } from './modules/curso/agregar-curso/agregar-curso.component';
 import { MpAgregarProfesorComponent } from './modules/profesor/mp-agregar-profesor/mp-agregar-profesor.component';
 import { AgregarColegioComponent } from './modules/colegio/agregar-colegio/agregar-colegio.component';
+import { VisualCursoComponent } from './modules/curso/visual-curso/visual-curso.component';
 
 
 export const routes: Routes = [
@@ -23,11 +24,10 @@ export const routes: Routes = [
         //Rutas Curso
     
     {path : 'curso/agregar-curso', component : AgregarCursoComponent},
+    {path : 'curso/visual-curso', component : VisualCursoComponent},
 
         //Rutas Colegio
     
     {path : 'colegio/agregar-colegio', component : AgregarColegioComponent}
-
-
 
 ];

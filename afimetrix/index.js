@@ -108,8 +108,8 @@ app.put('/estudiante/:estudianteId', (req, res) => {
 
 
   /* EndPoins Profesor */
-  app.get('/profesores/', (req, res) => {
-    db.query('SELECT * FROM profesores', (err, results) => {
+  app.get('/profesor/', (req, res) => {
+    db.query('SELECT * FROM profesor', (err, results) => {
       if (err) {
         res.status(500).send('Error fetching profesores');
         return;
@@ -180,8 +180,8 @@ app.put('/estudiante/:estudianteId', (req, res) => {
     });
   });
   /* EndPoins Curso */
-  app.get('/cursos', (req, res) => {
-    db.query('SELECT * FROM cursos', (err, results) => {
+  app.get('/curso', (req, res) => {
+    db.query('SELECT * FROM curso', (err, results) => {
       if (err) {
         res.status(500).send('Error fetching cursos');
         return;
@@ -190,15 +190,15 @@ app.put('/estudiante/:estudianteId', (req, res) => {
     });
   });
   
-  app.post('/cursos/agregar-curso', (req, res) => {
-    const { IdCurso,IdProfesor,IdColegio, Nombre} = req.body;
-    db.query('INSERT INTO cursos (IdCurso,IdProfesor,IdColegio, Nombre) VALUES (?, ?, ?, ?)', [IdCurso,IdProfesor,IdColegio, Nombre], (err, result) => {
+  app.post('/curso/agregar-curso', (req, res) => {
+    const { idCurso,idProfesor,idColegio, Nombre} = req.body;
+    db.query('INSERT INTO curso (idCurso,idProfesor,idColegio, Nombre) VALUES (?, ?, ?, ?)', [idCurso,idProfesor,idColegio, Nombre], (err, result) => {
       if (err) {
         res.status(500).send('Error creating curso');
         return;
       }
       const cursoId = result.insertId;
-      db.query('SELECT * FROM cursos WHERE id = ?', cursoId, (err, result) => {
+      db.query('SELECT * FROM curso WHERE idCurso = ?', cursoId, (err, result) => {
         if (err) {
           res.status(500).send('Error fetching created cursos');
           return;
@@ -208,30 +208,30 @@ app.put('/estudiante/:estudianteId', (req, res) => {
     });
   });
     
-  app.get('/cursos/:id', (req, res) => {
-    const cursoId = req.params.id;
-    db.query('SELECT * FROM cursos WHERE id = ?', cursoId, (err, result) => {
+  app.get('/curso/:idCurso', (req, res) => {
+    const cursoId = req.params.idCurso; // Corregir de req.params.id a req.params.idCurso
+    db.query('SELECT * FROM curso WHERE idCurso = ?', cursoId, (err, result) => {
       if (err) {
-        res.status(500).send('Error fetching estudiante');
+        res.status(500).send('Error fetching curso');
         return;
       }
       if (result.length === 0) {
-        res.status(404).send('cursos not found');
+        res.status(404).send('Curso not found');
         return;
       }
       res.json(result[0]);
     });
   });
     
-  app.put('/cursos/:id', (req, res) => {
-    const cursoId = req.params.id;
-    const { IdCurso,IdProfesor,IdColegio, Nombre} = req.body;
-    db.query('UPDATE cursos SET IdCurso = ?, IdProfesor = ?, IdColegio = ?, Nombre = ? WHERE id = ?', [IdCurso,IdProfesor,IdColegio, Nombre], err => {
+  app.put('/curso/:idCurso', (req, res) => {
+    const cursoId = req.params.idCurso;
+    const { idCurso,idProfesor,idColegio, Nombre} = req.body;
+    db.query('UPDATE cursos SET idCurso = ?, idProfesor = ?, idColegio = ?, Nombre = ? WHERE idCurso = ?', [idCurso,idProfesor,idColegio, Nombre], err => {
       if (err) {
         res.status(500).send('Error updating estudiante');
         return;
       }
-      db.query('SELECT * FROM cursos WHERE id = ?', cursoId, (err, result) => {
+      db.query('SELECT * FROM curso WHERE idCurso = ?', cursoId, (err, result) => {
         if (err) {
           res.status(500).send('Error fetching updated estudiante');
           return;
@@ -241,16 +241,18 @@ app.put('/estudiante/:estudianteId', (req, res) => {
     });
   });
     
-  app.delete('/cursos/:id', (req, res) => {
-    const cursoId = req.params.id;
-    db.query('DELETE FROM cursos WHERE id = ?', cursoId, err => {
+  app.delete('/curso/:idCurso', (req, res) => {
+    const cursoId = req.params.idCurso; // Corregir de req.params.id a req.params.idCurso
+    db.query('DELETE FROM curso WHERE idCurso = ?', cursoId, err => {
       if (err) {
-        res.status(500).send('Error deleting cursos');
+        res.status(500).send('Error deleting curso');
         return;
       }
-      res.status(200).json({ msg: 'curso deleted successfully' });
+      res.status(200).json({ msg: 'Curso deleted successfully' });
     });
   });
+
+  
 
 
 

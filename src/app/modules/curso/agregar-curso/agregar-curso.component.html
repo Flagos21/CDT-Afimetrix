@@ -15,10 +15,14 @@
             <div class="form-container">
                 <h2>AGREGAR CURSO</h2>
                 <form [formGroup]="form" (ngSubmit)="submit()">
-                    <input formControlName="IdCurso" type="text" class="form-control" placeholder="IdCurso">
-                    <input formControlName="IdProfesor" type="text" class="form-control" placeholder="RUN Profesor" required>
-                    <input formControlName="IdColegio" type="text" class="form-control" placeholder="IdColegio" required>
+                    <input formControlName="idCurso" type="text" class="form-control" placeholder="IdCurso">
                     <input formControlName="Nombre" type="text" class="form-control" placeholder="Nombre Curso" required>
+                    <input formControlName="idColegio" type="text" class="form-control" placeholder="IdColegio" required>
+                    <select formControlName = "idProfesor" name="idProfesor" class="form-control" id="idProfesor">
+                        <option *ngFor="let profesor of profesores" [value]="profesor.idProfesor">
+                            {{profesor.Nombre}}
+                            </option>
+                    </select> 
                     <button type="submit" class="agregar-button" [disabled]="!form.valid">Agregar</button>
                 </form>
             </div>
