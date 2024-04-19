@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { VisualCursComponent } from './visual-curs.component';
+import { VisualColeComponent } from './visual-cole.component';
 
-describe('VisualCursComponent', () => {
-  let component: VisualCursComponent;
-  let fixture: ComponentFixture<VisualCursComponent>;
+describe('VisualColeComponent', () => {
+  let component: VisualColeComponent;
+  let fixture: ComponentFixture<VisualColeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [VisualCursComponent]
+      imports: [VisualColeComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(VisualCursComponent);
+    fixture = TestBed.createComponent(VisualColeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

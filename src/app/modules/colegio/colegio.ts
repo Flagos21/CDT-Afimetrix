@@ -16,3 +16,4 @@ export interface Fundacion{
 idFundacion: string;
 Nombre: string
 }
+

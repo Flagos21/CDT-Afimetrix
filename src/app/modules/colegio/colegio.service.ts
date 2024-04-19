@@ -28,6 +28,7 @@ export class ColegioService {
       .get<Colegio[]>(`${this.apiURL}/colegio`)
       .pipe(catchError(this.errorHandler));
   }
+  
 
   //Crear un estudiante
 
@@ -92,7 +93,8 @@ export class ColegioService {
       .get<Fundacion[]>(`${this.apiURL}/fundacion`)
       .pipe(catchError(this.errorHandler));
   }
+
+  
 }
 
-//ver fundacion a lo otro maldito
   

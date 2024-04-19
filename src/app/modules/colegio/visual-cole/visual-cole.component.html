@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Visualizar colegios</title>
+    <!-- Añade enlaces a los estilos si es necesario -->
+</head>
+
+<body>
+    <div class="container">
+        <div class="container-top">
+            <div class="blue-stripe"></div>
+        </div>
+        <div class="container-bottom">
+            <div class="image-container"><img src="../../../../assets/img/LogoUnach.png" alt="" class="logo"></div>
+        </div>
+
+            <div class="search-bar">
+                <input type="text" class="search" placeholder="Buscar colegio por nombre" (keyup)="onSearch($event)">
+            </div>
+
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let colegio of filteredColegios">
+                        <td>{{colegio.Nombre}}</td>
+                        <td>
+                            <button>Acción</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+</body>
+
+</html>

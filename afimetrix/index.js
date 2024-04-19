@@ -179,6 +179,9 @@ app.put('/estudiante/:estudianteId', (req, res) => {
       res.status(200).json({ msg: 'profesores deleted successfully' });
     });
   });
+
+
+  
   /* EndPoins Curso */
   app.get('/cursos', (req, res) => {
     db.query('SELECT * FROM cursos', (err, results) => {
