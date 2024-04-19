@@ -16,8 +16,9 @@ h2 {
 }
 
 .table-container {
-    background-color: #081322;
+    background-color: #003366;
     padding: 40px;
+    width: 50%;
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -28,13 +29,23 @@ h2 {
 thead th { position: sticky; top: 0; }
 
 table {
-    display: block;
     overflow-y: auto;
     overflow-x: hidden;
-    background-color: #007bff;
-    color: white;
+    background-color: white;
+    color: black;
     font-weight: bold;
     height: 100%;
+}
+
+table td {
+    border-bottom: 1px solid rgb(102, 102, 102);
+    padding-block: 10px;
+
+}
+
+.table-options {
+    text-align: end;
+
 }
 
 form input[type="text"],
@@ -94,5 +105,45 @@ form select {
     align-items: center;
     padding: 12px;
 }
+
+.colegios {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+.nombre-ciudad {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+}
+.b-white {
+    background-color: white;
+    width: 100%;
+    margin: 4px;
+    padding: 8px;
+    font-weight: bold;
+}
+.pb-0 {
+    padding-bottom: 0;
+}
+
+.mb-0 {
+    margin-bottom: 0;
+}
+
+.w-auto {
+    width: auto;
+}
+.w-100 {
+    width: 100%;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
 
 

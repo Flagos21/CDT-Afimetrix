@@ -41,5 +41,15 @@ export class VisualCursoComponent {
       console.log(this.cursos);
     });
   }
+
+  agregarCurso(){
+    this.router.navigateByUrl('curso/agregar-curso');
+  }
+  verProfesor(){
+    this.router.navigateByUrl('estudiantes/me-agregar-estudiante');
+  }
+  verCurso(){
+    this.router.navigateByUrl('estudiantes/me-visual-estudiante');
+  }
 }
 

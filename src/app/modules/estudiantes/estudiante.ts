@@ -5,3 +5,9 @@ export interface Estudiante {
     Sexo: string;
     Clave: string;
 }
+export interface Curso {
+    idCurso: number;
+    idColegio: number;
+    idProfesor: string;
+    Nombre: string;
+}

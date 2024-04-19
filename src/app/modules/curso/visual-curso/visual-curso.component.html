@@ -31,7 +31,7 @@
         <div class="table-container">
             <div class="buttons">
                 <button type="button" class="agregar-button w-100">Ver Profesores</button>
-                <button type="button" class="agregar-button w-100">Agregar Curso</button>
+                <button type="button" class="agregar-button w-100" (click)=agregarCurso() >Agregar Curso</button>
             </div>
 
         <table class="table table-striped table-bordered">
@@ -40,7 +40,7 @@
                 <tr *ngFor="let curso of cursos">
                     <td>{{ curso.Nombre }}</td>
                     <td class="table-options">
-                        <button type="button" class="agregar-button mb-0 ">Ver Curso</button>
+                        <button type="button" class="agregar-button mb-0 " (click)= verCurso() >Ver Curso</button>
                         <button type="button" class="agregar-button mb-0 ">ENCUESTA</button>      
                     </td>
                 </tr>

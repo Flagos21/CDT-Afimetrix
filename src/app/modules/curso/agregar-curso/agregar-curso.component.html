@@ -17,7 +17,11 @@
                 <form [formGroup]="form" (ngSubmit)="submit()">
                     <input formControlName="idCurso" type="text" class="form-control" placeholder="IdCurso">
                     <input formControlName="Nombre" type="text" class="form-control" placeholder="Nombre Curso" required>
-                    <input formControlName="idColegio" type="text" class="form-control" placeholder="IdColegio" required>
+                    <select formControlName = "idColegio" name="idColegio" class="form-control" id="idColegio">
+                        <option *ngFor="let colegio of colegios" [value]="colegio.idColegio">
+                            {{colegio.Nombre}}
+                            </option>
+                    </select>
                     <select formControlName = "idProfesor" name="idProfesor" class="form-control" id="idProfesor">
                         <option *ngFor="let profesor of profesores" [value]="profesor.idProfesor">
                             {{profesor.Nombre}}

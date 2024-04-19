@@ -5,7 +5,7 @@ import { CursoService } from '../curso.service';
 
 import { Router } from '@angular/router';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-import { Profesor } from '../curso';
+import { Colegio, Profesor } from '../curso';
 
 @Component({
   selector: 'app-agregar-curso',
@@ -18,6 +18,7 @@ export class AgregarCursoComponent {
 
   form! : FormGroup;
   profesores: any[] = [];
+  colegios: any[] = []
 
   constructor(
     public cursoService: CursoService,
@@ -32,7 +33,9 @@ export class AgregarCursoComponent {
       Nombre: new FormControl('', [Validators.required]),
     });
     this.cursoService.getAllP().subscribe((data : Profesor[])=>
-    this.profesores = data)
+    this.profesores = data);
+    this.cursoService.getAllC().subscribe((data : Colegio[])=>
+    this.colegios = data)
   }
 
   get f() {
@@ -43,7 +46,7 @@ export class AgregarCursoComponent {
     console.log(this.form.value);
     this.cursoService.create(this.form.value).subscribe((res:any) => {
       console.log('Curso creado con exito!');
-      this.router.navigateByUrl('');
+      this.router.navigateByUrl('curso/visual-curso');
     })
   }
 

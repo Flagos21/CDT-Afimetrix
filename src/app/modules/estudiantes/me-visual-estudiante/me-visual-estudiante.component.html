@@ -14,34 +14,33 @@
         <div class="container-bottom">
         <div class="image-add-user-container">
             <img src="../../../../assets/img/LogoUnach.png" alt="" class="logo">
-            <button type="button" class="agregar-button" (click)="agregarEstudiante()">Agregar Estudiante</button>
         </div>
-        <h2>VISUALIZADOR DE ESTUDIANTES</h2>
+        <div class="table-container pb-0">
+        <div *ngFor="let curso of cursos" class="colegios">
+            <div  class="nombre-ciudad">
+                <p class="b-white">{{ curso.Nombre}}</p>
+                <p class="b-white">{{ curso.idProfesor}}</p>
+
+            </div>
+        </div>
+        </div>
         <div class="table-container">
-        
+            <div class="buttons">
+                <button type="button" class="agregar-button w-100">Sobrecarga De Estudiante</button>
+                <button (click)=agregarEstudiante() type="button" class="agregar-button w-100">Agregar Estudiante</button>
+            </div>
+
         <table class="table table-striped table-bordered">
-            <thead>
-                <tr>
-                    <th>RUN</th>
-                    <th>Nombre</th>
-                    <th>Fecha Nacimiento</th>
-                    <th>Genero</th>
-                    <th>Clave</th>
-                </tr>
-            </thead>
+
             <tbody>
                 <tr *ngFor="let estudiante of estudiantes">
-                    <td>{{ estudiante.idEstudiante }}</td>
                     <td>{{ estudiante.Nombre }}</td>
-                    <td>{{ estudiante.FechaNacimiento }}</td>
-                    <td>{{ estudiante.Sexo }}</td>
-                    <td>{{ estudiante.Clave }}</td>
-                    <td>
-                        <a href="#" [routerLink]="['/estudiantes/', estudiante.idEstudiante, 'me-actualizar-estudiante' ]" class="btn btn-primary">Edit</a>         
-                        <button type="button" (click)="deleteEstudiante(estudiante.idEstudiante)" class="eliminar-button">Delete</button>
+                    <td class="table-options">
+                        <button  type="button" class="agregar-button mb-0 " (click)="verEstudiante(estudiante.idEstudiante)">Ver Estudiante</button>    
                     </td>
                 </tr>
             </tbody>
+            
         </table>
         </div>
     </div>

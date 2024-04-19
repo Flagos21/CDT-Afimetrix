@@ -4,7 +4,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { Estudiante } from './estudiante';
+import { Estudiante, Curso } from './estudiante';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +25,12 @@ export class EstudianteService {
   getAll(): Observable<Estudiante[]> {
     return this.httpClient
       .get<Estudiante[]>(this.apiURL + '/estudiante/')
+      .pipe(catchError(this.errorHandler));
+  }
+
+  getAllCs(): Observable<Curso[]>{
+    return this.httpClient
+      .get<Curso[]>(this.apiURL + '/curso/')
       .pipe(catchError(this.errorHandler));
   }
 
