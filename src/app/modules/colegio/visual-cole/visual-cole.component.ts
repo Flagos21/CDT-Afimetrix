@@ -47,4 +47,7 @@ export class VisualColeComponent implements OnInit {
     }
 }
 
+agregarColegio(): void {
+  this.router.navigate(['/colegio/agregar-colegio']);
+}
 }
