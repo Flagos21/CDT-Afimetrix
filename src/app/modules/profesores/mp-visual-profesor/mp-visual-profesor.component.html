@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Ver Profesores</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="container-top">
+            <div class="blue-stripe"></div>
+        </div>
+
+        <div class="container-bottom">
+            <div class="image-add-user-container">
+                <img src="../../../../assets/img/LogoUnach.png" alt="" class="logo">
+                <button type="button" class="agregar-button" (click)="agregarProfesor()">Agregar Profesor</button>
+            </div>
+            <div class="table-container pb-0">
+                <div *ngFor="let colegio of colegios" class="colegios">
+                    <div class="nombre-ciudad">
+                        <p class="b-white">{{ colegio.Nombre}}</p>
+                        <p class="b-white">{{ colegio.NombreCiudad}}</p>
+
+                    </div>
+                    <div class="fundacion">
+                        <p class="b-white w-auto">{{colegio.NombreFundacion}}</p>
+                    </div>
+                </div>
+            </div>
+            <h2>VISUALIZADOR DE PROFESORES</h2>
+            <div class="table-container">
+
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let profesor of profesores">
+                            <td>{{ profesor.Nombre }}</td>
+                            <td>
+                                <button type="button" class="agregar-button mb-0" (click)="actualizarProfesor(profesor.idProfesor)">Ver</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

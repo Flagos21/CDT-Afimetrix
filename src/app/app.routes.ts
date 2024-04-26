@@ -3,9 +3,12 @@ import { MeAgregarEstudianteComponent } from './modules/estudiante/me-agregar-es
 import { MeVisualEstudianteComponent } from './modules/estudiante/me-visual-estudiante/me-visual-estudiante.component';
 import { MeActualizarEstudianteComponent } from './modules/estudiante/me-actualizar-estudiante/me-actualizar-estudiante.component';
 import { AgregarCursoComponent } from './modules/curso/agregar-curso/agregar-curso.component';
-import { MpAgregarProfesorComponent } from './modules/profesor/mp-agregar-profesor/mp-agregar-profesor.component';
+import { MpAgregarProfesorComponent } from './modules/profesores/mp-agregar-profesor/mp-agregar-profesor.component';
+import { MpVisualProfesorComponent } from './modules/profesores/mp-visual-profesor/mp-visual-profesor.component';
+import { MpActualizarProfesorComponent } from './modules/profesores/mp-actualizar-profesor/mp-actualizar-profesor.component';
 import { AgregarColegioComponent } from './modules/colegio/agregar-colegio/agregar-colegio.component';
-
+import { DetalleEncuestaComponent } from './modules/encuesta/detalle-encuesta/detalle-encuesta.component';
+import { Component } from '@angular/core';
 
 export const routes: Routes = [
     {path : '' , pathMatch : 'full' , redirectTo : ''},
@@ -19,6 +22,8 @@ export const routes: Routes = [
         //Rutas Profesor
 
     {path : 'profesor/mp-agregar-profesor', component : MpAgregarProfesorComponent},
+    {path: 'profesor/mp-visual-profesor', component : MpVisualProfesorComponent},
+    {path: 'profesor/:profesorId/mp-actualizar-profesor', component: MpActualizarProfesorComponent} ,
 
         //Rutas Curso
     
@@ -26,7 +31,11 @@ export const routes: Routes = [
 
         //Rutas Colegio
     
-    {path : 'curso/agregar-colegio', component : AgregarColegioComponent}
+    {path : 'curso/agregar-colegio', component : AgregarColegioComponent},
+
+        //Rutas Encuesta    
+    
+    {path : 'encuesta/detalle-ecuesta', component : DetalleEncuestaComponent}
 
 
 
