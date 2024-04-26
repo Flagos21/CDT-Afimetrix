@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Curso, Colegio, Ciudad, Fundacion } from '../curso';
 import { CommonModule } from '@angular/common';
 import { CursoService } from '../curso.service';
-import { RouterModule, Router } from '@angular/router';
+import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-visual-curso',
@@ -11,62 +11,60 @@ import { RouterModule, Router } from '@angular/router';
   templateUrl: './visual-curso.component.html',
   styleUrl: './visual-curso.component.css',
 })
-export class VisualCursoComponent {
+export class VisualCursoComponent implements OnInit {
   cursos: Curso[] = [];
+  colegioId: number = 1; // Establecer un valor predeterminado
   colegios: Colegio[] = [];
-  ciudades: Ciudad[] = [];
-  fundaciones: Fundacion[] = [];
-  colegioId: number = 1;
 
-  constructor(public cursoService: CursoService, private router: Router) {}
+  constructor(
+    public cursoService: CursoService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-    this.getAllCursos();
-    this.getAllColegios();
+    this.getAllColegios(); // Llamar a getAllColegios() aquí para asegurar que se carguen los colegios al iniciar el componente
+    this.route.params.subscribe(params => {
+      this.colegioId = +params['idColegio']; // Convertir el idColegio a número
+      this.getAllCursos();
+    });
   }
 
   getAllColegios(): void {
-    console.log(this.router.url);
-    console.log(window.location.href);
-    this.cursoService.getAllC().subscribe((data: Colegio[]) => {
-      // Suponiendo que this.colegioId contiene la ID del colegio que quieres mostrar
-      this.colegios = data.filter(
-        (colegio) => colegio.idColegio === this.colegioId
-      );
-      console.log(this.colegios);
-    });
+    if (this.colegioId !== undefined) {
+      this.cursoService.getAllC().subscribe((data: Colegio[]) => {
+        const colegioEncontrado = data.find(colegio => colegio.idColegio === this.colegioId);
+        if (colegioEncontrado) {
+          this.colegios = [colegioEncontrado];
+        } else {
+          console.log(`No se encontró ningún colegio con el ID ${this.colegioId}`);
+        }
+      });
+    } else {
+      console.log(`colegioId es undefined`);
+    }
   }
-  
+
   getAllCursos(): void {
-    console.log(this.router.url);
-    console.log(window.location.href);
-    this.cursoService.getAll().subscribe((data: Curso[]) => {
-      this.cursos = data;
-      console.log(this.cursos);
-    });
-  }
-
-  getAllCiudad(): void {
-    console.log(this.router.url);
-    console.log(window.location.href);
-    this.cursoService.getAllCd().subscribe((data: Ciudad[]) => {
-      this.ciudades = data;
-      console.log(this.ciudades);
-    });
-  }
-
-  getAllFundacion(): void {
-    console.log(this.router.url);
-    console.log();
+    if (this.colegioId) {
+      this.cursoService.getCursosByColegioId(this.colegioId).subscribe((data: Curso[]) => {
+        this.cursos = data;
+        console.log(this.cursos);
+      });
+    }
   }
 
   agregarCurso() {
     this.router.navigateByUrl('curso/agregar-curso');
   }
+
   verProfesor() {
     this.router.navigateByUrl('estudiantes/me-agregar-estudiante');
   }
+
   verCurso() {
-    this.router.navigateByUrl('estudiantes/me-visual-estudiante');
+    if (this.colegioId) {
+      this.router.navigateByUrl(`/curso/detalles-curso/${this.colegioId}`);
+    }
   }
 }

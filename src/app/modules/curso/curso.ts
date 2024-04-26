@@ -31,3 +31,10 @@ export interface Fundacion {
   idAsociacion: number;
   Nombre: string;
 }
+
+export interface Profesor {
+    idProfesor: number;
+    Nombre: string;
+    Clave: string;
+    Tipo: string;
+}

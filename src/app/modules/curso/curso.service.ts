@@ -26,39 +26,14 @@ export class CursoService {
       .pipe(catchError(this.errorHandler));
   }
 
-  getAllP(): Observable<Profesor[]> {
+  getAllP(): Observable<Profesor[]>{
     return this.httpClient
       .get<Profesor[]>(this.apiURL + '/profesor/')
       .pipe(catchError(this.errorHandler));
   }
-
-  getAllC(): Observable<Colegio[]> {
+  getAllC(): Observable<Colegio[]>{
     return this.httpClient
       .get<Colegio[]>(this.apiURL + '/colegio/')
-      .pipe(
-        map((data: any[]) => {
-          return data.map((item: any) => {
-            return {
-              idColegio: item.idColegio,
-              Nombre: item.Nombre,
-              NombreCiudad: item.NombreCiudad,
-              NombreFundacion: item.NombreFundacion,
-            } as Colegio; // Convertimos cada objeto a tipo Colegio
-          });
-        }),
-        catchError(this.errorHandler)
-      );
-  }
-
-  getAllCd(): Observable<Ciudad[]> {
-    return this.httpClient
-      .get<Ciudad[]>(this.apiURL + '/ciudad/')
-      .pipe(catchError(this.errorHandler));
-  }
-
-  getAllF(): Observable<Ciudad[]> {
-    return this.httpClient
-      .get<Ciudad[]>(this.apiURL + '/fundacion/')
       .pipe(catchError(this.errorHandler));
   }
 
@@ -72,9 +47,15 @@ export class CursoService {
       .pipe(catchError(this.errorHandler));
   }
 
-  find(idCurso: number): Observable<Curso> {
+  find(idCurso:number): Observable<Curso>{
     return this.httpClient
       .get<Curso>(this.apiURL + '/curso/' + idCurso)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  getCursosByColegioId(colegioId: number): Observable<Curso[]> {
+    return this.httpClient
+      .get<Curso[]>(`${this.apiURL}/colegio/${colegioId}/cursos`)
       .pipe(catchError(this.errorHandler));
   }
 
