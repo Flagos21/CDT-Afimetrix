@@ -1,7 +1,20 @@
 export interface Curso {
-    id: number;
-    IdCurso: string;
-    IdColegio: string;
-    IdProfesor: string;
+    idCurso: number;
+    idColegio: number;
+    idProfesor: string;
     Nombre: string;
+}
+
+export interface Colegio {
+    idColegio: number;
+    Nombre: string;
+    idFundacion: string;
+    idCiudad: string;
+}
+
+export interface Profesor {
+    idProfesor: number;
+    Nombre: string;
+    Clave: string;
+    Tipo: string;
 }

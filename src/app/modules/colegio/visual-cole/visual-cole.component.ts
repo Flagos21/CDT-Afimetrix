@@ -17,6 +17,7 @@ export class VisualColeComponent implements OnInit {
   colegios: Colegio[] = [];
   filteredColegios: Colegio[] = [];
   searchTerm$ = new Subject<string>();
+  idColegioFilter: number | undefined;
 
   constructor(public colegioService: ColegioService, private router: Router) {}
 
@@ -50,4 +51,12 @@ export class VisualColeComponent implements OnInit {
 agregarColegio(): void {
   this.router.navigate(['/colegio/agregar-colegio']);
 }
+
+verDetalles(colegio: Colegio): void {
+  if (colegio && colegio.idColegio) {
+    this.router.navigate(['/curso/visual-curso', colegio.idColegio]); 
+  }
 }
+
+}
+

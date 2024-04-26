@@ -6,6 +6,8 @@ import { AgregarCursoComponent } from './modules/curso/agregar-curso/agregar-cur
 import { MpAgregarProfesorComponent } from './modules/profesor/mp-agregar-profesor/mp-agregar-profesor.component';
 import { AgregarColegioComponent } from './modules/colegio/agregar-colegio/agregar-colegio.component';
 import { VisualColeComponent } from './modules/colegio/visual-cole/visual-cole.component';
+import { Component } from '@angular/core';
+import { VisualCursoComponent } from './modules/curso/visual-curso/visual-curso.component';
 
 
 export const routes: Routes = [
@@ -24,6 +26,8 @@ export const routes: Routes = [
         //Rutas Curso
     
     {path : 'curso/agregar-curso', component : AgregarCursoComponent},
+
+    {path: 'curso/visual-curso/:idColegio', component : VisualCursoComponent},
 
         //Rutas Colegio
     

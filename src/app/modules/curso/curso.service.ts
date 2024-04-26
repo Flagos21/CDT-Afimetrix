@@ -4,7 +4,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { Curso } from './curso';
+import { Colegio, Curso, Profesor } from './curso';
+
 
 @Injectable({
   providedIn: 'root'
@@ -22,23 +23,40 @@ export class CursoService {
 
   getAll(): Observable<Curso[]>{
     return this.httpClient
-      .get<Curso[]>(this.apiURL + '/cursos/')
+      .get<Curso[]>(this.apiURL + '/curso/')
+      .pipe(catchError(this.errorHandler));
+  }
+
+  getAllP(): Observable<Profesor[]>{
+    return this.httpClient
+      .get<Profesor[]>(this.apiURL + '/profesor/')
+      .pipe(catchError(this.errorHandler));
+  }
+  getAllC(): Observable<Colegio[]>{
+    return this.httpClient
+      .get<Colegio[]>(this.apiURL + '/colegio/')
       .pipe(catchError(this.errorHandler));
   }
 
   create(curso: Curso): Observable<Curso> {
     return this.httpClient
       .post<Curso>(
-        this.apiURL + '/cursos/agregar-curso',
+        this.apiURL + '/curso/agregar-curso',
         JSON.stringify(curso),
         this.httpOptions
       )
       .pipe(catchError(this.errorHandler));
   }
 
-  find(id:number): Observable<Curso>{
+  find(idCurso:number): Observable<Curso>{
     return this.httpClient
-      .get<Curso>(this.apiURL + '/cursos/' + id)
+      .get<Curso>(this.apiURL + '/curso/' + idCurso)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  getCursosByColegioId(colegioId: number): Observable<Curso[]> {
+    return this.httpClient
+      .get<Curso[]>(`${this.apiURL}/colegio/${colegioId}/cursos`)
       .pipe(catchError(this.errorHandler));
   }
 

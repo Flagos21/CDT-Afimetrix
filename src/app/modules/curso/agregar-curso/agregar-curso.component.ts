@@ -1,3 +1,4 @@
+
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -5,6 +6,7 @@ import { CursoService } from '../curso.service';
 
 import { Router } from '@angular/router';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Colegio, Profesor } from '../curso';
 
 @Component({
   selector: 'app-agregar-curso',
@@ -16,6 +18,8 @@ import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angula
 export class AgregarCursoComponent {
 
   form! : FormGroup;
+  profesores: any[] = [];
+  colegios: any[] = []
 
   constructor(
     public cursoService: CursoService,
@@ -24,11 +28,15 @@ export class AgregarCursoComponent {
 
   ngOnInit(): void{
     this.form = new FormGroup({
-      IdCurso: new FormControl('', [Validators.required]),
-      IdColegio: new FormControl('', [Validators.required]),
-      IdProfesor: new FormControl('', [Validators.required]),
+      idCurso: new FormControl('', [Validators.required]),
+      idColegio: new FormControl('', [Validators.required]),
+      idProfesor: new FormControl('', [Validators.required]),
       Nombre: new FormControl('', [Validators.required]),
     });
+    this.cursoService.getAllP().subscribe((data : Profesor[])=>
+    this.profesores = data);
+    this.cursoService.getAllC().subscribe((data : Colegio[])=>
+    this.colegios = data)
   }
 
   get f() {
@@ -39,11 +47,9 @@ export class AgregarCursoComponent {
     console.log(this.form.value);
     this.cursoService.create(this.form.value).subscribe((res:any) => {
       console.log('Curso creado con exito!');
-      this.router.navigateByUrl('');
+      this.router.navigateByUrl('curso/visual-curso');
     })
   }
 
 
 }
-
-

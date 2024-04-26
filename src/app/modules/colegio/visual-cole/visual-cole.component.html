@@ -17,7 +17,7 @@
 
         <div class="search-bar">
             <input type="text" class="search" placeholder="Buscar colegio por nombre" (keyup)="onSearch($event)">
-            <button (click)="agregarColegio()">Agregar Colegio</button>
+            <button type="button" class="button" (click)="agregarColegio()">Agregar Colegio</button>
         </div>
 
         <table class="table table-striped table-bordered">
@@ -30,9 +30,9 @@
                 <tr *ngFor="let colegio of filteredColegios">
                     <td>{{colegio.Nombre}}</td>
                     <td>
-                        <button>Ver</button>
+                        <button (click)="verDetalles(colegio)">Ver</button>
                     </td>
-                </tr>
+                  </tr>
             </tbody>
         </table>
 
