@@ -1,23 +1,25 @@
 import { Component, OnInit } from '@angular/core';
-import { Curso, Colegio } from '../curso';
+import { Curso, Colegio, Ciudad, Fundacion } from '../curso';
 import { CommonModule } from '@angular/common';
 import { CursoService } from '../curso.service';
-import { RouterModule, Router} from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 
 @Component({
   selector: 'app-visual-curso',
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './visual-curso.component.html',
-  styleUrl: './visual-curso.component.css'
+  styleUrl: './visual-curso.component.css',
 })
 export class VisualCursoComponent {
   cursos: Curso[] = [];
   colegios: Colegio[] = [];
-  colegioId: number = 7;
+  ciudades: Ciudad[] = [];
+  fundaciones: Fundacion[] = [];
+  colegioId: number = 1;
 
-  constructor(public cursoService: CursoService, private router: Router){}
-  
+  constructor(public cursoService: CursoService, private router: Router) {}
+
   ngOnInit(): void {
     this.getAllCursos();
     this.getAllColegios();
@@ -28,7 +30,9 @@ export class VisualCursoComponent {
     console.log(window.location.href);
     this.cursoService.getAllC().subscribe((data: Colegio[]) => {
       // Suponiendo que this.colegioId contiene la ID del colegio que quieres mostrar
-      this.colegios = data.filter(colegio => colegio.idColegio === this.colegioId); 
+      this.colegios = data.filter(
+        (colegio) => colegio.idColegio === this.colegioId
+      );
       console.log(this.colegios);
     });
   }
@@ -36,20 +40,33 @@ export class VisualCursoComponent {
   getAllCursos(): void {
     console.log(this.router.url);
     console.log(window.location.href);
-    this.cursoService.getAll().subscribe((data: Curso[]) =>{
+    this.cursoService.getAll().subscribe((data: Curso[]) => {
       this.cursos = data;
       console.log(this.cursos);
     });
   }
 
-  agregarCurso(){
+  getAllCiudad(): void {
+    console.log(this.router.url);
+    console.log(window.location.href);
+    this.cursoService.getAllCd().subscribe((data: Ciudad[]) => {
+      this.ciudades = data;
+      console.log(this.ciudades);
+    });
+  }
+
+  getAllFundacion(): void {
+    console.log(this.router.url);
+    console.log();
+  }
+
+  agregarCurso() {
     this.router.navigateByUrl('curso/agregar-curso');
   }
-  verProfesor(){
+  verProfesor() {
     this.router.navigateByUrl('estudiantes/me-agregar-estudiante');
   }
-  verCurso(){
+  verCurso() {
     this.router.navigateByUrl('estudiantes/me-visual-estudiante');
   }
 }
-

@@ -82,7 +82,7 @@ app.delete('/estudiante/:idEstudiante', (req, res) => {
 
 
 app.put('/estudiante/:estudianteId', (req, res) => {
-  const estudianteId = req.params.estudianteId; // Corregir de req.params.idEstudiante a req.params.estudianteId
+  const estudianteId = req.params.estudianteId;
   const { Nombre, FechaNacimiento, Sexo, Clave } = req.body;
   db.query('UPDATE estudiante SET Nombre = ?, FechaNacimiento = ?, Sexo = ?, Clave = ? WHERE idEstudiante = ?', [Nombre, FechaNacimiento, Sexo, Clave, estudianteId], err => {
     if (err) {
@@ -96,6 +96,20 @@ app.put('/estudiante/:estudianteId', (req, res) => {
       }
       res.json(result[0]);
     });
+  });
+});
+
+// Endpoint para agregar una matrícula
+app.post('/matricula/agregar', (req, res) => {
+  const { idEstudiante, idCurso, Anio } = req.body;
+
+  // Insertar datos en la tabla matricula
+  db.query('INSERT INTO matricula (idEstudiante, idCurso, Anio) VALUES (?, ?, ?)', [idEstudiante, idCurso, Anio], (err, result) => {
+    if (err) {
+      res.status(500).send('Error creating matricula');
+      return;
+    }
+    res.status(201).json({ msg: 'Matricula created successfully', matriculaId: result.insertId });
   });
 });
 
@@ -252,26 +266,6 @@ app.put('/estudiante/:estudianteId', (req, res) => {
     });
   });
 
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   /* EndPoins Colegio */
   app.get('/colegio', (req, res) => {
@@ -302,9 +296,17 @@ app.put('/estudiante/:estudianteId', (req, res) => {
     });
   });
   
-  app.get('/colegio/:idColegio', (req, res) => {
-    const colegioId = req.params.idColegio;
-    db.query('SELECT * FROM colegio WHERE idColegio = ?', colegioId, (err, result) => {
+// Modificar la consulta SQL en el endpoint /colegio/:idColegio
+app.get('/colegio/:idColegio', (req, res) => {
+  const colegioId = req.params.idColegio;
+  db.query(
+    `SELECT c.Nombre AS NombreColegio, ci.Nombre AS NombreCiudad, f.Nombre AS NombreFundacion 
+    FROM colegio c 
+    JOIN ciudad ci ON c.idCiudad = ci.idCiudad 
+    JOIN fundacion f ON c.idFundacion = f.idFundacion 
+    WHERE c.idColegio = ?`,
+    colegioId,
+    (err, result) => {
       if (err) {
         res.status(500).send('Error fetching colegio');
         return;
@@ -314,8 +316,11 @@ app.put('/estudiante/:estudianteId', (req, res) => {
         return;
       }
       res.json(result[0]);
-    });
-  });
+    }
+  );
+});
+
+
   
   app.put('/colegio/:idColegio', (req, res) => {
     const colegioId = req.params.idColegio;
@@ -346,6 +351,30 @@ app.put('/estudiante/:estudianteId', (req, res) => {
     });
   });
   
+
+  //EndPoins Ciudades
+
+  app.get('/ciudad/', (req, res) => {
+    db.query('SELECT * FROM ciudad', (err, results) => {
+      if (err) {
+        res.status(500).send('Error fetching profesores');
+        return;
+      }
+      res.json(results);
+    });
+  });
+
+  //EndPoins Fundaciones
+
+  app.get('/fundacion/', (req, res) => {
+    db.query('SELECT * FROM fundacion', (err, results) => {
+      if (err) {
+        res.status(500).send('Error fetching profesores');
+        return;
+      }
+      res.json(results);
+    });
+  });
 
 /* Start server */
 app.listen(port, () => {
