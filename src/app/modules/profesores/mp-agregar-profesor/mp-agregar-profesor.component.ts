@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ProfesorService } from '../profesor.service';
+import { Colegio } from '../profesor';
 
 @Component({
   selector: 'app-mp-agregar-profesor',
@@ -15,6 +16,7 @@ import { ProfesorService } from '../profesor.service';
 export class MpAgregarProfesorComponent {
 
   form!: FormGroup;
+  colegios:any[] = [];
 
   constructor(
     public profesorService: ProfesorService,
@@ -26,8 +28,17 @@ export class MpAgregarProfesorComponent {
       idProfesor: new FormControl('', [Validators.required]),
       Nombre: new FormControl('', Validators.required),
       Clave: new FormControl('', Validators.required),
+      idColegio: new FormControl('', Validators.required),
+      Tipo: new FormControl('', Validators.required),
     });
+
+    // Cargar la lista de Colegios desde el servicio de colegios
+    this.profesorService.getAllC().subscribe((data: Colegio[]) => {
+      this.colegios = data;
+  });
   }
+
+  
 
   get f(){
     return this.form.controls;
@@ -35,9 +46,15 @@ export class MpAgregarProfesorComponent {
 
   submit(){
     console.log(this.form.value);
-    this.profesorService.create(this.form.value).subscribe((res:any) => {
-      console.log('Profesor creado con exito!');
-      this.router.navigateByUrl(''); //Poner Ruta
-    })
+    this.profesorService.create(this.form.value).subscribe(
+      (res: any) => {
+        console.log('Profesor creado con éxito!');
+        this.router.navigateByUrl('/profesor/mp-visual-profesor'); // Poner Ruta
+      },
+      (error: any) => {
+        console.error('Error al crear el profesor:', error);
+        // Aquí puedes manejar el error de acuerdo a tus necesidades
+      }
+    );
   }
 }
