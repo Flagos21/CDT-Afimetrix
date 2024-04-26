@@ -4,7 +4,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
-import { Colegio } from './colegio';
+import { Colegio, Fundacion } from './colegio';
+import { Ciudad }from './colegio';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,7 @@ export class ColegioService {
       .get<Colegio[]>(`${this.apiURL}/colegio`)
       .pipe(catchError(this.errorHandler));
   }
+  
 
   //Crear un estudiante
 
@@ -79,4 +81,20 @@ export class ColegioService {
     }
     return throwError(errorMessage);
   }
+
+  //ver ciudades asi a lo maldito 
+  getAllC(): Observable<Ciudad[]> {
+    return this.httpClient
+      .get<Ciudad[]>(`${this.apiURL}/ciudad`)
+      .pipe(catchError(this.errorHandler));
+  }
+  getAllF(): Observable<Fundacion[]> {
+    return this.httpClient
+      .get<Fundacion[]>(`${this.apiURL}/fundacion`)
+      .pipe(catchError(this.errorHandler));
+  }
+
+  
 }
+
+  

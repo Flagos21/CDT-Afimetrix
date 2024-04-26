@@ -2,7 +2,8 @@
 <html lang="es">
 
 <head>
-    <title>Agregar estudiante</title>
+    <title>Agregar Colegio</title>
+    <!-- Añade enlaces a los estilos si es necesario -->
 </head>
 
 <body>
@@ -17,8 +18,24 @@
                 <form [formGroup]="form" (ngSubmit)="submit()">
                     <input formControlName="idColegio" type="text" class="form-control" placeholder="idColegio" required>
                     <input formControlName="Nombre" type="text" class="form-control" placeholder="Nombre">
-                    <input formControlName="idCiudad" type="text" class="form-control" placeholder="Id Ciudad" required>
-                    <input formControlName="idFundacion" type="text" class="form-control" placeholder="Id Fundacion" required>
+
+                    <!-- Reemplaza el campo de texto por un select para idCiudad -->
+                    <select formControlName="idCiudad" class="form-control" required>
+                        <!-- Usando *ngFor para poblar el dropdown con las opciones de la lista de ciudades -->
+                        <option *ngFor="let ciudad of ciudades" [value]="ciudad.idCiudad">
+                            {{ ciudad.Nombre }}
+                        </option>
+                    </select>
+
+
+
+                    <select formControlName="idFundacion" class="form-control" required>
+                        <!-- Usando *ngFor para poblar el dropdown con las opciones de la lista de fundaciones -->
+                        <option *ngFor="let fundacion of fundacion" [value]="fundacion.idFundacion">
+                            {{ fundacion.Nombre }}
+                        </option>
+                    </select>
+                    
                     <button type="submit" class="agregar-button" [disabled]="!form.valid">Agregar</button>
                 </form>
             </div>

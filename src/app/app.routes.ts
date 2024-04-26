@@ -10,6 +10,7 @@ import { AgregarColegioComponent } from './modules/colegio/agregar-colegio/agreg
 import { DetalleEncuestaComponent } from './modules/encuesta/detalle-encuesta/detalle-encuesta.component';
 import { Component } from '@angular/core';
 import { VisualCursoComponent } from './modules/curso/visual-curso/visual-curso.component';
+import { VisualColeComponent } from './modules/colegio/visual-cole/visual-cole.component';
 
 export const routes: Routes = [
     {path : '' , pathMatch : 'full' , redirectTo : ''},
@@ -33,12 +34,7 @@ export const routes: Routes = [
 
         //Rutas Colegio
     
-    {path : 'curso/agregar-colegio', component : AgregarColegioComponent},
-
-        //Rutas Encuesta    
-    
-    {path : 'encuesta/detalle-ecuesta', component : DetalleEncuestaComponent}
-
-
+    {path : 'colegio/agregar-colegio', component : AgregarColegioComponent},
+    {path : 'colegio/visual-cole', component : VisualColeComponent}
 
 ];
