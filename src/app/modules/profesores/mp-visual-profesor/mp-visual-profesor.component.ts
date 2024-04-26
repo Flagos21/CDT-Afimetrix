@@ -69,7 +69,7 @@ export class MpVisualProfesorComponent implements OnInit {
     this.router.navigateByUrl('profesor/mp-agregar-profesor');
   }
   actualizarProfesor(idProfesor: string): void {
-    this.router.navigate(['/profesores', idProfesor, 'mp-actualizar-profesor']);
+    this.router.navigate(['/profesor', idProfesor, 'mp-actualizar-profesor']);
   }
 
 }
