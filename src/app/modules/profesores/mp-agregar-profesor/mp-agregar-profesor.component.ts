@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { Router } from '@angular/router';
-import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators,FormBuilder } from '@angular/forms';
 import { ProfesorService } from '../profesor.service';
 import { Colegio } from '../profesor';
 
@@ -16,35 +16,42 @@ import { Colegio } from '../profesor';
 export class MpAgregarProfesorComponent {
 
   form!: FormGroup;
-  colegios:any[] = [];
+  colegioIdFromUrl: number = 0;
 
   constructor(
     public profesorService: ProfesorService,
-    private router: Router
-  ){}
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private formBuilder: FormBuilder,
+  ) { }
 
-  ngOnInit(): void{
-    this.form = new FormGroup({
-      idProfesor: new FormControl('', [Validators.required]),
-      Nombre: new FormControl('', Validators.required),
-      Clave: new FormControl('', Validators.required),
-      idColegio: new FormControl('', Validators.required),
-      Tipo: new FormControl('', Validators.required),
+  ngOnInit(): void {
+    this.activatedRoute.paramMap.subscribe(params => {
+      if (params !== null && params.has('idColegio')) {
+        const idColegioParam = params.get('idColegio');
+        if (idColegioParam !== null) {
+          this.colegioIdFromUrl = +idColegioParam;
+        }
+      }
     });
 
-    // Cargar la lista de Colegios desde el servicio de colegios
-    this.profesorService.getAllC().subscribe((data: Colegio[]) => {
-      this.colegios = data;
-  });
+    this.form = this.formBuilder.group({
+      idProfesor: ['', [Validators.required]],
+      Nombre: ['', Validators.required],
+      Clave: ['', Validators.required],
+      idColegio: [this.colegioIdFromUrl, Validators.required],
+      Tipo: ['', Validators.required]
+    });
   }
 
-  
 
-  get f(){
+
+  get f() {
     return this.form.controls;
   }
 
-  submit(){
+  submit() {
+    this.form.patchValue({ idColegio: this.colegioIdFromUrl });
     console.log(this.form.value);
     this.profesorService.create(this.form.value).subscribe(
       (res: any) => {
