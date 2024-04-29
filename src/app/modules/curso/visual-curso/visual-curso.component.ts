@@ -3,17 +3,18 @@ import { Curso, Colegio, Ciudad, Fundacion } from '../curso';
 import { CommonModule } from '@angular/common';
 import { CursoService } from '../curso.service';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-visual-curso',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule,  ReactiveFormsModule],
   templateUrl: './visual-curso.component.html',
   styleUrl: './visual-curso.component.css',
 })
 export class VisualCursoComponent implements OnInit {
   cursos: Curso[] = [];
-  colegioId: number = 1; // Establecer un valor predeterminado
+  colegioId: number = 0; // Establecer un valor predeterminado
   colegios: Colegio[] = [];
 
   constructor(
@@ -53,9 +54,13 @@ export class VisualCursoComponent implements OnInit {
       });
     }
   }
+  
 
-  agregarCurso() {
-    this.router.navigateByUrl('curso/agregar-curso');
+  agregarCurso(colegio: Colegio) {
+    if(colegio && colegio.idColegio){
+      const colegioId = colegio.idColegio
+      this.router.navigate(['curso/agregar-curso', { idColegio: colegioId}]);
+    }
   }
 
   verProfesor() {
@@ -64,7 +69,7 @@ export class VisualCursoComponent implements OnInit {
 
   verCurso() {
     if (this.colegioId) {
-      this.router.navigateByUrl(`/curso/detalles-curso/${this.colegioId}`);
+      this.router.navigateByUrl('estudiantes/me-visual-estudiante');
     }
   }
 }

@@ -37,6 +37,9 @@ export class CursoService {
       .pipe(catchError(this.errorHandler));
   }
 
+
+  
+
   create(curso: Curso): Observable<Curso> {
     return this.httpClient
       .post<Curso>(
@@ -53,11 +56,12 @@ export class CursoService {
       .pipe(catchError(this.errorHandler));
   }
 
-  getCursosByColegioId(colegioId: number): Observable<Curso[]> {
+  getCursosByColegioId(idColegio: number): Observable<Curso[]> {
     return this.httpClient
-      .get<Curso[]>(`${this.apiURL}/colegio/${colegioId}/cursos`)
+      .get<Curso[]>(`${this.apiURL}/colegio/${idColegio}/cursos`)
       .pipe(catchError(this.errorHandler));
   }
+  
 
   errorHandler(error: any) {
     let errorMessage = '';

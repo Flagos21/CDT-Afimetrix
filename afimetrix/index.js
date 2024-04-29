@@ -301,7 +301,22 @@ app.delete('/profesor/:idProfesor', (req, res) => {
     });
   });
   
-// Modificar la consulta SQL en el endpoint /colegio/:idColegio
+// Endpoint para obtener los cursos de un colegio específico por idColegio
+app.get('/colegio/:idColegio/cursos', (req, res) => {
+  const colegioId = req.params.idColegio;
+  db.query(
+    'SELECT * FROM curso WHERE idColegio = ?',
+    colegioId,
+    (err, result) => {
+      if (err) {
+        res.status(500).send('Error fetching cursos');
+        return;
+      }
+      res.json(result);
+    }
+  );
+});
+
 app.get('/colegio/:idColegio', (req, res) => {
   const colegioId = req.params.idColegio;
   db.query(
@@ -324,8 +339,6 @@ app.get('/colegio/:idColegio', (req, res) => {
     }
   );
 });
-
-
   
   app.put('/colegio/:idColegio', (req, res) => {
     const colegioId = req.params.idColegio;

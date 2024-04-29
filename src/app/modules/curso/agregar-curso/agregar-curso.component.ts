@@ -4,8 +4,8 @@ import { CommonModule } from '@angular/common';
 
 import { CursoService } from '../curso.service';
 
-import { Router } from '@angular/router';
-import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Colegio, Profesor } from '../curso';
 
 @Component({
@@ -20,19 +20,36 @@ export class AgregarCursoComponent {
   form! : FormGroup;
   profesores: any[] = [];
   colegios: any[] = []
+  colegioIdFromUrl: number = 0;
+  idCurso: number = 0;
 
   constructor(
     public cursoService: CursoService,
-    private router: Router
+    private router: Router,
+    private formBuilder: FormBuilder,
+    private activatedRoute: ActivatedRoute
   ){}
+  
+  setCursoId(cursoId: number) {
+    this.idCurso = cursoId;
+  }
 
   ngOnInit(): void{
-    this.form = new FormGroup({
-      idCurso: new FormControl('', [Validators.required]),
-      idColegio: new FormControl('', [Validators.required]),
-      idProfesor: new FormControl('', [Validators.required]),
-      Nombre: new FormControl('', [Validators.required]),
+    this.activatedRoute.paramMap.subscribe(params => {
+      if (params !== null && params.has('idColegio')) {
+        const idColegioParam = params.get('idColegio');
+        if (idColegioParam !== null) {
+          this.colegioIdFromUrl = +idColegioParam;
+        }
+      }
     });
+    this.form = this.formBuilder.group({
+      idCurso: ['', [Validators.required]],
+      idColegio: [this.colegioIdFromUrl, Validators.required],
+      idProfesor: ['', Validators.required],
+      Nombre: ['', Validators.required],
+    });
+
     this.cursoService.getAllP().subscribe((data : Profesor[])=>
     this.profesores = data);
     this.cursoService.getAllC().subscribe((data : Colegio[])=>
