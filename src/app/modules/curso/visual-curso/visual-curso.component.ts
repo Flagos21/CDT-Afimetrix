@@ -14,7 +14,7 @@ import { RouterModule } from '@angular/router';
 })
 export class VisualCursoComponent implements OnInit {
   cursos: Curso[] = [];
-  colegioId: number = 1; // Establecer un valor predeterminado
+  colegioId: number = 0 ; // Establecer un valor predeterminado
   colegios: Colegio[] = [];
 
   constructor(

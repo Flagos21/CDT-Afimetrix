@@ -17,7 +17,8 @@ export class VisualColeComponent implements OnInit {
   colegios: Colegio[] = [];
   filteredColegios: Colegio[] = [];
   searchTerm$ = new Subject<string>();
-  idColegioFilter: number | undefined;
+  colegioId: number = 0 ;
+  
 
   constructor(public colegioService: ColegioService, private router: Router) {}
 
@@ -41,12 +42,16 @@ export class VisualColeComponent implements OnInit {
       colegio.Nombre.toLowerCase().includes(term.toLowerCase())
     );
   }
+
+  
   onSearch(event: KeyboardEvent): void {
     const input = event.target as HTMLInputElement;
     if (input) {
         this.searchTerm$.next(input.value);
     }
 }
+
+
 
 agregarColegio(): void {
   this.router.navigate(['/colegio/agregar-colegio']);

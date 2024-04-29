@@ -20,20 +20,22 @@
             <button type="button" class="button" (click)="agregarColegio()">Agregar Colegio</button>
         </div>
 
-        <table class="table table-striped table-bordered">
+        <table class="table-container">
             <thead>
                 <tr>
-                    <th>Nombre</th>
+                    <th class="b-white">Nombre</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class = "b-white">
                 <tr *ngFor="let colegio of filteredColegios">
-                    <td>{{colegio.Nombre}}</td>
+                    <td class="b-white
+                    ">{{colegio.Nombre}}</td>
                     <td>
-                        <button (click)="verDetalles(colegio)">Ver</button>
+                        <button type="button" class="button" (click)="verDetalles(colegio)">Ver</button>
                     </td>
-                  </tr>
+                </tr>
             </tbody>
+            
         </table>
 
     </div>

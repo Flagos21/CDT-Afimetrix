@@ -24,31 +24,30 @@
                 <div class="fundacion">
                     <p class="b-white w-auto">{{ colegio.idFundacion }}</p>
                 </div>
+                <div class="buttons">
+                    <button type="button" class="agregar-button w-100">Ver Profesores</button>
+                    <button type="button" class="agregar-button w-100" (click)=agregarCurso() >Agregar Curso</button>
+                </div>
+    
+            <table class="table table-striped table-bordered">
+    
+                <tbody>
+                    <tr *ngFor="let curso of cursos">
+                        <td>{{ curso.Nombre }}</td>
+                        <td class="table-options">
+                            <button type="button" class="agregar-button mb-0 " (click)= verCurso() >Ver Curso</button>
+                            <button type="button" class="agregar-button mb-0 ">ENCUESTA</button>      
+                        </td>
+                    </tr>
+                </tbody>
+                
+            </table>
+            </div>
             </div>
             
         </div>
         </div>
-        <div class="table-container">
-            <div class="buttons">
-                <button type="button" class="agregar-button w-100">Ver Profesores</button>
-                <button type="button" class="agregar-button w-100" (click)=agregarCurso() >Agregar Curso</button>
-            </div>
 
-        <table class="table table-striped table-bordered">
-
-            <tbody>
-                <tr *ngFor="let curso of cursos">
-                    <td>{{ curso.Nombre }}</td>
-                    <td class="table-options">
-                        <button type="button" class="agregar-button mb-0 " (click)= verCurso() >Ver Curso</button>
-                        <button type="button" class="agregar-button mb-0 ">ENCUESTA</button>      
-                    </td>
-                </tr>
-            </tbody>
-            
-        </table>
-        </div>
-    </div>
 </body>
 
 </html>
