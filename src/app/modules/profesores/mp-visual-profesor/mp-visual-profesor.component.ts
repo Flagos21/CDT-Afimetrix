@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Profesor, Colegio, Ciudad, Fundacion} from '../profesor';
+import { Profesor, Colegio, Ciudad, Fundacion } from '../profesor';
 import { CommonModule } from '@angular/common';
 import { ProfesorService } from '../profesor.service';
 import { RouterModule, Router } from '@angular/router';
@@ -16,17 +16,17 @@ export class MpVisualProfesorComponent implements OnInit {
   colegios: Colegio[] = [];
   ciudades: Ciudad[] = [];
   fundaciones: Fundacion[] = [];
-  idColegioSeleccionado: number = 4;
+  idColegioSeleccionado: number = 8;
 
   constructor(public profesorService: ProfesorService, private router: Router) { }
 
   ngOnInit(): void {
     this.getAllProfesoresByColegioId();
     this.getAllColegioByColegioId();
-    this.mostrarNombreCiudad();
+    //this.mostrarNombreCiudad();
 
   }
-  getAllProfesoresByColegioId(): void{
+  getAllProfesoresByColegioId(): void {
     console.log(this.router.url);
     console.log(window.location.href);
     this.profesorService.getAll().subscribe((data: Profesor[]) => {
@@ -34,42 +34,46 @@ export class MpVisualProfesorComponent implements OnInit {
       console.log(this.profesores);
     });
   }
-  getAllColegioByColegioId():void {
+  getAllColegioByColegioId(): void {
     console.log(this.router.url);
     console.log(window.location.href);
-    this.profesorService.getAllC().subscribe((data: Colegio[]) => {
+    this.profesorService.getAllC(this.idColegioSeleccionado).subscribe((data: Colegio[]) => {
       this.colegios = data.filter(colegio => colegio.idColegio === this.idColegioSeleccionado);
       console.log(this.colegios);
     });
   }
-  
-  mostrarNombreCiudad(): void {
+
+/*  mostrarNombreCiudad(): void {
     if (this.colegios && this.colegios.length > 0) {
-        const idColegioSeleccionado = this.idColegioSeleccionado;
-        const colegioSeleccionado = this.colegios.find(colegio => colegio.idColegio === idColegioSeleccionado);
+      const idColegioSeleccionado = this.idColegioSeleccionado;
+      const colegioSeleccionado = this.colegios.find(colegio => colegio.idColegio === idColegioSeleccionado);
 
-        if (colegioSeleccionado) {
-            const idCiudadColegio = colegioSeleccionado.idCiudad;
+      if (colegioSeleccionado) {
+        const idCiudadColegio = colegioSeleccionado.idCiudad;
 
-            this.profesorService.getAllC().subscribe((data: Ciudad[]) => {
-                this.ciudades = data.filter(ciudad => ciudad.idCiudad === idCiudadColegio);
-                console.log(this.ciudades);
-            });
-        } else {
-            console.error('El colegio seleccionado no tiene un ID de ciudad válido.');
-        }
+        this.profesorService.getAllC(this.idColegioSeleccionado).subscribe((data: Ciudad[]) => {
+          this.ciudades = data.filter(ciudad => ciudad.idCiudad === idCiudadColegio);
+          console.log(this.ciudades);
+        });
+      } else {
+        console.error('El colegio seleccionado no tiene un ID de ciudad válido.');
+      }
     } else {
-        console.error('No se encontraron colegios.');
+      console.error('No se encontraron colegios.');
     }
-}
+  }*/
 
 
 
-  agregarProfesor() {
-    this.router.navigateByUrl('profesor/mp-agregar-profesor');
+  agregarProfesor(colegio: Colegio) {
+    if (colegio && colegio.idColegio) {
+      const idColegioSeleccionado = colegio.idColegio;
+      this.router.navigate(['profesor/mp-agregar-profesor', { idColegio: idColegioSeleccionado }]);
+    }
   }
+  
   actualizarProfesor(idProfesor: string): void {
-    this.router.navigate(['/profesores', idProfesor, 'mp-actualizar-profesor']);
+    this.router.navigate(['/profesor', idProfesor, 'mp-actualizar-profesor']);
   }
 
 }

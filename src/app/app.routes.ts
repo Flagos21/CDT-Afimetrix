@@ -11,31 +11,33 @@ import { DetalleEncuestaComponent } from './modules/encuesta/detalle-encuesta/de
 import { Component } from '@angular/core';
 
 export const routes: Routes = [
-    {path : '' , pathMatch : 'full' , redirectTo : ''},
+    { path: '', pathMatch: 'full', redirectTo: '' },
 
-        //Rutas Estudiante
+    //Rutas Estudiante
 
-    {path : 'estudiante/me-visual-estudiante', component : MeVisualEstudianteComponent},
-    {path : 'estudiante/me-agregar-estudiante', component : MeAgregarEstudianteComponent},
-    {path : 'estudiante/:estudianteId/me-actualizar-estudiante', component : MeActualizarEstudianteComponent},
+    { path: 'estudiante/me-visual-estudiante', component: MeVisualEstudianteComponent },
+    { path: 'estudiante/me-agregar-estudiante', component: MeAgregarEstudianteComponent },
+    { path: 'estudiante/:estudianteId/me-actualizar-estudiante', component: MeActualizarEstudianteComponent },
 
-        //Rutas Profesor
+    //Rutas Profesor
 
-    {path : 'profesor/mp-agregar-profesor', component : MpAgregarProfesorComponent},
-    {path: 'profesor/mp-visual-profesor', component : MpVisualProfesorComponent},
-    {path: 'profesor/:profesorId/mp-actualizar-profesor', component: MpActualizarProfesorComponent} ,
+    { path: 'profesor/mp-agregar-profesor', component: MpAgregarProfesorComponent },
+    { path: 'profesor/mp-agregar-profesor/:idColegio', component: MpAgregarProfesorComponent },
+    { path: 'profesor/mp-visual-profesor', component: MpVisualProfesorComponent },
+    { path: 'profesor/mp-visual-profesor/:idColegio', component: MpVisualProfesorComponent },
+    { path: 'profesor/:profesorId/mp-actualizar-profesor', component: MpActualizarProfesorComponent },
 
-        //Rutas Curso
-    
-    {path : 'curso/agregar-curso', component : AgregarCursoComponent},
+    //Rutas Curso
 
-        //Rutas Colegio
-    
-    {path : 'curso/agregar-colegio', component : AgregarColegioComponent},
+    { path: 'curso/agregar-curso', component: AgregarCursoComponent },
 
-        //Rutas Encuesta    
-    
-    {path : 'encuesta/detalle-ecuesta', component : DetalleEncuestaComponent}
+    //Rutas Colegio
+
+    { path: 'curso/agregar-colegio', component: AgregarColegioComponent },
+
+    //Rutas Encuesta    
+
+    { path: 'encuesta/detalle-ecuesta', component: DetalleEncuestaComponent }
 
 
 

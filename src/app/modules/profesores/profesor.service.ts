@@ -71,25 +71,25 @@ export class ProfesorService {
       .get<Ciudad[]>(this.apiURL + '/ciudad/')
       .pipe(catchError(this.errorHandler));
   }
-  getAllC(): Observable<Colegio[]> {
+  getAllC(idColegio: number): Observable<Colegio[]> {
     return this.httpClient
-      .get<Colegio[]>(this.apiURL + '/colegio/')
+      .get<any>(this.apiURL + '/colegio/' + idColegio)
       .pipe(
-        map((data: any[]) => {
-          return data.map((item: any) => {
-            return {
-              idColegio: item.idColegio,
-              Nombre: item.Nombre,
-              // Asegúrate de que la API devuelva estos campos
-              NombreCiudad: item.NombreCiudad,
-              NombreFundacion: item.NombreFundacion,
-            } as Colegio; // Convertimos cada objeto a tipo Colegio
-          });
+        map((data: any) => {
+          const colegio: Colegio = {
+            idColegio: idColegio,
+            Nombre: data.NombreColegio,
+            NombreCiudad: data.NombreCiudad,
+            NombreFundacion: data.NombreFundacion,
+            idFundacion: data.idFundacion, // Asegúrate de incluir estos campos si son necesarios
+            idCiudad: data.idCiudad // Asegúrate de incluir estos campos si son necesarios
+          };
+          return [colegio]; // Devuelve un array con un solo objeto Colegio
         }),
         catchError(this.errorHandler)
       );
   }
-  
+
   getAllF(): Observable<Fundacion[]> {
     return this.httpClient
       .get<Fundacion[]>(this.apiURL + '/fundacion/')

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ProfesorService } from '../profesor.service';
 import { Profesor } from '../profesor';
@@ -8,7 +8,7 @@ import { Profesor } from '../profesor';
 @Component({
   selector: 'app-mp-actualizar-profesor',
   standalone: true,
-  imports: [CommonModule, RouterModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './mp-actualizar-profesor.component.html',
   styleUrl: './mp-actualizar-profesor.component.css'
 })

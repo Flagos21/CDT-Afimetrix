@@ -16,10 +16,17 @@
                 <h2>ACTUALIZAR PROFESOR</h2>
                 <form [formGroup]="form" (ngSubmit)="submit()">
                     <input formControlName="Nombre" type="text" [(ngModel)]="profesor.Nombre" class="form-control">
+                    <input formControlName="idProfesor" type="text" [(ngModel)]="profesor.idProfesor"
+                        class="form-control" required="" readonly>
                     <input formControlName="Clave" type="text" [(ngModel)]="profesor.Clave" class="form-control"
                         required="">
-                    <input formControlName="idProfesor" type="text" [(ngModel)]="profesor.idProfesor"
-                        class="form-control" required="">
+                    <input formControlName="idColegio" type="text" [(ngModel)]="profesor.idColegio" placeholder="idColegio" class="form-control"
+                        required="" readonly hidden>
+                    <select formControlName="Tipo" class="form-control" placeholder="Tipo" [(ngModel)]="profesor.Tipo" required>
+                        <option value="">Tipo</option>
+                        <option value="Administrador">Administrador</option>
+                        <option value="Usuario">Usuario</option>
+                    </select>
                     <button type="submit" class="agregar-button" [disabled]="!form.valid">Actualizar</button>
                 </form>
             </div>
