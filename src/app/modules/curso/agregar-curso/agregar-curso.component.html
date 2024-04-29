@@ -19,6 +19,7 @@
                     <input formControlName="Nombre" type="text" class="form-control" placeholder="Nombre Curso" required>
                     <input formControlName="idColegio" type="text" class="form-control" id="idColegio" placeholder="idColegio" [value]="colegioIdFromUrl" readonly>
                     <select formControlName="idProfesor" class="form-control" id="idProfesor">
+                        <option value="">Profesor</option>
                         <option *ngFor="let profesor of profesores" [value]="profesor.idProfesor">
                             {{ profesor.Nombre }}
                         </option>

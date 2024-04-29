@@ -16,26 +16,26 @@
             <div class="form-container">
                 <h2>AGREGAR COLEGIOS</h2>
                 <form [formGroup]="form" (ngSubmit)="submit()">
-                    <input formControlName="idColegio" type="text" class="form-control" placeholder="idColegio" required>
+                    <input formControlName="idColegio" type="text" class="form-control" placeholder="idColegio"
+                        required>
                     <input formControlName="Nombre" type="text" class="form-control" placeholder="Nombre">
 
-                    <!-- Reemplaza el campo de texto por un select para idCiudad -->
+
                     <select formControlName="idCiudad" class="form-control" required>
-                        <!-- Usando *ngFor para poblar el dropdown con las opciones de la lista de ciudades -->
+
+                        <option value="">Ciudad</option>
                         <option *ngFor="let ciudad of ciudades" [value]="ciudad.idCiudad">
                             {{ ciudad.Nombre }}
                         </option>
                     </select>
 
-
-
                     <select formControlName="idFundacion" class="form-control" required>
-                        <!-- Usando *ngFor para poblar el dropdown con las opciones de la lista de fundaciones -->
+                        <option value="">Fundacion</option>
                         <option *ngFor="let fundacion of fundacion" [value]="fundacion.idFundacion">
                             {{ fundacion.Nombre }}
                         </option>
                     </select>
-                    
+
                     <button type="submit" class="agregar-button" [disabled]="!form.valid">Agregar</button>
                 </form>
             </div>

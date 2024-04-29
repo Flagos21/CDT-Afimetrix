@@ -13,33 +13,41 @@ import { VisualCursoComponent } from './modules/curso/visual-curso/visual-curso.
 import { VisualColeComponent } from './modules/colegio/visual-cole/visual-cole.component';
 
 export const routes: Routes = [
-    { path: '', pathMatch: 'full', redirectTo: '' },
 
-    //Rutas Estudiante
+  { path: '', pathMatch: 'full', redirectTo: 'colegio/visual-cole' },
 
-    { path: 'estudiante/me-visual-estudiante', component: MeVisualEstudianteComponent },
-    { path: 'estudiante/me-agregar-estudiante', component: MeAgregarEstudianteComponent },
-    { path: 'estudiante/:estudianteId/me-actualizar-estudiante', component: MeActualizarEstudianteComponent },
+  //Rutas Estudiante
 
-    //Rutas Profesor
+  {
+    path: 'estudiantes/me-visual-estudiante',
+    component: MeVisualEstudianteComponent,
+  },
+  {
+    path: 'estudiantes/me-agregar-estudiante',
+    component: MeAgregarEstudianteComponent,
+  },
+  {
+    path: 'estudiantes/:estudianteId/me-actualizar-estudiante',
+    component: MeActualizarEstudianteComponent,
+  },
 
-    { path: 'profesor/mp-agregar-profesor', component: MpAgregarProfesorComponent },
-    { path: 'profesor/mp-agregar-profesor/:idColegio', component: MpAgregarProfesorComponent },
-    { path: 'profesor/mp-visual-profesor', component: MpVisualProfesorComponent },
-    { path: 'profesor/mp-visual-profesor/:idColegio', component: MpVisualProfesorComponent },
-    { path: 'profesor/:profesorId/mp-actualizar-profesor', component: MpActualizarProfesorComponent },
+  //Rutas Profesor
 
-    //Rutas Curso
+  {
+    path: 'profesor/mp-agregar-profesor',
+    component: MpAgregarProfesorComponent,
+  },
+  { path: 'profesor/mp-visual-profesor', component: MpVisualProfesorComponent },
+  {
+    path: 'profesor/:profesorId/mp-actualizar-profesor',
+    component: MpActualizarProfesorComponent,
+  },
 
-    { path: 'curso/agregar-curso', component: AgregarCursoComponent },
+  //Rutas Curso
 
-    //Rutas Colegio
-
-    { path: 'curso/agregar-colegio', component: AgregarColegioComponent },
-
-    //Rutas Encuesta    
-
-    { path: 'encuesta/detalle-ecuesta', component: DetalleEncuestaComponent },
+  { path: 'curso/agregar-curso', component: AgregarCursoComponent },
+  { path: 'curso/agregar-curso/:idColegio', component: AgregarCursoComponent },
+  { path: 'curso/visual-curso', component: VisualCursoComponent },
 
   { path: 'curso/visual-curso/:idColegio', component: VisualCursoComponent },
 
@@ -47,4 +55,5 @@ export const routes: Routes = [
 
   { path: 'colegio/agregar-colegio', component: AgregarColegioComponent },
   { path: 'colegio/visual-cole', component: VisualColeComponent },
+  
 ];
