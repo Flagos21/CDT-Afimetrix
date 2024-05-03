@@ -14,42 +14,43 @@ import { VisualColeComponent } from './modules/colegio/visual-cole/visual-cole.c
 
 export const routes: Routes = [
 
-  { path: '', pathMatch: 'full', redirectTo: 'colegio/visual-cole' },
+    { path: '', pathMatch: 'full', redirectTo: 'colegio/visual-cole' },
 
-  //Rutas Estudiante
+    //Rutas Estudiante
 
-  {
-    path: 'estudiantes/me-visual-estudiante',
-    component: MeVisualEstudianteComponent,
-  },
-  {
-    path: 'estudiantes/me-agregar-estudiante',
-    component: MeAgregarEstudianteComponent,
-  },
-  {
-    path: 'estudiantes/:estudianteId/me-actualizar-estudiante',
-    component: MeActualizarEstudianteComponent,
-  },
+    {
+        path: 'estudiantes/me-visual-estudiante',
+        component: MeVisualEstudianteComponent,
+    },
+    {
+        path: 'estudiantes/me-agregar-estudiante',
+        component: MeAgregarEstudianteComponent,
+    },
+    {
+        path: 'estudiantes/:estudianteId/me-actualizar-estudiante',
+        component: MeActualizarEstudianteComponent,
+    },
 
-  //Rutas Profesor
+    //Rutas Profesor
 
-  { path: 'profesor/mp-agregar-profesor', component: MpAgregarProfesorComponent },
-  { path: 'profesor/mp-agregar-profesor/:idColegio', component: MpAgregarProfesorComponent },
-  { path: 'profesor/mp-visual-profesor', component: MpVisualProfesorComponent },
-  { path: 'profesor/mp-visual-profesor/:idColegio', component: MpVisualProfesorComponent },
-  { path: 'profesor/:profesorId/mp-actualizar-profesor', component: MpActualizarProfesorComponent },
+    { path: 'profesor/mp-agregar-profesor', component: MpAgregarProfesorComponent },
+    { path: 'profesor/mp-agregar-profesor/:idColegio', component: MpAgregarProfesorComponent },
+    { path: 'profesor/mp-visual-profesor', component: MpVisualProfesorComponent },
+    { path: 'profesor/mp-visual-profesor/:idColegio', component: MpVisualProfesorComponent },
+    { path: 'profesor/:profesorId/mp-actualizar-profesor', component: MpActualizarProfesorComponent },
 
-  //Rutas Curso
 
-  { path: 'curso/agregar-curso', component: AgregarCursoComponent },
-  { path: 'curso/agregar-curso/:idColegio', component: AgregarCursoComponent },
-  { path: 'curso/visual-curso', component: VisualCursoComponent },
+    //Rutas Curso
 
-  { path: 'curso/visual-curso/:idColegio', component: VisualCursoComponent },
+    { path: 'curso/agregar-curso', component: AgregarCursoComponent },
+    { path: 'curso/agregar-curso/:idColegio', component: AgregarCursoComponent },
+    { path: 'curso/visual-curso', component: VisualCursoComponent },
 
-  //Rutas Colegio
+    { path: 'curso/visual-curso/:idColegio', component: VisualCursoComponent },
 
-  { path: 'colegio/agregar-colegio', component: AgregarColegioComponent },
-  { path: 'colegio/visual-cole', component: VisualColeComponent },
-  
+    //Rutas Colegio
+
+    { path: 'colegio/agregar-colegio', component: AgregarColegioComponent },
+    { path: 'colegio/visual-cole', component: VisualColeComponent },
+
 ];

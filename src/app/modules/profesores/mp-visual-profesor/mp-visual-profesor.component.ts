@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Profesor, Colegio, Ciudad, Fundacion } from '../profesor';
 import { CommonModule } from '@angular/common';
 import { ProfesorService } from '../profesor.service';
-import { RouterModule, Router } from '@angular/router';
+import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-mp-visual-profesor',
@@ -16,11 +16,19 @@ export class MpVisualProfesorComponent implements OnInit {
   colegios: Colegio[] = [];
   ciudades: Ciudad[] = [];
   fundaciones: Fundacion[] = [];
-  idColegioSeleccionado: number = 8;
+  idColegioSeleccionado: number = 0;
 
-  constructor(public profesorService: ProfesorService, private router: Router) { }
+  constructor(public profesorService: ProfesorService, private router: Router, private activatedRoute: ActivatedRoute  ) { }
 
   ngOnInit(): void {
+    this.activatedRoute.paramMap.subscribe(params => {
+      if (params !== null && params.has('idColegio')) {
+        const idColegioParam = params.get('idColegio');
+        if (idColegioParam !== null) {
+          this.idColegioSeleccionado = +idColegioParam;
+        }
+      }
+    });
     this.getAllProfesoresByColegioId();
     this.getAllColegioByColegioId();
     //this.mostrarNombreCiudad();

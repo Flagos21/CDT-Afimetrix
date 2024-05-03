@@ -56,7 +56,7 @@ export class MpAgregarProfesorComponent {
     this.profesorService.create(this.form.value).subscribe(
       (res: any) => {
         console.log('Profesor creado con éxito!');
-        this.router.navigateByUrl('/profesor/mp-visual-profesor'); // Poner Ruta
+        this.router.navigateByUrl('/profesor/mp-visual-profesor/' + this.colegioIdFromUrl); // Poner Ruta
       },
       (error: any) => {
         console.error('Error al crear el profesor:', error);

@@ -29,8 +29,10 @@
             </div>
             <div class="table-container">
                 <div class="buttons">
-                    <button type="button" class="agregar-button w-100">Ver Profesores</button>
+
                     <div *ngFor="let colegio of colegios">
+                        <button type="button" class="agregar-button" (click)="verProfesor(colegio)" >Ver Profesores</button>
+
                         <button type="button" class="agregar-button" (click)="agregarCurso(colegio)">Agregar
                             Curso</button>
                     </div>

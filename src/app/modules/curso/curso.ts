@@ -12,12 +12,10 @@ export interface Colegio {
   NombreCiudad: string;
   NombreFundacion: string;
 }
-
 export interface Ciudad {
   idCiudad: number;
   Nombre: string;
 }
-
 export interface Fundacion {
   idFundacion: number;
   idAsociacion: number;
