@@ -33,15 +33,11 @@ export const routes: Routes = [
 
   //Rutas Profesor
 
-  {
-    path: 'profesor/mp-agregar-profesor',
-    component: MpAgregarProfesorComponent,
-  },
+  { path: 'profesor/mp-agregar-profesor', component: MpAgregarProfesorComponent },
+  { path: 'profesor/mp-agregar-profesor/:idColegio', component: MpAgregarProfesorComponent },
   { path: 'profesor/mp-visual-profesor', component: MpVisualProfesorComponent },
-  {
-    path: 'profesor/:profesorId/mp-actualizar-profesor',
-    component: MpActualizarProfesorComponent,
-  },
+  { path: 'profesor/mp-visual-profesor/:idColegio', component: MpVisualProfesorComponent },
+  { path: 'profesor/:profesorId/mp-actualizar-profesor', component: MpActualizarProfesorComponent },
 
   //Rutas Curso
 

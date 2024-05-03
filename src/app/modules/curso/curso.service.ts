@@ -31,10 +31,23 @@ export class CursoService {
       .get<Profesor[]>(this.apiURL + '/profesor/')
       .pipe(catchError(this.errorHandler));
   }
-  getAllC(): Observable<Colegio[]>{
+  getAllC(idColegio: number): Observable<Colegio[]> {
     return this.httpClient
-      .get<Colegio[]>(this.apiURL + '/colegio/')
-      .pipe(catchError(this.errorHandler));
+      .get<any>(this.apiURL + '/colegio/' + idColegio)
+      .pipe(
+        map((data: any) => {
+          const colegio: Colegio = {
+            idColegio: idColegio,
+            Nombre: data.NombreColegio,
+            NombreCiudad: data.NombreCiudad,
+            NombreFundacion: data.NombreFundacion,
+            idFundacion: data.idFundacion, // Asegúrate de incluir estos campos si son necesarios
+            idCiudad: data.idCiudad // Asegúrate de incluir estos campos si son necesarios
+          };
+          return [colegio]; // Devuelve un array con un solo objeto Colegio
+        }),
+        catchError(this.errorHandler)
+      );
   }
 
 

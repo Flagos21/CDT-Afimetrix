@@ -30,9 +30,6 @@ export class AgregarCursoComponent {
     private activatedRoute: ActivatedRoute
   ){}
   
-  setCursoId(cursoId: number) {
-    this.idCurso = cursoId;
-  }
 
   ngOnInit(): void{
     this.activatedRoute.paramMap.subscribe(params => {
@@ -52,8 +49,6 @@ export class AgregarCursoComponent {
 
     this.cursoService.getAllP().subscribe((data : Profesor[])=>
     this.profesores = data);
-    this.cursoService.getAllC().subscribe((data : Colegio[])=>
-    this.colegios = data)
   }
 
   get f() {

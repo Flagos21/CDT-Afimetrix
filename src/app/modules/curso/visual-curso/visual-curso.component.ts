@@ -14,45 +14,44 @@ import { ReactiveFormsModule } from '@angular/forms';
 })
 export class VisualCursoComponent implements OnInit {
   cursos: Curso[] = [];
-  colegioId: number = 0; // Establecer un valor predeterminado
+  colegioId: number = 0;
   colegios: Colegio[] = [];
 
   constructor(
     public cursoService: CursoService,
     private router: Router,
-    private route: ActivatedRoute
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
-    this.getAllColegios(); // Llamar a getAllColegios() aquí para asegurar que se carguen los colegios al iniciar el componente
-    this.route.params.subscribe(params => {
-      this.colegioId = +params['idColegio']; // Convertir el idColegio a número
-      this.getAllCursos();
+    this.activatedRoute.paramMap.subscribe(params => {
+      if (params !== null && params.has('idColegio')) {
+        const idColegioParam = params.get('idColegio');
+        if (idColegioParam !== null) {
+          this.colegioId = +idColegioParam;
+        }
+      }
     });
+    this.getAllCursos();
+    this.getAllColegios();
   }
 
   getAllColegios(): void {
-    if (this.colegioId !== undefined) {
-      this.cursoService.getAllC().subscribe((data: Colegio[]) => {
-        const colegioEncontrado = data.find(colegio => colegio.idColegio === this.colegioId);
-        if (colegioEncontrado) {
-          this.colegios = [colegioEncontrado];
-        } else {
-          console.log(`No se encontró ningún colegio con el ID ${this.colegioId}`);
-        }
-      });
-    } else {
-      console.log(`colegioId es undefined`);
-    }
+    console.log(this.router.url);
+    console.log(window.location.href);
+    this.cursoService.getAllC(this.colegioId).subscribe((data: Colegio[]) => {
+      this.colegios = data.filter(colegio => colegio.idColegio === this.colegioId);
+      console.log(this.colegios);
+    });
   }
 
   getAllCursos(): void {
-    if (this.colegioId) {
-      this.cursoService.getCursosByColegioId(this.colegioId).subscribe((data: Curso[]) => {
-        this.cursos = data;
-        console.log(this.cursos);
-      });
-    }
+    console.log(this.router.url);
+    console.log(window.location.href);
+    this.cursoService.getAll().subscribe((data: Curso[]) => {
+      this.cursos = data.filter(profesor => profesor.idColegio === this.colegioId);
+      console.log(this.cursos);
+    })
   }
   
 
