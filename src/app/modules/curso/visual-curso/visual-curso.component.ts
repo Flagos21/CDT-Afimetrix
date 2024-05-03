@@ -62,9 +62,11 @@ export class VisualCursoComponent implements OnInit {
       this.router.navigate(['curso/agregar-curso', { idColegio: colegioId}]);
     }
   }
-
-  verProfesor() {
-    this.router.navigateByUrl('estudiantes/me-agregar-estudiante');
+  verProfesor(colegio: Colegio) {
+    if (colegio && colegio.idColegio) {
+      const colegioId = colegio.idColegio;
+      this.router.navigate(['profesor/mp-visual-profesor', { idColegio: colegioId }]);
+    }
   }
 
   verCurso() {

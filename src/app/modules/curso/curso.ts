@@ -12,29 +12,19 @@ export interface Colegio {
   NombreCiudad: string; // Nuevo campo para el nombre de la ciudad
   NombreFundacion: string; // Nuevo campo para el nombre de la fundación
 }
-
-
 export interface Profesor {
-  idProfesor: number;
+  idProfesor: string;
   Nombre: string;
   Clave: string;
-  Tipo: string;
+  idColegio: number;
+  Tipo:  string
 }
-
 export interface Ciudad {
   idCiudad: number;
   Nombre: string;
 }
-
 export interface Fundacion {
   idFundacion: number;
   idAsociacion: number;
   Nombre: string;
-}
-
-export interface Profesor {
-    idProfesor: number;
-    Nombre: string;
-    Clave: string;
-    Tipo: string;
 }
