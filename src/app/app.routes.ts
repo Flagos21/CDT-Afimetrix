@@ -8,6 +8,7 @@ import { AgregarColegioComponent } from './modules/colegio/agregar-colegio/agreg
 import { VisualColeComponent } from './modules/colegio/visual-cole/visual-cole.component';
 import { Component } from '@angular/core';
 import { VisualCursoComponent } from './modules/curso/visual-curso/visual-curso.component';
+import { IngresarComponent } from './modules/login/ingresar/ingresar.component';
 
 
 export const routes: Routes = [
@@ -33,6 +34,9 @@ export const routes: Routes = [
     
     {path : 'colegio/agregar-colegio', component : AgregarColegioComponent},
 
-    {path : 'colegio/visual-cole', component : VisualColeComponent}
+    {path : 'colegio/visual-cole', component : VisualColeComponent},
 
+        //Ruta login
+
+     {path : 'login/ingresar', component : IngresarComponent}   
 ];
