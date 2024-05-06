@@ -11,7 +11,7 @@ const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
   password: 'completoitaliano1',
-  database: 'afimetrixp'
+  database: 'afimetrix2'
 });
   
 db.connect(err => {
