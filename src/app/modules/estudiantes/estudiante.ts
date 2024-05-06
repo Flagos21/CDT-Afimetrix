@@ -11,3 +11,10 @@ export interface Curso {
     idProfesor: string;
     Nombre: string;
 }
+
+export interface Matricula {
+    idMatricula: number;
+    Anio: Date;
+    idEstudiante: number;
+    idCurso: number;
+}

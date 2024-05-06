@@ -1,4 +1,3 @@
-
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -17,9 +16,9 @@ import { Colegio, Profesor } from '../curso';
 })
 export class AgregarCursoComponent {
 
-  form! : FormGroup;
-  profesores: any[] = [];
-  colegios: any[] = []
+  form!: FormGroup;
+  profesores: Profesor[] = [];
+  colegios: Colegio[] = [];
   colegioIdFromUrl: number = 0;
   idCurso: number = 0;
 
@@ -40,15 +39,23 @@ export class AgregarCursoComponent {
         }
       }
     });
+    
+    // Obtener lista de profesores
+    this.cursoService.getAllP().subscribe((data: Profesor[]) => {
+      this.profesores = data;
+    });
+
+    // Obtener lista de colegios
+    this.cursoService.getAllC(this.colegioIdFromUrl).subscribe((data: Colegio[]) => {
+      this.colegios = data;
+    });
+
     this.form = this.formBuilder.group({
       idCurso: ['', [Validators.required]],
       idColegio: [this.colegioIdFromUrl, Validators.required],
       idProfesor: ['', Validators.required],
       Nombre: ['', Validators.required],
     });
-
-    this.cursoService.getAllP().subscribe((data : Profesor[])=>
-    this.profesores = data);
   }
 
   get f() {
@@ -57,11 +64,9 @@ export class AgregarCursoComponent {
 
   submit(){
     console.log(this.form.value);
-    this.cursoService.create(this.form.value).subscribe((res:any) => {
-      console.log('Curso creado con exito!');
-      this.router.navigateByUrl('curso/visual-curso');
-    })
+    this.cursoService.create(this.form.value).subscribe((res: any) => {
+      console.log('Curso creado con éxito!');
+      this.router.navigateByUrl('curso/visual-curso/' + this.colegioIdFromUrl); // Ajustar la ruta según tu estructura
+    });
   }
-
-
 }
