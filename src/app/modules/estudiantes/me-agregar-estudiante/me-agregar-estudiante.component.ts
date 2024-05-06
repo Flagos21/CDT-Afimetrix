@@ -27,7 +27,11 @@ export class MeAgregarEstudianteComponent {
       Nombre: new FormControl('', Validators.required),
       FechaNacimiento: new FormControl('', Validators.required),
       Sexo: new FormControl('', Validators.required),
-      Clave: new FormControl('', Validators.required)
+      Clave: new FormControl('', Validators.required),
+      Anio: new FormControl('', Validators.required),
+      idCurso: new FormControl('', Validators.required),
+      idMatricula: new FormControl('', Validators.required)
+      
     });
   }
 

@@ -15,6 +15,6 @@ export interface Curso {
 export interface Matricula {
     idMatricula: number;
     Anio: Date;
-    idEstudiante: number;
+    idEstudiante: string;
     idCurso: number;
 }

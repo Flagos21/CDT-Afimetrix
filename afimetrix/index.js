@@ -35,7 +35,7 @@ app.get('/estudiante/', (req, res) => {
 });
 
 app.post('/estudiante/me-agregar-estudiante', (req, res) => {
-  const { idEstudiante, Nombre, FechaNacimiento, Sexo, Clave } = req.body;
+  const { idEstudiante, Nombre, FechaNacimiento, Sexo, Clave, Anio, idCurso, idMatricula } = req.body;
   db.query('INSERT INTO estudiante (idEstudiante, Nombre, FechaNacimiento, Sexo, Clave) VALUES (?, ?, ?, ?, ?)', [idEstudiante, Nombre, FechaNacimiento, Sexo, Clave], (err, result) => {
     if (err) {
       res.status(500).send('Error creating estudiante');
@@ -43,6 +43,20 @@ app.post('/estudiante/me-agregar-estudiante', (req, res) => {
     }
     const estudianteId = result.insertId;
     db.query('SELECT * FROM estudiante WHERE idEstudiante = ?', estudianteId, (err, result) => {
+      if (err) {
+        res.status(500).send('Error fetching created estudiante');
+        return;
+      }
+      res.status(201).json(result[0]);
+    });
+  });
+  db.query('INSERT INTO matricula (idEstudiante, Anio, idCurso, idMatricula) VALUES (?, ?, ?, ?)', [idEstudiante, Anio, idCurso, idMatricula], (err, result) => {
+    if (err) {
+      res.status(500).send('Error creating estudiante');
+      return;
+    }
+    const matriculaId = result.insertId;
+    db.query('SELECT * FROM matricula WHERE idMatricula = ?', matriculaId, (err, result) => {
       if (err) {
         res.status(500).send('Error fetching created estudiante');
         return;
