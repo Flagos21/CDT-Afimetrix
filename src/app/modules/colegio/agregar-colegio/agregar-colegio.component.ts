@@ -28,8 +28,8 @@ export class AgregarColegioComponent implements OnInit {
     this.form = new FormGroup({
       idColegio: new FormControl('', [Validators.required]),
       Nombre: new FormControl('', [Validators.required]),
-      idFundacion: new FormControl('', [Validators.required]),
-      idCiudad: new FormControl('', [Validators.required])
+      idCiudad: new FormControl('', [Validators.required]),
+      idFundacion: new FormControl('', [Validators.required])
     });
 
     // Cargar la lista de ciudades desde el servicio de ciudades

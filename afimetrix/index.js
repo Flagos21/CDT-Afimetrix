@@ -23,16 +23,23 @@ db.connect(err => {
   
 app.use(bodyParser.json());
 app.use(cors());
+
   
-app.get('/estudiante/', (req, res) => {
-  db.query('SELECT * FROM estudiante', (err, results) => {
+app.get('/estudiante', (req, res) => {
+  const query = `
+    SELECT e.*, m.idMatricula, m.Anio AS AnioMatricula, m.idCurso
+    FROM estudiante e
+    LEFT JOIN matricula m ON e.idEstudiante = m.idEstudiante
+  `;
+  db.query(query, (err, results) => {
     if (err) {
-      res.status(500).send('Error fetching estudiantes');
+      res.status(500).send('Error fetching students data');
       return;
     }
     res.json(results);
   });
 });
+
 
 app.post('/estudiante/me-agregar-estudiante', (req, res) => {
   const { idEstudiante, Nombre, FechaNacimiento, Sexo, Clave, Anio, idCurso, idMatricula } = req.body;
@@ -68,40 +75,80 @@ app.post('/estudiante/me-agregar-estudiante', (req, res) => {
   
 app.get('/estudiante/:idEstudiante', (req, res) => {
   const estudianteId = req.params.idEstudiante;
-  db.query('SELECT * FROM estudiante WHERE idEstudiante = ?', estudianteId, (err, result) => {
+  const query = `
+    SELECT e.*, m.idMatricula, m.Anio AS AnioMatricula, m.idCurso
+    FROM estudiante e
+    LEFT JOIN matricula m ON e.idEstudiante = m.idEstudiante
+    WHERE e.idEstudiante = ?
+  `;
+  db.query(query, estudianteId, (err, results) => {
     if (err) {
-      res.status(500).send('Error fetching estudiante');
+      res.status(500).send('Error fetching student data');
       return;
     }
-    if (result.length === 0) {
-      res.status(404).send('Estudiante not found');
+    if (results.length === 0) {
+      res.status(404).send('Student not found');
       return;
     }
-    res.json(result[0]);
+    res.json(results);
   });
 });
+
 
   
 
 
 
-app.put('/estudiante/:estudianteId', (req, res) => {
-  const estudianteId = req.params.estudianteId;
-  const { Nombre, FechaNacimiento, Sexo, Clave } = req.body;
-  db.query('UPDATE estudiante SET Nombre = ?, FechaNacimiento = ?, Sexo = ?, Clave = ? WHERE idEstudiante = ?', [Nombre, FechaNacimiento, Sexo, Clave, estudianteId], err => {
+app.put('/estudiante/:idEstudiante', (req, res) => {
+  const estudianteId = req.params.idEstudiante;
+  const { idEstudiante, Nombre, FechaNacimiento, Sexo, Clave, Anio, idCurso, idMatricula } = req.body;
+  
+  db.beginTransaction(err => {
     if (err) {
-      res.status(500).send('Error updating estudiante');
-      return;
+      return res.status(500).send('Error initiating transaction');
     }
-    db.query('SELECT * FROM estudiante WHERE idEstudiante = ?', estudianteId, (err, result) => {
-      if (err) {
-        res.status(500).send('Error fetching updated estudiante');
-        return;
+
+    // Actualizar datos en la tabla estudiante
+    db.query(
+      'UPDATE estudiante SET idEstudiante = ?, Nombre = ?, FechaNacimiento = ?, Sexo = ?, Clave = ? WHERE idEstudiante = ?',
+      [idEstudiante, Nombre, FechaNacimiento, Sexo, Clave, estudianteId],
+      (err, result) => {
+        if (err) {
+          db.rollback(() => {
+            return res.status(500).send('Error updating estudiante');
+          });
+          return;
+        }
+
+        // Actualizar datos en la tabla matricula
+        db.query(
+          'UPDATE matricula SET idEstudiante = ?, Anio = ?, idCurso = ?, idMatricula = ? WHERE idEstudiante = ?',
+          [idEstudiante, Anio, idCurso, idMatricula, estudianteId],
+          (err, result) => {
+            if (err) {
+              db.rollback(() => {
+                return res.status(500).send('Error updating matricula');
+              });
+              return;
+            }
+
+            db.commit(err => {
+              if (err) {
+                db.rollback(() => {
+                  return res.status(500).send('Error committing transaction');
+                });
+                return;
+              }
+
+              res.status(200).json({ msg: 'Estudiante updated successfully' });
+            });
+          }
+        );
       }
-      res.json(result[0]);
-    });
+    );
   });
 });
+
 // Cambiar DELETE FROM estudiantes a DELETE FROM estudiante
 app.delete('/estudiante/:idEstudiante', (req, res) => {
   const estudianteId = req.params.idEstudiante;
@@ -111,20 +158,6 @@ app.delete('/estudiante/:idEstudiante', (req, res) => {
       return;
     }
     res.status(200).json({ msg: 'Estudiante deleted successfully' });
-  });
-});
-
-// Endpoint para agregar una matrícula
-app.post('/matricula/agregar', (req, res) => {
-  const { idEstudiante, idCurso, Anio } = req.body;
-
-  // Insertar datos en la tabla matricula
-  db.query('INSERT INTO matricula (idEstudiante, idCurso, Anio) VALUES (?, ?, ?)', [idEstudiante, idCurso, Anio], (err, result) => {
-    if (err) {
-      res.status(500).send('Error creating matricula');
-      return;
-    }
-    res.status(201).json({ msg: 'Matricula created successfully', matriculaId: result.insertId });
   });
 });
 
@@ -286,6 +319,9 @@ app.delete('/profesor/:idProfesor', (req, res) => {
   });
 
 
+
+
+
   /* EndPoins Colegio */
   app.get('/colegio', (req, res) => {
     db.query('SELECT * FROM colegio', (err, results) => {
@@ -299,21 +335,25 @@ app.delete('/profesor/:idProfesor', (req, res) => {
   
   app.post('/colegio/agregar-colegio', (req, res) => {
     const { idColegio, Nombre, idFundacion, idCiudad } = req.body;
-    db.query('INSERT INTO colegio (idColegio, Nombre, idCiudad, idFundacion) VALUES (?, ?, ?, ?)', [idColegio, Nombre, idFundacion, idCiudad], (err, result) => {
-      if (err) {
-        res.status(500).send('Error creating colegio');
-        return;
-      }
-      const colegioId = result.insertId;
-      db.query('SELECT * FROM colegio WHERE idColegio = ?', colegioId, (err, result) => {
+    db.query('INSERT INTO colegio (idColegio, Nombre, idCiudad, idFundacion) VALUES (?, ?, ?, ?)', 
+      [idColegio, Nombre, idCiudad, idFundacion], 
+      (err, result) => {
         if (err) {
-          res.status(500).send('Error fetching created colegio');
+          res.status(500).send('Error creating colegio'); // Envia un mensaje de error
           return;
         }
-        res.status(201).json(result[0]);
-      });
-    });
+        const colegioId = result.insertId;
+        db.query('SELECT * FROM colegio WHERE idColegio = ?', colegioId, (err, result) => {
+          if (err) {
+            res.status(500).send('Error fetching created colegio'); // Envia un mensaje de error
+            return;
+          }
+          res.status(201).json(result[0]); // Envía la respuesta con el colegio creado
+        });
+      }
+    );
   });
+  
   
 // Endpoint para obtener los cursos de un colegio específico por idColegio
 app.get('/colegio/:idColegio/cursos', (req, res) => {
