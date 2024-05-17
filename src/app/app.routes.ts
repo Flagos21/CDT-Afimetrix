@@ -3,40 +3,57 @@ import { MeAgregarEstudianteComponent } from './modules/estudiantes/me-agregar-e
 import { MeVisualEstudianteComponent } from './modules/estudiantes/me-visual-estudiante/me-visual-estudiante.component';
 import { MeActualizarEstudianteComponent } from './modules/estudiantes/me-actualizar-estudiante/me-actualizar-estudiante.component';
 import { AgregarCursoComponent } from './modules/curso/agregar-curso/agregar-curso.component';
-import { MpAgregarProfesorComponent } from './modules/profesor/mp-agregar-profesor/mp-agregar-profesor.component';
+import { MpAgregarProfesorComponent } from './modules/profesores/mp-agregar-profesor/mp-agregar-profesor.component';
+import { MpVisualProfesorComponent } from './modules/profesores/mp-visual-profesor/mp-visual-profesor.component';
+import { MpActualizarProfesorComponent } from './modules/profesores/mp-actualizar-profesor/mp-actualizar-profesor.component';
 import { AgregarColegioComponent } from './modules/colegio/agregar-colegio/agregar-colegio.component';
-import { VisualColeComponent } from './modules/colegio/visual-cole/visual-cole.component';
+import { DetalleEncuestaComponent } from './modules/encuesta/detalle-encuesta/detalle-encuesta.component';
 import { Component } from '@angular/core';
 import { VisualCursoComponent } from './modules/curso/visual-curso/visual-curso.component';
-import { IngresarComponent } from './modules/login/ingresar/ingresar.component';
+import { VisualColeComponent } from './modules/colegio/visual-cole/visual-cole.component';
+import { LoginComponent } from './modules/ingresar/login/login.component';
 
 
 export const routes: Routes = [
-    {path : '' , pathMatch : 'full' , redirectTo : ''},
 
-        //Rutas Estudiante
+    { path: '', pathMatch: 'full', redirectTo: 'colegio/visual-cole' },
 
-    {path : 'estudiantes/me-visual-estudiante', component : MeVisualEstudianteComponent},
-    {path : 'estudiantes/me-agregar-estudiante', component : MeAgregarEstudianteComponent},
-    {path : 'estudiantes/:estudianteId/me-actualizar-estudiante', component : MeActualizarEstudianteComponent},
+    //Rutas Estudiante
 
-        //Rutas Profesor
+    {
+        path: 'estudiantes/me-visual-estudiante',
+        component: MeVisualEstudianteComponent,
+    },
+    {
+        path: 'estudiantes/me-agregar-estudiante',
+        component: MeAgregarEstudianteComponent,
+    },
+    {
+        path: 'estudiantes/:estudianteId/me-actualizar-estudiante',
+        component: MeActualizarEstudianteComponent,
+    },
 
-    {path : 'profesor/mp-agregar-profesor', component : MpAgregarProfesorComponent},
+    //Rutas Profesor
 
-        //Rutas Curso
-    
-    {path : 'curso/agregar-curso', component : AgregarCursoComponent},
+    { path: 'profesor/mp-agregar-profesor', component: MpAgregarProfesorComponent },
+    { path: 'profesor/mp-agregar-profesor/:idColegio', component: MpAgregarProfesorComponent },
+    { path: 'profesor/mp-visual-profesor', component: MpVisualProfesorComponent },
+    { path: 'profesor/mp-visual-profesor/:idColegio', component: MpVisualProfesorComponent },
+    { path: 'profesor/:profesorId/mp-actualizar-profesor', component: MpActualizarProfesorComponent },
 
-    {path: 'curso/visual-curso/:idColegio', component : VisualCursoComponent},
 
-        //Rutas Colegio
-    
-    {path : 'colegio/agregar-colegio', component : AgregarColegioComponent},
+    //Rutas Curso
 
-    {path : 'colegio/visual-cole', component : VisualColeComponent},
+    { path: 'curso/agregar-curso', component: AgregarCursoComponent },
+    { path: 'curso/agregar-curso/:idColegio', component: AgregarCursoComponent },
+    { path: 'curso/visual-curso', component: VisualCursoComponent },
 
-        //Ruta login
+    { path: 'curso/visual-curso/:idColegio', component: VisualCursoComponent },
 
-     {path : 'login/ingresar', component : IngresarComponent}   
+    //Rutas Colegio
+
+    { path: 'colegio/agregar-colegio', component: AgregarColegioComponent },
+    { path: 'colegio/visual-cole', component: VisualColeComponent },
+
+    { path: 'ingresar/login', component: LoginComponent},
 ];

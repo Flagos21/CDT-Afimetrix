@@ -2,16 +2,15 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
-import { Colegio, Curso, Profesor } from './curso';
-
+import { Colegio, Curso, Profesor, Ciudad } from './curso';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CursoService {
-  private apiURL = "http://localhost:3000";
+  private apiURL = 'http://localhost:3000';
 
   httpOptions = {
     headers: new HttpHeaders({
@@ -21,7 +20,7 @@ export class CursoService {
 
   constructor(private httpClient: HttpClient) {}
 
-  getAll(): Observable<Curso[]>{
+  getAll(): Observable<Curso[]> {
     return this.httpClient
       .get<Curso[]>(this.apiURL + '/curso/')
       .pipe(catchError(this.errorHandler));
@@ -32,11 +31,27 @@ export class CursoService {
       .get<Profesor[]>(this.apiURL + '/profesor/')
       .pipe(catchError(this.errorHandler));
   }
-  getAllC(): Observable<Colegio[]>{
+  getAllC(idColegio: number): Observable<Colegio[]> {
     return this.httpClient
-      .get<Colegio[]>(this.apiURL + '/colegio/')
-      .pipe(catchError(this.errorHandler));
+      .get<any>(this.apiURL + '/colegio/' + idColegio)
+      .pipe(
+        map((data: any) => {
+          const colegio: Colegio = {
+            idColegio: idColegio,
+            Nombre: data.NombreColegio,
+            NombreCiudad: data.NombreCiudad,
+            NombreFundacion: data.NombreFundacion,
+            idFundacion: data.idFundacion, // Asegúrate de incluir estos campos si son necesarios
+            idCiudad: data.idCiudad // Asegúrate de incluir estos campos si son necesarios
+          };
+          return [colegio]; // Devuelve un array con un solo objeto Colegio
+        }),
+        catchError(this.errorHandler)
+      );
   }
+
+
+  
 
   create(curso: Curso): Observable<Curso> {
     return this.httpClient
@@ -54,11 +69,12 @@ export class CursoService {
       .pipe(catchError(this.errorHandler));
   }
 
-  getCursosByColegioId(colegioId: number): Observable<Curso[]> {
+  getCursosByColegioId(idColegio: number): Observable<Curso[]> {
     return this.httpClient
-      .get<Curso[]>(`${this.apiURL}/colegio/${colegioId}/cursos`)
+      .get<Curso[]>(`${this.apiURL}/colegio/${idColegio}/cursos`)
       .pipe(catchError(this.errorHandler));
   }
+  
 
   errorHandler(error: any) {
     let errorMessage = '';
