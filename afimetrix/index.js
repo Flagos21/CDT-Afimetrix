@@ -2,28 +2,28 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql');
 const cors = require('cors');
-  
+
 const app = express();
 const port = 3000;
-  
+
 /* MySQL Connection */
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '',
+  password: 'Pato1596*-+',
   database: 'afimetrix'
 });
-  
+
 db.connect(err => {
   if (err) {
     throw err;
   }
   console.log('Connected to MySQL');
 });
-  
+
 app.use(bodyParser.json());
 app.use(cors());
-  
+
 app.get('/estudiante/', (req, res) => {
   db.query('SELECT * FROM estudiante', (err, results) => {
     if (err) {
@@ -51,7 +51,7 @@ app.post('/estudiante/me-agregar-estudiante', (req, res) => {
     });
   });
 });
-  
+
 app.get('/estudiante/:idEstudiante', (req, res) => {
   const estudianteId = req.params.idEstudiante;
   db.query('SELECT * FROM estudiante WHERE idEstudiante = ?', estudianteId, (err, result) => {
@@ -66,10 +66,6 @@ app.get('/estudiante/:idEstudiante', (req, res) => {
     res.json(result[0]);
   });
 });
-
-  
-
-
 
 app.put('/estudiante/:estudianteId', (req, res) => {
   const estudianteId = req.params.estudianteId;
@@ -122,7 +118,7 @@ app.post('/matricula/agregar', (req, res) => {
 
 
 
-  /* EndPoins Profesor */
+/* EndPoins Profesor */
 app.get('/profesor/', (req, res) => {
   db.query('SELECT * FROM profesor', (err, results) => {
     if (err) {
@@ -166,7 +162,6 @@ app.get('/profesor/:idProfesor', (req, res) => {
   });
 });
 
-
 app.put('/profesor/:profesorId', (req, res) => {
   const profesorId = req.params.profesorId; // Cambia de req.params.idProfesor a req.params.profesorId
   const { Nombre, Clave, idColegio, Tipo } = req.body;
@@ -185,7 +180,6 @@ app.put('/profesor/:profesorId', (req, res) => {
   });
 });
 
-
 app.delete('/profesor/:idProfesor', (req, res) => {
   const profesorId = req.params.id;
   db.query('DELETE FROM profesor WHERE idProfesor = ?', profesorId, err => {
@@ -197,110 +191,110 @@ app.delete('/profesor/:idProfesor', (req, res) => {
   });
 });
 
-  
-  /* EndPoins Curso */
-  app.get('/curso', (req, res) => {
-    db.query('SELECT * FROM curso', (err, results) => {
-      if (err) {
-        res.status(500).send('Error fetching cursos');
-        return;
-      }
-      res.json(results);
-    });
+
+/* EndPoins Curso */
+app.get('/curso', (req, res) => {
+  db.query('SELECT * FROM curso', (err, results) => {
+    if (err) {
+      res.status(500).send('Error fetching cursos');
+      return;
+    }
+    res.json(results);
   });
-  
-  app.post('/curso/agregar-curso', (req, res) => {
-    const { idCurso,idProfesor,idColegio, Nombre} = req.body;
-    db.query('INSERT INTO curso (idCurso,idProfesor,idColegio, Nombre) VALUES (?, ?, ?, ?)', [idCurso,idProfesor,idColegio, Nombre], (err, result) => {
-      if (err) {
-        res.status(500).send('Error creating curso');
-        return;
-      }
-      const cursoId = result.insertId;
-      db.query('SELECT * FROM curso WHERE idCurso = ?', cursoId, (err, result) => {
-        if (err) {
-          res.status(500).send('Error fetching created cursos');
-          return;
-        }
-        res.status(201).json(result[0]);
-      });
-    });
-  });
-    
-  app.get('/curso/:idCurso', (req, res) => {
-    const cursoId = req.params.idCurso; // Corregir de req.params.id a req.params.idCurso
+});
+
+app.post('/curso/agregar-curso', (req, res) => {
+  const { idCurso, idProfesor, idColegio, Nombre } = req.body;
+  db.query('INSERT INTO curso (idCurso,idProfesor,idColegio, Nombre) VALUES (?, ?, ?, ?)', [idCurso, idProfesor, idColegio, Nombre], (err, result) => {
+    if (err) {
+      res.status(500).send('Error creating curso');
+      return;
+    }
+    const cursoId = result.insertId;
     db.query('SELECT * FROM curso WHERE idCurso = ?', cursoId, (err, result) => {
       if (err) {
-        res.status(500).send('Error fetching curso');
+        res.status(500).send('Error fetching created cursos');
         return;
       }
-      if (result.length === 0) {
-        res.status(404).send('Curso not found');
+      res.status(201).json(result[0]);
+    });
+  });
+});
+
+app.get('/curso/:idCurso', (req, res) => {
+  const cursoId = req.params.idCurso; // Corregir de req.params.id a req.params.idCurso
+  db.query('SELECT * FROM curso WHERE idCurso = ?', cursoId, (err, result) => {
+    if (err) {
+      res.status(500).send('Error fetching curso');
+      return;
+    }
+    if (result.length === 0) {
+      res.status(404).send('Curso not found');
+      return;
+    }
+    res.json(result[0]);
+  });
+});
+
+app.put('/curso/:idCurso', (req, res) => {
+  const cursoId = req.params.idCurso;
+  const { idCurso, idProfesor, idColegio, Nombre } = req.body;
+  db.query('UPDATE cursos SET idCurso = ?, idProfesor = ?, idColegio = ?, Nombre = ? WHERE idCurso = ?', [idCurso, idProfesor, idColegio, Nombre], err => {
+    if (err) {
+      res.status(500).send('Error updating estudiante');
+      return;
+    }
+    db.query('SELECT * FROM curso WHERE idCurso = ?', cursoId, (err, result) => {
+      if (err) {
+        res.status(500).send('Error fetching updated estudiante');
         return;
       }
       res.json(result[0]);
     });
   });
-    
-  app.put('/curso/:idCurso', (req, res) => {
-    const cursoId = req.params.idCurso;
-    const { idCurso,idProfesor,idColegio, Nombre} = req.body;
-    db.query('UPDATE cursos SET idCurso = ?, idProfesor = ?, idColegio = ?, Nombre = ? WHERE idCurso = ?', [idCurso,idProfesor,idColegio, Nombre], err => {
-      if (err) {
-        res.status(500).send('Error updating estudiante');
-        return;
-      }
-      db.query('SELECT * FROM curso WHERE idCurso = ?', cursoId, (err, result) => {
-        if (err) {
-          res.status(500).send('Error fetching updated estudiante');
-          return;
-        }
-        res.json(result[0]);
-      });
-    });
+});
+
+app.delete('/curso/:idCurso', (req, res) => {
+  const cursoId = req.params.idCurso; // Corregir de req.params.id a req.params.idCurso
+  db.query('DELETE FROM curso WHERE idCurso = ?', cursoId, err => {
+    if (err) {
+      res.status(500).send('Error deleting curso');
+      return;
+    }
+    res.status(200).json({ msg: 'Curso deleted successfully' });
   });
-    
-  app.delete('/curso/:idCurso', (req, res) => {
-    const cursoId = req.params.idCurso; // Corregir de req.params.id a req.params.idCurso
-    db.query('DELETE FROM curso WHERE idCurso = ?', cursoId, err => {
-      if (err) {
-        res.status(500).send('Error deleting curso');
-        return;
-      }
-      res.status(200).json({ msg: 'Curso deleted successfully' });
-    });
-  });
+});
 
 
-  /* EndPoins Colegio */
-  app.get('/colegio', (req, res) => {
-    db.query('SELECT * FROM colegio', (err, results) => {
+/* EndPoins Colegio */
+app.get('/colegio', (req, res) => {
+  db.query('SELECT * FROM colegio', (err, results) => {
+    if (err) {
+      res.status(500).send('Error fetching colegio');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.post('/colegio/agregar-colegio', (req, res) => {
+  const { idColegio, Nombre, idFundacion, idCiudad } = req.body;
+  db.query('INSERT INTO colegio (idColegio, Nombre, idCiudad, idFundacion) VALUES (?, ?, ?, ?)', [idColegio, Nombre, idFundacion, idCiudad], (err, result) => {
+    if (err) {
+      res.status(500).send('Error creating colegio');
+      return;
+    }
+    const colegioId = result.insertId;
+    db.query('SELECT * FROM colegio WHERE idColegio = ?', colegioId, (err, result) => {
       if (err) {
-        res.status(500).send('Error fetching colegio');
+        res.status(500).send('Error fetching created colegio');
         return;
       }
-      res.json(results);
+      res.status(201).json(result[0]);
     });
   });
-  
-  app.post('/colegio/agregar-colegio', (req, res) => {
-    const { idColegio, Nombre, idFundacion, idCiudad } = req.body;
-    db.query('INSERT INTO colegio (idColegio, Nombre, idCiudad, idFundacion) VALUES (?, ?, ?, ?)', [idColegio, Nombre, idFundacion, idCiudad], (err, result) => {
-      if (err) {
-        res.status(500).send('Error creating colegio');
-        return;
-      }
-      const colegioId = result.insertId;
-      db.query('SELECT * FROM colegio WHERE idColegio = ?', colegioId, (err, result) => {
-        if (err) {
-          res.status(500).send('Error fetching created colegio');
-          return;
-        }
-        res.status(201).json(result[0]);
-      });
-    });
-  });
-  
+});
+
 // Endpoint para obtener los cursos de un colegio específico por idColegio
 app.get('/colegio/:idColegio/cursos', (req, res) => {
   const colegioId = req.params.idColegio;
@@ -339,88 +333,157 @@ app.get('/colegio/:idColegio', (req, res) => {
     }
   );
 });
-  
-  app.put('/colegio/:idColegio', (req, res) => {
-    const colegioId = req.params.idColegio;
-    const { idColegio, Nombre, idCiudad, idFundacion } = req.body;
-    db.query('UPDATE colegio SET idColegio = ?, Nombre = ?, idCiudad = ?, idFundacion = ? WHERE id = ?', [idColegio, Nombre, idCiudad, idFundacion, colegioId], err => {
-      if (err) {
-        res.status(500).send('Error updating colegio');
-        return;
-      }
-      db.query('SELECT * FROM colegio WHERE idColegio = ?', colegioId, (err, result) => {
-        if (err) {
-          res.status(500).send('Error fetching updated colegio');
-          return;
-        }
-        res.json(result[0]);
-      });
-    });
-  });
-  
-  app.delete('/colegio/:idColegio', (req, res) => {
-    const colegioId = req.params.id;
-    db.query('DELETE FROM colegio WHERE idColegio = ?', colegioId, err => {
-      if (err) {
-        res.status(500).send('Error deleting colegio');
-        return;
-      }
-      res.status(200).json({ msg: 'Colegio deleted successfully' });
-    });
-  });
-  
 
-  //lo de ciudad*/
-  app.get('/ciudad', (req, res) => {
-    db.query('SELECT * FROM ciudad', (err, results) => {
+app.put('/colegio/:idColegio', (req, res) => {
+  const colegioId = req.params.idColegio;
+  const { idColegio, Nombre, idCiudad, idFundacion } = req.body;
+  db.query('UPDATE colegio SET idColegio = ?, Nombre = ?, idCiudad = ?, idFundacion = ? WHERE id = ?', [idColegio, Nombre, idCiudad, idFundacion, colegioId], err => {
+    if (err) {
+      res.status(500).send('Error updating colegio');
+      return;
+    }
+    db.query('SELECT * FROM colegio WHERE idColegio = ?', colegioId, (err, result) => {
       if (err) {
-        res.status(500).send('Error fetching ciudad');
-        return;
-      }
-      res.json(results);
-    });
-  });
-
-  app.get('/ciudad/:idCiudad', (req, res) => {
-    const ciudadId = req.params.idCiudad;
-    db.query('SELECT * FROM ciudad WHERE idCiudad = ?', ciudadId, (err, result) => {
-      if (err) {
-        res.status(500).send('Error fetching ciudad');
-        return;
-      }
-      if (result.length === 0) {
-        res.status(404).send('Ciudad not found');
+        res.status(500).send('Error fetching updated colegio');
         return;
       }
       res.json(result[0]);
     });
   });
+});
 
-  // lo de fundacion
-  app.get('/fundacion', (req, res) => {
-    db.query('SELECT * FROM fundacion', (err, results) => {
+app.delete('/colegio/:idColegio', (req, res) => {
+  const colegioId = req.params.id;
+  db.query('DELETE FROM colegio WHERE idColegio = ?', colegioId, err => {
+    if (err) {
+      res.status(500).send('Error deleting colegio');
+      return;
+    }
+    res.status(200).json({ msg: 'Colegio deleted successfully' });
+  });
+});
+
+
+//lo de ciudad*/
+app.get('/ciudad', (req, res) => {
+  db.query('SELECT * FROM ciudad', (err, results) => {
+    if (err) {
+      res.status(500).send('Error fetching ciudad');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get('/ciudad/:idCiudad', (req, res) => {
+  const ciudadId = req.params.idCiudad;
+  db.query('SELECT * FROM ciudad WHERE idCiudad = ?', ciudadId, (err, result) => {
+    if (err) {
+      res.status(500).send('Error fetching ciudad');
+      return;
+    }
+    if (result.length === 0) {
+      res.status(404).send('Ciudad not found');
+      return;
+    }
+    res.json(result[0]);
+  });
+});
+
+// lo de fundacion
+app.get('/fundacion', (req, res) => {
+  db.query('SELECT * FROM fundacion', (err, results) => {
+    if (err) {
+      res.status(500).send('Error fetching fundacion');
+      return;
+    }
+    res.json(results);
+  });
+});
+
+app.get('/fundacion/:idFundacion', (req, res) => {
+  const fundacionId = req.params.idFundacion;
+  db.query('SELECT * FROM fundacion WHERE idFundacion = ?', fundacionId, (err, result) => {
+    if (err) {
+      res.status(500).send('Error fetching fundacion');
+      return;
+    }
+    if (result.length === 0) {
+      res.status(404).send('Fundacion not found');
+      return;
+    }
+    res.json(result[0]);
+  });
+});
+
+/* EndPoins Encuesta */
+app.get('/detalleencuesta', (req, res) => {
+  db.query('SELECT * FROM detalleencuesta', (err, results) => {
+    if (err) {
+      res.status(500).send('Error fetching detalleencuesta');
+      return;
+    }
+    res.json(results);
+  });
+});
+app.post('/detalleencuesta/crear-encuesta', (req, res) => {
+  const { idDetalleEncuesta, Tipo, FechaInicio, FechaFin, idEncuesta, idCurso } = req.body;
+  db.query('INSERT INTO detalleencuesta (idDetalleEncuesta, Tipo, FechaInicio, FechaFin, idEncuesta, idCurso) VALUES (?, ?, ?, ?, ?, ?)', [idDetalleEncuesta, Tipo, FechaInicio, FechaFin, idEncuesta, idCurso], (err, result) => {
+    if (err) {
+      res.status(500).send('Error creating DetalleEncuesta');
+      return;
+    }
+    const detalleEncuestaId = result.insertId;
+    db.query('SELECT * FROM detalleencuesta WHERE idDetalleEncuesta = ?', [detalleEncuestaId], (err, result) => {
       if (err) {
-        res.status(500).send('Error fetching fundacion');
+        res.status(500).send('Error fetching created DetalleEncuesta');
         return;
       }
-      res.json(results);
+      res.status(201).json(result[0]);
     });
   });
-
-  app.get('/fundacion/:idFundacion', (req, res) => {
-    const fundacionId = req.params.idFundacion;
-    db.query('SELECT * FROM fundacion WHERE idFundacion = ?', fundacionId, (err, result) => {
+});
+app.get('/detalleencuesta/:idDetalleEncuesta', (req, res) => {
+  const idDetalleEncuesta = req.params.idDetalleEncuesta;
+  db.query('SELECT * FROM detalleencuesta WHERE idDetalleEncuesta = ?', idDetalleEncuesta, (err, result) => {
+    if (err) {
+      res.status(500).send('Error fetching DetalleEncuesta');
+      return;
+    }
+    if (result.length === 0) {
+      res.status(404).send('DetalleEncuesta not found');
+      return;
+    }
+    res.json(result[0]);
+  });
+});
+app.put('/detalleencuesta/:idDetalleEncuesta', (req, res) => {
+  const idDetalleEncuesta = req.params.idDetalleEncuesta;
+  const { Tipo, FechaInicio, FechaFin, idEncuesta, idCurso } = req.body;
+  db.query('UPDATE detalleencuesta SET Tipo = ?, FechaInicio = ?, FechaFin = ?, idEncuesta = ?, idCurso = ? WHERE idDetalleEncuesta = ?', [Tipo, FechaInicio, FechaFin, idEncuesta, idCurso, idDetalleEncuesta], err => {
+    if (err) {
+      res.status(500).send('Error updating DetalleEncuesta');
+      return;
+    }
+    db.query('SELECT * FROM detalleencuesta WHERE idDetalleEncuesta = ?', [idDetalleEncuesta], (err, result) => {
       if (err) {
-        res.status(500).send('Error fetching fundacion');
-        return;
-      }
-      if (result.length === 0) {
-        res.status(404).send('Fundacion not found');
+        res.status(500).send('Error fetching updated DetalleEncuesta');
         return;
       }
       res.json(result[0]);
     });
   });
+});
+app.delete('/detalleencuesta/:idDetalleEncuesta', (req, res) => {
+  const idDetalleEncuesta = req.params.idDetalleEncuesta;
+  db.query('DELETE FROM detalleencuesta WHERE idDetalleEncuesta = ?', idDetalleEncuesta, err => {
+    if (err) {
+      res.status(500).send('Error deleting DetalleEncuesta');
+      return;
+    }
+    res.status(200).json({ msg: 'DetalleEncuesta deleted successfully' });
+  });
+});
 
 
 /* Start server */

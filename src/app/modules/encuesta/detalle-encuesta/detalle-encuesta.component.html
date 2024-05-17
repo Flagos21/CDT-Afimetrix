@@ -1,1 +1,47 @@
-<p>detalle-encuesta works!</p>
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Ver Encuestas</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="container-top">
+            <div class="blue-stripe"></div>
+        </div>
+
+        <div class="container-bottom">
+            <div class="image-add-user-container">
+                <img src="../../../../assets/img/LogoUnach.png" alt="" class="logo">
+                <div *ngFor="let curso of cursos">
+                    <button type="button" class="agregar-button" (click)="crearEncuesta(curso)">Crear</button>
+                </div>
+            </div>
+            <div class="table-container">
+                <table class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Incio</th>
+                            <th>Termino</th>
+                            <th>Consentimiento</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let encuesta of encuestas">
+                            <td>{{ encuesta.Tipo }}</td>
+                            <td>{{ encuesta.FechaInicio }}</td>
+                            <td>{{ encuesta.FechaFin }}</td>
+                            <td class="table-options">
+                                <button  type="button" class="buttons mb-0 ">Descargar</button>    
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

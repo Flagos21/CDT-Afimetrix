@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Crear Encuesta</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="container-top">
+            <div class="blue-stripe"></div>
+        </div>
+        <div class="container-bottom">
+            <div class="image-container"><img src="../../../../assets/img/LogoUnach.png" alt="" class="logo"></div>
+            <div class="form-container">
+                <h2>CREAR ENCUESTA</h2>
+                <form [formGroup]="form" (ngSubmit)="submit()">
+                    <input formControlName="idDetalleEncuesta" type="text" class="form-control"
+                        placeholder="idDetalleEncuesta">
+                    <select formControlName="Tipo" type="text" class="form-control" placeholder="Tipo" required>
+                        <option value="">Tipo</option>
+                        <option value="Hábitos Alimenticios y Nutrición">Hábitos Alimenticios y Nutrición</option>
+                        <option value="Actividad Física">Actividad Física</option>
+                        <option value="Sueño">Sueño</option>
+                        <option value="Higiene Personal">Higiene Personal</option>
+                        <option value="Bienestar Emocional">Bienestar Emocional</option>
+                        <option value="Acoso Escolar (Bullying)">Acoso Escolar (Bullying)</option>
+                        <option value="Apoyo Social">Apoyo Social</option>
+                        <option value="Conocimiento sobre Salud">Conocimiento sobre Salud</option>
+                        <option value="Uso de Servicios de Salud">Uso de Servicios de Salud</option>
+                        <option value="Condiciones Crónicas">Condiciones Crónicas</option>
+                        <option value="Uso de Tecnología">Uso de Tecnología</option>
+                    </select>
+                    <input formControlName="FechaInicio" type="date" class="form-control" placeholder="" required>
+                    <input formControlName="FechaFin" type="date" class="form-control" placeholder="" required>
+                    <select formControlName="idEncuesta" type="text" class="form-control" placeholder="Encuesta"
+                        required>
+                        <option value="">id Encuesta</option>
+                        <option value="1">Inicial</option>
+                        <option value="2">Final</option>
+                    </select>
+                    <input formControlName="idCurso" type="text" [value]="cursoIdFromURL" readonly>
+
+                    <button type="submit" class="agregar-button" [disabled]="!form.valid">Crear</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

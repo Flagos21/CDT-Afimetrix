@@ -8,7 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 @Component({
   selector: 'app-visual-curso',
   standalone: true,
-  imports: [CommonModule, RouterModule,  ReactiveFormsModule],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule],
   templateUrl: './visual-curso.component.html',
   styleUrl: './visual-curso.component.css',
 })
@@ -16,12 +16,13 @@ export class VisualCursoComponent implements OnInit {
   cursos: Curso[] = [];
   colegioId: number = 0; // Establecer un valor predeterminado
   colegios: Colegio[] = [];
+  cursoIdFromURL: number = 0;
 
   constructor(
     public cursoService: CursoService,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.getAllColegios(); // Llamar a getAllColegios() aquí para asegurar que se carguen los colegios al iniciar el componente
@@ -29,6 +30,14 @@ export class VisualCursoComponent implements OnInit {
       this.colegioId = +params['idColegio']; // Convertir el idColegio a número
       this.getAllCursos();
     });
+    this.route.paramMap.subscribe(params => {
+      if (params !== null && params.has('idCurso')) {
+        const idCursoParam = params.get('idCurso');
+        if (idCursoParam !== null) {
+          this.cursoIdFromURL = +idCursoParam;
+        }
+      }
+    })
   }
 
   getAllColegios(): void {
@@ -54,24 +63,27 @@ export class VisualCursoComponent implements OnInit {
       });
     }
   }
-  
+
 
   agregarCurso(colegio: Colegio) {
-    if(colegio && colegio.idColegio){
-      const colegioId = colegio.idColegio
-      this.router.navigate(['curso/agregar-curso', { idColegio: colegioId}]);
+    if (colegio && colegio.idColegio) {
+      this.router.navigate(['curso/agregar-curso', colegio.idColegio]);
     }
   }
   verProfesor(colegio: Colegio) {
     if (colegio && colegio.idColegio) {
-      const colegioId = colegio.idColegio;
-      this.router.navigate(['profesor/mp-visual-profesor', { idColegio: colegioId }]);
+      this.router.navigate(['profesor/mp-visual-profesor', colegio.idColegio]);
     }
   }
 
   verCurso() {
     if (this.colegioId) {
       this.router.navigateByUrl('estudiantes/me-visual-estudiante');
+    }
+  }
+  verEncuestas(curso: Curso) {
+    if (curso && curso.idCurso) {
+      this.router.navigate(['/curso/detalle-encuesta', curso.idCurso]);
     }
   }
 }
