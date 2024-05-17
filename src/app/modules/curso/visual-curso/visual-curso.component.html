@@ -44,7 +44,7 @@
                         <tr *ngFor="let curso of cursos">
                             <td>{{ curso.Nombre }}</td>
                             <td class="table-options">
-                                <button type="button" class="agregar-button mb-0 " (click)=verCurso()>Ver Curso</button>
+                                <button type="button" class="agregar-button mb-0 " (click)="verCurso(curso)">Ver Curso</button>
                                 <button type="button" class="agregar-button mb-0 ">ENCUESTA</button>
                             </td>
                         </tr>

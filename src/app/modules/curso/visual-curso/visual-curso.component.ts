@@ -68,9 +68,9 @@ export class VisualCursoComponent implements OnInit {
     }
   }
 
-  verCurso() {
-    if (this.colegioId) {
-      this.router.navigateByUrl('estudiantes/me-visual-estudiante');
+  verCurso(curso: Curso) {
+    if (curso && curso.idCurso) {
+      this.router.navigate(['estudiantes/me-visual-estudiante', curso.idCurso]);
     }
   }
 }

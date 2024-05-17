@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, numberAttribute } from '@angular/core';
 import { Curso, Estudiante } from '../estudiante';
 import { CommonModule } from '@angular/common';
 import { EstudianteService } from '../estudiante.service';
-import { RouterModule, Router } from '@angular/router';
+import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-me-visual-estudiante',
@@ -14,11 +14,20 @@ import { RouterModule, Router } from '@angular/router';
 export class MeVisualEstudianteComponent implements OnInit {
   estudiantes: Estudiante[] = [];
   cursos: Curso[] = [];
-  cursoId: number = 1;
+  cursoId: number = 0;
 
-  constructor(public estudianteService: EstudianteService, private router: Router) {}
+  constructor(public estudianteService: EstudianteService, private router: Router, private activatedRoute: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
+    this.activatedRoute.paramMap.subscribe(params => {
+      if (params !== null && params.has('idCurso')) {
+        const idCursoParam = params.get('idCurso');
+        if (idCursoParam !== null) {
+          this.cursoId = +idCursoParam;
+        }
+      }
+    });
     this.getAllEstudiante();
     this.getAllCurso();
   }
@@ -27,7 +36,6 @@ export class MeVisualEstudianteComponent implements OnInit {
     console.log(this.router.url);
     console.log(window.location.href);
     this.estudianteService.getAllCs().subscribe((data: Curso[]) => {
-      // Suponiendo que this.colegioId contiene la ID del colegio que quieres mostrar
       this.cursos = data.filter(cursos => cursos.idCurso === this.cursoId); 
       console.log(this.cursos);
     });
@@ -36,8 +44,8 @@ export class MeVisualEstudianteComponent implements OnInit {
   getAllEstudiante(): void {
     console.log(this.router.url);
     console.log(window.location.href);
-    this.estudianteService.getAll().subscribe((data: Estudiante[]) => {
-      this.estudiantes = data;
+    this.estudianteService.getAll(this.cursoId).subscribe((data: Estudiante[]) => {
+      this.estudiantes = data.filter(estudiante => estudiante.idCurso === this.cursoId );
       console.log(this.estudiantes);
     });
   }

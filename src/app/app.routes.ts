@@ -23,6 +23,10 @@ export const routes: Routes = [
         component: MeVisualEstudianteComponent,
     },
     {
+        path: 'estudiantes/me-visual-estudiante/:idCurso',
+        component: MeVisualEstudianteComponent,
+    },
+    {
         path: 'estudiantes/me-agregar-estudiante',
         component: MeAgregarEstudianteComponent,
     },

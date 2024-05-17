@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 
 import { Observable, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 import { Estudiante, Curso } from './estudiante';
 
@@ -22,17 +22,37 @@ export class EstudianteService {
 
   // Obtener todos los registros de estudiante
 
-  getAll(): Observable<Estudiante[]> {
+  getAll(idCurso: number): Observable<Estudiante[]> {
     return this.httpClient
-      .get<Estudiante[]>(this.apiURL + '/estudiante/')
-      .pipe(catchError(this.errorHandler));
+      .get<Estudiante[]>(`${this.apiURL}/estudiante?cursoId=${idCurso}`)
+      .pipe(
+        map((data: any[]) => data.map(item => ({
+          idEstudiante: item.idEstudiante,
+          Nombre: item.Nombre,
+          FechaNacimiento: item.FechaNacimiento,
+          Sexo: item.Sexo,
+          Clave: item.Clave,
+          idMatricula: item.idMatricula,
+          Anio: new Date(item.AnioMatricula),
+          idCurso: item.idCurso
+        }))),
+        catchError(this.handleError)
+      );
   }
 
-  getAllCs(): Observable<Curso[]>{
+  getAllCs(): Observable<Curso[]> {
     return this.httpClient
-      .get<Curso[]>(this.apiURL + '/curso/')
-      .pipe(catchError(this.errorHandler));
+      .get<Curso[]>(`${this.apiURL}/curso`)
+      .pipe(
+        catchError(this.handleError)
+      );
   }
+
+  private handleError(error: HttpErrorResponse) {
+    console.error('Error:', error);
+    return throwError('Ocurrió un error, por favor intente nuevamente');
+  }
+
 
   //Crear un estudiante
 
