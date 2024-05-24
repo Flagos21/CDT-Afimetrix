@@ -33,25 +33,50 @@ app.get('/estudiante/', (req, res) => {
     res.json(results);
   });
 });
-
+// Endpoint para crear un estudiante y una matrícula
 app.post('/estudiante/me-agregar-estudiante', (req, res) => {
-  const { idEstudiante, Nombre, FechaNacimiento, Sexo, Clave } = req.body;
-  db.query('INSERT INTO estudiante (idEstudiante, Nombre, FechaNacimiento, Sexo, Clave) VALUES (?, ?, ?, ?, ?)', [idEstudiante, Nombre, FechaNacimiento, Sexo, Clave], (err, result) => {
+  const { idEstudiante, Nombre, FechaNacimiento, Sexo, Clave, idCurso, Anio } = req.body;
+
+  db.beginTransaction(err => {
     if (err) {
-      res.status(500).send('Error creating estudiante');
+      res.status(500).send('Error starting transaction');
       return;
     }
-    const estudianteId = result.insertId;
-    db.query('SELECT * FROM estudiante WHERE idEstudiante = ?', estudianteId, (err, result) => {
+
+    const estudianteQuery = 'INSERT INTO estudiante (idEstudiante, Nombre, FechaNacimiento, Sexo, Clave) VALUES (?, ?, ?, ?, ?)';
+    const estudianteData = [idEstudiante, Nombre, FechaNacimiento, Sexo, Clave];
+
+    db.query(estudianteQuery, estudianteData, (err, estudianteResult) => {
       if (err) {
-        res.status(500).send('Error fetching created estudiante');
-        return;
+        return db.rollback(() => {
+          res.status(500).send('Error creating estudiante');
+        });
       }
-      res.status(201).json(result[0]);
+
+      const matriculaQuery = 'INSERT INTO matricula (idEstudiante, idCurso, Anio) VALUES (?, ?, ?)';
+      const matriculaData = [idEstudiante, idCurso, Anio];
+
+      db.query(matriculaQuery, matriculaData, (err, matriculaResult) => {
+        if (err) {
+          return db.rollback(() => {
+            res.status(500).send('Error creating matricula');
+          });
+        }
+
+        db.commit(err => {
+          if (err) {
+            return db.rollback(() => {
+              res.status(500).send('Error committing transaction');
+            });
+          }
+          res.status(201).send('Estudiante and matricula created successfully');
+        });
+      });
     });
   });
 });
-  
+
+
 app.get('/estudiante/:idEstudiante', (req, res) => {
   const estudianteId = req.params.idEstudiante;
   db.query('SELECT * FROM estudiante WHERE idEstudiante = ?', estudianteId, (err, result) => {
@@ -66,10 +91,6 @@ app.get('/estudiante/:idEstudiante', (req, res) => {
     res.json(result[0]);
   });
 });
-
-  
-
-
 
 app.put('/estudiante/:estudianteId', (req, res) => {
   const estudianteId = req.params.estudianteId;
@@ -88,7 +109,7 @@ app.put('/estudiante/:estudianteId', (req, res) => {
     });
   });
 });
-// Cambiar DELETE FROM estudiantes a DELETE FROM estudiante
+
 app.delete('/estudiante/:idEstudiante', (req, res) => {
   const estudianteId = req.params.idEstudiante;
   db.query('DELETE FROM estudiante WHERE idEstudiante = ?', estudianteId, err => {

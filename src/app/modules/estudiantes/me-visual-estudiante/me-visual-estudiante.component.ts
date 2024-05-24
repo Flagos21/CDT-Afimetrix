@@ -84,7 +84,9 @@ throw new Error('Method not implemented.');
           Nombre: data.Nombre,
           FechaNacimiento: data.FechaNacimiento,
           Sexo: data.Sexo,
-          Clave: data.Clave
+          Clave: data.Clave,
+          idCurso: this.cursoId,
+          Anio: new Date().getFullYear() // Suponiendo que el año actual es el de matriculación
         };
   
         // Llamada al servicio para guardar el estudiante
