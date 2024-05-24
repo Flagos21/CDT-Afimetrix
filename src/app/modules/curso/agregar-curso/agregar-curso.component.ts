@@ -1,8 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { CursoService } from '../curso.service';
-
 import { Router, ActivatedRoute } from '@angular/router';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Colegio, Profesor } from '../curso';
@@ -12,9 +10,9 @@ import { Colegio, Profesor } from '../curso';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './agregar-curso.component.html',
-  styleUrl: './agregar-curso.component.css'
+  styleUrls: ['./agregar-curso.component.css']
 })
-export class AgregarCursoComponent {
+export class AgregarCursoComponent implements OnInit {
 
   form!: FormGroup;
   profesores: Profesor[] = [];
@@ -27,10 +25,9 @@ export class AgregarCursoComponent {
     private router: Router,
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute
-  ){}
-  
+  ) {}
 
-  ngOnInit(): void{
+  ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
       if (params !== null && params.has('idColegio')) {
         const idColegioParam = params.get('idColegio');
@@ -38,11 +35,6 @@ export class AgregarCursoComponent {
           this.colegioIdFromUrl = +idColegioParam;
         }
       }
-    });
-    
-    // Obtener lista de profesores
-    this.cursoService.getAllP().subscribe((data: Profesor[]) => {
-      this.profesores = data;
     });
 
     // Obtener lista de colegios
@@ -56,13 +48,23 @@ export class AgregarCursoComponent {
       idProfesor: ['', Validators.required],
       Nombre: ['', Validators.required],
     });
+
+    // Obtener lista de profesores filtrados por el colegio seleccionado
+    this.updateProfesores(this.colegioIdFromUrl);
+  }
+
+  // Obtener lista de profesores filtrados por el colegio seleccionado
+  updateProfesores(idColegio: number): void {
+    this.cursoService.getAllP().subscribe((data: Profesor[]) => {
+      this.profesores = data.filter(profesor => profesor.idColegio === idColegio);
+    });
   }
 
   get f() {
     return this.form.controls;
   }
 
-  submit(){
+  submit() {
     console.log(this.form.value);
     this.cursoService.create(this.form.value).subscribe((res: any) => {
       console.log('Curso creado con éxito!');

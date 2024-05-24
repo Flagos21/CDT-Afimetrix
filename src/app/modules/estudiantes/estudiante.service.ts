@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
-
 import { Observable, throwError } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-
-import { Estudiante, Curso } from './estudiante';
+import { Curso, Estudiante } from './estudiante';
 
 @Injectable({
   providedIn: 'root',
@@ -20,9 +18,7 @@ export class EstudianteService {
 
   constructor(private httpClient: HttpClient) {}
 
-  // Obtener todos los registros de estudiante
-
-  getAll(idCurso: number): Observable<Estudiante[]> {
+  getAllEstudiantes(idCurso: number): Observable<Estudiante[]> {
     return this.httpClient
       .get<Estudiante[]>(`${this.apiURL}/estudiante?cursoId=${idCurso}`)
       .pipe(
@@ -40,63 +36,53 @@ export class EstudianteService {
       );
   }
 
-  getAllCs(): Observable<Curso[]> {
+  getAllCursos(): Observable<Curso[]> {
     return this.httpClient
       .get<Curso[]>(`${this.apiURL}/curso`)
       .pipe(
+        map((data: any[]) => data.map(item => ({
+          idCurso: item.idCurso,
+          idColegio: item.idColegio,
+          idProfesor: item.idProfesor,
+          Nombre: item.Nombre,
+        }))),
         catchError(this.handleError)
       );
   }
 
-  private handleError(error: HttpErrorResponse) {
-    console.error('Error:', error);
-    return throwError('Ocurrió un error, por favor intente nuevamente');
-  }
-
-
-  //Crear un estudiante
-
-  create(estudiante: Estudiante): Observable<Estudiante> {
+  createEstudiante(estudiante: Estudiante): Observable<Estudiante> {
     return this.httpClient
       .post<Estudiante>(
-        this.apiURL + '/estudiante/me-agregar-estudiante',
+        `${this.apiURL}/estudiante/me-agregar-estudiante`,
         JSON.stringify(estudiante),
         this.httpOptions
       )
-      .pipe(catchError(this.errorHandler));
+      .pipe(catchError(this.handleError));
   }
-
-  //Buscar un estudiante especifico
 
   find(idEstudiante: string): Observable<Estudiante> {
     return this.httpClient
-      .get<Estudiante>(this.apiURL + '/estudiante/' + idEstudiante)
-      .pipe(catchError(this.errorHandler));
+      .get<Estudiante>(`${this.apiURL}/estudiante/${idEstudiante}`)
+      .pipe(catchError(this.handleError));
   }
-
-  //Actualizar datos de un  estudiante especifico
 
   update(idEstudiante: string, estudiante: Estudiante): Observable<Estudiante> {
     return this.httpClient
       .put<Estudiante>(
-        this.apiURL + '/estudiante/' + idEstudiante,
+        `${this.apiURL}/estudiante/${idEstudiante}`,
         JSON.stringify(estudiante),
         this.httpOptions
       )
-      .pipe(catchError(this.errorHandler));
+      .pipe(catchError(this.handleError));
   }
 
-  //Eliminar un estudiante especifico
-
-  delete(idEstudiante: string): Observable<any> {
+  deleteEstudiante(idEstudiante: string): Observable<any> {
     return this.httpClient
-      .delete<any>(this.apiURL + '/estudiante/' + idEstudiante, this.httpOptions)
-      .pipe(catchError(this.errorHandler));
+      .delete<any>(`${this.apiURL}/estudiante/${idEstudiante}`, this.httpOptions)
+      .pipe(catchError(this.handleError));
   }
 
-  //Manejar errores
-
-  errorHandler(error: any) {
+  private handleError(error: HttpErrorResponse) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
       errorMessage = error.error.message;

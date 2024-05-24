@@ -1,27 +1,43 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { EstudianteService } from '../estudiante.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Estudiante, Curso } from '../estudiante';
 
 @Component({
   selector: 'app-me-agregar-estudiante',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './me-agregar-estudiante.component.html',
-  styleUrl: './me-agregar-estudiante.component.css'
+  styleUrls: ['./me-agregar-estudiante.component.css']
 })
-export class MeAgregarEstudianteComponent {
+export class MeAgregarEstudianteComponent implements OnInit {
 
   form!: FormGroup;
+  cursos: Curso[] = [];
+  idCurso: number = 0;
 
   constructor(
     public estudianteService: EstudianteService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) {}
 
-  ngOnInit(): void{
+  ngOnInit(): void {
+    this.activatedRoute.paramMap.subscribe(params => {
+      if (params !== null && params.has('idCurso')) {
+        const idCursoParam = params.get('idCurso');
+        if (idCursoParam !== null) {
+          this.idCurso = +idCursoParam;
+        }
+      }
+    });
+
+    this.estudianteService.getAllCursos().subscribe((data: Curso[]) => {
+      this.cursos = data;
+    });
+
     this.form = new FormGroup({
       idEstudiante: new FormControl('', [Validators.required]),
       Nombre: new FormControl('', Validators.required),
@@ -29,9 +45,8 @@ export class MeAgregarEstudianteComponent {
       Sexo: new FormControl('', Validators.required),
       Clave: new FormControl('', Validators.required),
       Anio: new FormControl('', Validators.required),
-      idCurso: new FormControl('', Validators.required),
-      idMatricula: new FormControl('', Validators.required)
-      
+      idCurso: new FormControl(this.idCurso, Validators.required),
+      idMatricula: new FormControl('', Validators.required) 
     });
   }
 
@@ -41,11 +56,9 @@ export class MeAgregarEstudianteComponent {
 
   submit() {
     console.log(this.form.value);
-    this.estudianteService.create(this.form.value).subscribe((res:any) => {
-      console.log('Estudiante creado con exito!');
-      this.router.navigateByUrl('estudiantes/me-visual-estudiante'); //Poner Ruta
-    })
+    this.estudianteService.createEstudiante(this.form.value).subscribe((res: any) => {
+      console.log('Estudiante creado con éxito!');
+      this.router.navigateByUrl('estudiantes/me-visual-estudiante/' + this.idCurso); // Ajustar la ruta según tu estructura
+    });
   }
-
-
 }
