@@ -100,7 +100,12 @@ throw new Error('Method not implemented.');
     
   }
 
-  
+  triggerFileUpload() {
+    const fileUploadInput = document.getElementById('fileUpload') as HTMLInputElement;
+    if (fileUploadInput) {
+      fileUploadInput.click();
+    }
+  }
 
 }
   
