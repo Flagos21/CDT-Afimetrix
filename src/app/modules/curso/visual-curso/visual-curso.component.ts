@@ -56,21 +56,24 @@ export class VisualCursoComponent implements OnInit {
   
 
   agregarCurso(colegio: Colegio) {
-    if(colegio && colegio.idColegio){
-      const colegioId = colegio.idColegio
-      this.router.navigate(['curso/agregar-curso', { idColegio: colegioId}]);
+    if (colegio && colegio.idColegio) {
+      this.router.navigate(['curso/agregar-curso', colegio.idColegio]);
     }
   }
   verProfesor(colegio: Colegio) {
     if (colegio && colegio.idColegio) {
-      const colegioId = colegio.idColegio;
-      this.router.navigate(['profesor/mp-visual-profesor', { idColegio: colegioId }]);
+      this.router.navigate(['profesor/mp-visual-profesor', colegio.idColegio]);
     }
   }
 
   verCurso(curso: Curso) {
     if (curso && curso.idCurso) {
       this.router.navigate(['estudiantes/me-visual-estudiante', curso.idCurso]);
+    }
+  }
+  verEncuestas(curso: Curso) {
+    if (curso && curso.idCurso) {
+      this.router.navigate(['/curso/detalle-encuesta', curso.idCurso]);
     }
   }
 }

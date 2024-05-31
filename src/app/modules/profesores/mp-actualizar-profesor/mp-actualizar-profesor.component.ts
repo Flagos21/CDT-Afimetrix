@@ -27,8 +27,6 @@ export class MpActualizarProfesorComponent {
     this.idProfesor = this.route.snapshot.params['profesorId'];
     this.profesorService.find(this.idProfesor).subscribe((data: Profesor) => {
       this.profesor = data;
-      // Obtener el ID del colegio desde el profesor cargado
-      this.form.patchValue({ idColegio: this.profesor.idColegio });
     });
 
     this.form = new FormGroup({
@@ -39,18 +37,17 @@ export class MpActualizarProfesorComponent {
       Tipo: new FormControl('', Validators.required),
     });
   }
-
   get f() {
     return this.form.controls;
   }
-
   submit() {
     console.log(this.form.value);
     this.profesorService
       .update(this.idProfesor, this.form.value)
       .subscribe((res: any) => {
-        console.log('Profesor actualizado con éxito!');
-        this.router.navigateByUrl('profesor/mp-visual-profesor/' + this.profesor.idColegio);
+        console.log('Profesor actualizado con exito!');
+        this.router.navigateByUrl('profesor/mp-visual-profesor');
       });
   }
 }
+

@@ -7,10 +7,10 @@ import { MpAgregarProfesorComponent } from './modules/profesores/mp-agregar-prof
 import { MpVisualProfesorComponent } from './modules/profesores/mp-visual-profesor/mp-visual-profesor.component';
 import { MpActualizarProfesorComponent } from './modules/profesores/mp-actualizar-profesor/mp-actualizar-profesor.component';
 import { AgregarColegioComponent } from './modules/colegio/agregar-colegio/agregar-colegio.component';
-import { DetalleEncuestaComponent } from './modules/encuesta/detalle-encuesta/detalle-encuesta.component';
-import { Component } from '@angular/core';
 import { VisualCursoComponent } from './modules/curso/visual-curso/visual-curso.component';
 import { VisualColeComponent } from './modules/colegio/visual-cole/visual-cole.component';
+import { CrearEncuestaComponent } from './modules/encuesta/crear-encuesta/crear-encuesta.component';
+import { DetalleEncuestaComponent } from './modules/encuesta/detalle-encuesta/detalle-encuesta.component';
 
 export const routes: Routes = [
 
@@ -56,5 +56,12 @@ export const routes: Routes = [
 
     { path: 'colegio/agregar-colegio', component: AgregarColegioComponent },
     { path: 'colegio/visual-cole', component: VisualColeComponent },
+
+
+    // Rutas Encuesta
+    { path: 'curso/detalle-encuesta/crear-encuesta', component: CrearEncuestaComponent },
+    { path: 'curso/detalle-encuesta/crear-encuesta/:idCurso', component: CrearEncuestaComponent },
+    { path: 'curso/detalle-encuesta', component: DetalleEncuestaComponent },
+    { path: 'curso/detalle-encuesta/:idCurso', component: DetalleEncuestaComponent }
 
 ];
