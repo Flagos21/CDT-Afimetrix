@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Estudiante, Curso } from '../estudiante';
 
+
 @Component({
   selector: 'app-me-agregar-estudiante',
   standalone: true,
@@ -44,7 +45,7 @@ export class MeAgregarEstudianteComponent implements OnInit {
       FechaNacimiento: new FormControl('', Validators.required),
       Sexo: new FormControl('', Validators.required),
       Clave: new FormControl('', Validators.required),
-      Anio: new FormControl('', Validators.required),
+      Anio: new FormControl('2024', Validators.required),
       idCurso: new FormControl(this.idCurso, Validators.required),
       idMatricula: new FormControl('', Validators.required) 
     });

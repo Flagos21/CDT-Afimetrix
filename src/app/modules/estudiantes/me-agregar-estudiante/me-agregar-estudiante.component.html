@@ -24,8 +24,8 @@
                         <option value="femenino">Femenino</option>
                         </select>
                         <input formControlName="Clave" type="text" class="form-control" placeholder="Clave" required>
-                        <input formControlName="Anio" type="text" class="form-control" placeholder="Año Matrícula" required>
-                        <input formControlName="idCurso" type="text" class="form-control" placeholder="ID Curso" required>
+                        <input formControlName="Anio" type="text" class="form-control" placeholder="Año Matrícula" required readonly>
+                        <input formControlName="idCurso" type="text" class="form-control" placeholder="ID Curso" required readonly>
                         <input formControlName="idMatricula" type="text" class="form-control" placeholder="ID Matrícula" required>
                         <button type="submit" class="agregar-button" [disabled]="!form.valid">Agregar</button>
                     </form>

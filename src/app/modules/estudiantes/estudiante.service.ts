@@ -18,6 +18,7 @@ export class EstudianteService {
 
   constructor(private httpClient: HttpClient) {}
 
+
   getAllEstudiantes(idCurso: number): Observable<Estudiante[]> {
     return this.httpClient
       .get<Estudiante[]>(`${this.apiURL}/estudiante?cursoId=${idCurso}`)
@@ -29,7 +30,7 @@ export class EstudianteService {
           Sexo: item.Sexo,
           Clave: item.Clave,
           idMatricula: item.idMatricula,
-          Anio: new Date(item.AnioMatricula),
+          Anio: item.AnioMatricula,
           idCurso: item.idCurso
         }))),
         catchError(this.handleError)
@@ -69,7 +70,7 @@ export class EstudianteService {
   update(idEstudiante: string, estudiante: Estudiante): Observable<Estudiante> {
     return this.httpClient
       .put<Estudiante>(
-        `${this.apiURL}/estudiante/${idEstudiante}`,
+        this.apiURL + '/estudiante/' + idEstudiante,
         JSON.stringify(estudiante),
         this.httpOptions
       )

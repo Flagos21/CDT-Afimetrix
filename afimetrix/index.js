@@ -25,7 +25,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
   
-app.get('/estudiante', (req, res) => {
+app.get('/estudiante/', (req, res) => {
   const query = `
     SELECT e.*, m.idMatricula, m.Anio AS AnioMatricula, m.idCurso
     FROM estudiante e
@@ -33,45 +33,56 @@ app.get('/estudiante', (req, res) => {
   `;
   db.query(query, (err, results) => {
     if (err) {
-      res.status(500).send('Error fetching students data');
-      return;
+      return res.status(500).send('Error fetching students data');
     }
     res.json(results);
   });
 });
 
 
+
 app.post('/estudiante/me-agregar-estudiante', (req, res) => {
   const { idEstudiante, Nombre, FechaNacimiento, Sexo, Clave, Anio, idCurso, idMatricula } = req.body;
-  db.query('INSERT INTO estudiante (idEstudiante, Nombre, FechaNacimiento, Sexo, Clave) VALUES (?, ?, ?, ?, ?)', [idEstudiante, Nombre, FechaNacimiento, Sexo, Clave], (err, result) => {
+
+  db.beginTransaction(err => {
     if (err) {
-      res.status(500).send('Error creating estudiante');
-      return;
+      return res.status(500).json({ message: 'Error initiating transaction' });
     }
-    const estudianteId = result.insertId;
-    db.query('SELECT * FROM estudiante WHERE idEstudiante = ?', estudianteId, (err, result) => {
+
+    const estudianteQuery = 'INSERT INTO estudiante (idEstudiante, Nombre, FechaNacimiento, Sexo, Clave) VALUES (?, ?, ?, ?, ?)';
+    const estudianteParams = [idEstudiante, Nombre, FechaNacimiento, Sexo, Clave];
+
+    db.query(estudianteQuery, estudianteParams, (err) => {
       if (err) {
-        res.status(500).send('Error fetching created estudiante');
-        return;
+        return db.rollback(() => {
+          res.status(500).json({ message: 'Error creating estudiante' });
+        });
       }
-      res.status(201).json(result[0]);
-    });
-  });
-  db.query('INSERT INTO matricula (idEstudiante, Anio, idCurso, idMatricula) VALUES (?, ?, ?, ?)', [idEstudiante, Anio, idCurso, idMatricula], (err, result) => {
-    if (err) {
-      res.status(500).send('Error creating estudiante');
-      return;
-    }
-    const matriculaId = result.insertId;
-    db.query('SELECT * FROM matricula WHERE idMatricula = ?', matriculaId, (err, result) => {
-      if (err) {
-        res.status(500).send('Error fetching created estudiante');
-        return;
-      }
-      res.status(201).json(result[0]);
+
+      const matriculaQuery = 'INSERT INTO matricula (idEstudiante, Anio, idCurso, idMatricula) VALUES (?, ?, ?, ?)';
+      const matriculaParams = [idEstudiante, Anio, idCurso, idMatricula];
+
+      db.query(matriculaQuery, matriculaParams, (err) => {
+        if (err) {
+          return db.rollback(() => {
+            res.status(500).json({ message: 'Error creating matricula' });
+          });
+        }
+
+        db.commit(err => {
+          if (err) {
+            return db.rollback(() => {
+              res.status(500).json({ message: 'Error committing transaction' });
+            });
+          }
+          res.status(201).json({ message: 'Estudiante y matricula creados correctamente' });
+        });
+      });
     });
   });
 });
+
+
   
 app.get('/estudiante/:idEstudiante', (req, res) => {
   const estudianteId = req.params.idEstudiante;
@@ -81,91 +92,68 @@ app.get('/estudiante/:idEstudiante', (req, res) => {
     LEFT JOIN matricula m ON e.idEstudiante = m.idEstudiante
     WHERE e.idEstudiante = ?
   `;
-  db.query(query, estudianteId, (err, results) => {
+  db.query(query, [estudianteId], (err, results) => {
     if (err) {
-      res.status(500).send('Error fetching student data');
-      return;
+      return res.status(500).send('Error fetching student data');
     }
     if (results.length === 0) {
-      res.status(404).send('Student not found');
-      return;
+      return res.status(404).send('Student not found');
     }
-    res.json(results);
+    res.json(results[0]); // Enviar solo el primer resultado
   });
 });
-
-
-  
 
 
 
 app.put('/estudiante/:idEstudiante', (req, res) => {
   const estudianteId = req.params.idEstudiante;
   const { idEstudiante, Nombre, FechaNacimiento, Sexo, Clave, Anio, idCurso, idMatricula } = req.body;
-  
+
   db.beginTransaction(err => {
     if (err) {
       return res.status(500).send('Error initiating transaction');
     }
 
-    // Actualizar datos en la tabla estudiante
-    db.query(
-      'UPDATE estudiante SET idEstudiante = ?, Nombre = ?, FechaNacimiento = ?, Sexo = ?, Clave = ? WHERE idEstudiante = ?',
-      [idEstudiante, Nombre, FechaNacimiento, Sexo, Clave, estudianteId],
-      (err, result) => {
+    const updateEstudianteQuery = `
+      UPDATE estudiante
+      SET idEstudiante = ?, Nombre = ?, FechaNacimiento = ?, Sexo = ?, Clave = ?
+      WHERE idEstudiante = ?
+    `;
+    const updateEstudianteParams = [idEstudiante, Nombre, FechaNacimiento, Sexo, Clave, estudianteId];
+
+    db.query(updateEstudianteQuery, updateEstudianteParams, (err, result) => {
+      if (err) {
+        return db.rollback(() => {
+          res.status(500).send('Error updating estudiante');
+        });
+      }
+
+      const updateMatriculaQuery = `
+        UPDATE matricula
+        SET idEstudiante = ?, Anio = ?, idCurso = ?, idMatricula = ?
+        WHERE idEstudiante = ?
+      `;
+      const updateMatriculaParams = [idEstudiante, Anio, idCurso, idMatricula, estudianteId];
+
+      db.query(updateMatriculaQuery, updateMatriculaParams, (err, result) => {
         if (err) {
-          db.rollback(() => {
-            return res.status(500).send('Error updating estudiante');
+          return db.rollback(() => {
+            res.status(500).send('Error updating matricula');
           });
-          return;
         }
 
-        // Actualizar datos en la tabla matricula
-        db.query(
-          'UPDATE matricula SET idEstudiante = ?, Anio = ?, idCurso = ?, idMatricula = ? WHERE idEstudiante = ?',
-          [idEstudiante, Anio, idCurso, idMatricula, estudianteId],
-          (err, result) => {
-            if (err) {
-              db.rollback(() => {
-                return res.status(500).send('Error updating matricula');
-              });
-              return;
-            }
-
-            db.commit(err => {
-              if (err) {
-                db.rollback(() => {
-                  return res.status(500).send('Error committing transaction');
-                });
-                return;
-              }
-
-              res.status(200).json({ msg: 'Estudiante updated successfully' });
+        db.commit(err => {
+          if (err) {
+            return db.rollback(() => {
+              res.status(500).send('Error committing transaction');
             });
           }
-        );
-      }
-    );
+          res.status(200).json({ msg: 'Estudiante updated successfully' });
+        });
+      });
+    });
   });
 });
-
-// Cambiar DELETE FROM estudiantes a DELETE FROM estudiante
-app.delete('/estudiante/:idEstudiante', (req, res) => {
-  const estudianteId = req.params.idEstudiante;
-  db.query('DELETE FROM estudiante WHERE idEstudiante = ?', estudianteId, err => {
-    if (err) {
-      res.status(500).send('Error deleting estudiante');
-      return;
-    }
-    res.status(200).json({ msg: 'Estudiante deleted successfully' });
-  });
-});
-
-
-
-
-
-
 
 
 
@@ -233,16 +221,6 @@ app.put('/profesor/:profesorId', (req, res) => {
 });
 
 
-app.delete('/profesor/:idProfesor', (req, res) => {
-  const profesorId = req.params.id;
-  db.query('DELETE FROM profesor WHERE idProfesor = ?', profesorId, err => {
-    if (err) {
-      res.status(500).send('Error deleting profesores');
-      return;
-    }
-    res.status(200).json({ msg: 'profesores deleted successfully' });
-  });
-});
 
   
 /* EndPoins Curso */

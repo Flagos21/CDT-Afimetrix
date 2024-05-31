@@ -1,56 +1,26 @@
-<!DOCTYPE html>
-<html lang="es">
-
-<head>
-    <title>Agregar Estudiantes</title>
-</head>
-
-<body>
-    <div class="container">
-        <div class="container-top">
-            <div class="blue-stripe"></div>
-        </div>
-        <div class="container-bottom">
-            <div class="image-container"><img src="../../../../assets/img/LogoUnach.png" alt="" class="logo"></div>
-            <div class="form-container">
-                <h2>ACTUALIZAR ESTUDIANTE</h2>
-                <form [formGroup]="form" (ngSubmit)="submit()">
-                    <input 
-                    formControlName="Nombre" 
-                    type="text"
-                    [(ngModel)]="estudiante.Nombre" 
-                    class="form-control">
-                    <input 
-                    formControlName="idEstudiante"
-                    type="text" 
-                    [(ngModel)]="estudiante.idEstudiante"
-                    class="form-control" required="">
-                    <input 
-                    formControlName="FechaNacimiento" 
-                    type="date"
-                    [(ngModel)]="estudiante.FechaNacimiento" 
-                    class="form-control" required>
-                    <select 
-                    formControlName="Sexo" 
-                    name="genero" 
-                    class="form-control"
-                    [(ngModel)]="estudiante.Sexo"  
-                    id="genero" required>
-                        <option value="">Género</option>
-                        <option value="masculino">Masculino</option>
-                        <option value="femenino">Femenino</option>
-                    </select>
-                    <input 
-                    formControlName="Clave" 
-                    type="text"
-                    [(ngModel)]="estudiante.Clave" 
-                    class="form-control" required>
-                    <button type="submit" class="agregar-button" [disabled]="!form.valid">Actualizar</button>
-                </form>
-            </div>
-        </div>
-
+<div class="container">
+    <div class="container-top">
+      <div class="blue-stripe"></div>
     </div>
-</body>
-
-</html>
+    <div class="container-bottom">
+      <div class="image-container">
+        <img src="../../../../assets/img/LogoUnach.png" alt="" class="logo">
+      </div>
+      <div class="form-container">
+        <h2>ACTUALIZAR ESTUDIANTE</h2>
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <input formControlName="Nombre" type="text" class="form-control">
+          <input formControlName="idEstudiante" type="text" class="form-control" required>
+          <input formControlName="FechaNacimiento" type="date" class="form-control" required>
+          <select formControlName="Sexo" class="form-control" required>
+            <option value="">Género</option>
+            <option value="masculino">Masculino</option>
+            <option value="femenino">Femenino</option>
+          </select>
+          <input formControlName="Clave" type="text" class="form-control" required>
+          <button type="submit" class="agregar-button" [disabled]="!form.valid">Actualizar</button>
+        </form>
+      </div>
+    </div>
+  </div>
+  
