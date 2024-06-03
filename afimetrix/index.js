@@ -38,58 +38,55 @@ app.get("/estudiante/", (req, res) => {
   });
 });
 
-app.post("/estudiante/me-agregar-estudiante", (req, res) => {
-  const {
-    idEstudiante,
-    Nombre,
-    FechaNacimiento,
-    Sexo,
-    Clave,
-    Anio,
-    idCurso
-  } = req.body;
-
-  db.beginTransaction((err) => {
+app.post('/estudiante/me-agregar-estudiante', (req, res) => {
+  const { idEstudiante, Nombre, FechaNacimiento, Sexo, Clave, Anio, idCurso } = req.body;
+  db.beginTransaction(err => {
     if (err) {
-      return res.status(500).json({ message: "Error initiating transaction" });
+      console.error('Error initiating transaction:', err);
+      return res.status(500).send('Error initiating transaction');
     }
 
-    const estudianteQuery =
-      "INSERT INTO estudiante (idEstudiante, Nombre, FechaNacimiento, Sexo, Clave) VALUES (?, ?, ?, ?, ?)";
-    const estudianteParams = [      idEstudiante,      Nombre,      FechaNacimiento,      Sexo,      Clave,    ];
-
-    db.query(estudianteQuery, estudianteParams, (err, result) => {
-      if (err) {
-        return db.rollback(() => {
-          res.status(500).json({ message: "Error creating estudiante" });
-        });
-      }
-
-      const idEstudianteCreated = result.insertId;
-
-      const matriculaQuery =
-        "INSERT INTO matricula (idEstudiante, Anio, idCurso) VALUES (?, ?, ?)";
-      const matriculaParams = [idEstudianteCreated, Anio, idCurso];
-
-      db.query(matriculaQuery, matriculaParams, (err, result) => {
+    // Insertar estudiante en la tabla estudiante
+    db.query('INSERT INTO estudiante (idEstudiante, Nombre, FechaNacimiento, Sexo, Clave) VALUES (?, ?, ?, ?, ?)', 
+      [idEstudiante, Nombre, FechaNacimiento, Sexo, Clave], 
+      (err, result) => {
         if (err) {
-          return db.rollback(() => {
-            res.status(500).json({ message: "Error creating matricula" });
+          db.rollback(() => {
+            console.error('Error creating estudiante:', err);
+            res.status(500).send('Error creating estudiante');
           });
+          return;
         }
+        
+        // Insertar matrícula en la tabla matricula
+        db.query('INSERT INTO matricula (idEstudiante, Anio, idCurso) VALUES (?, ?, ?)', 
+          [idEstudiante, Anio, idCurso], 
+          (err, result) => {
+            if (err) {
+              db.rollback(() => {
+                console.error('Error creating matrícula:', err);
+                res.status(500).send('Error creating matrícula');
+              });
+              return;
+            }
 
-        db.commit((err) => {
-          if (err) {
-            return db.rollback(() => {
-              res.status(500).json({ message: "Error committing transaction" });
+            const idMatricula = result.insertId;
+
+            db.commit(err => {
+              if (err) {
+                db.rollback(() => {
+                  console.error('Error committing transaction:', err);
+                  res.status(500).send('Error committing transaction');
+                });
+                return;
+              }
+
+              res.status(201).json({ msg: 'Estudiante and matrícula created successfully', idMatricula });
             });
           }
-          res
-            .status(201)
-            .json({ message: "Estudiante y matricula creados correctamente" });
-        });
-      });
-    });
+        );
+      }
+    );
   });
 });
 
