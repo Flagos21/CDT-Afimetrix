@@ -1,0 +1,16 @@
+<!-- sidebar.component.html -->
+<div class="w3-main">
+    <div class="w3-teal">
+        <button class="w3-button w3-teal w3-xlarge w3-hide-large" (click)="w3_open()">&#9776;</button>
+        <!-- <button class="w3-button w3-teal" (click)="goBack()"><-</button> -->
+      </div>
+      
+</div>
+
+
+<div *ngIf="sidebarOpen" [ngClass]="{'w3-sidebar': true, 'w3-bar-block': true, 'w3-collapse': true, 'w3-card': true, 'w3-animate-left': true}" style="width:200px;" id="mySidebar">
+    <button class="w3-button" (click)="w3_close()">Close &times;</button>
+    <a href="profesor/mp-visual-profesor" class="w3-bar-item w3-button">Ver profesores </a>
+    <a href="colegio/visual-cole" class="w3-bar-item w3-button">Ver colegios</a>
+    <a href="curso/agregar-curso" class="w3-bar-item w3-button">Agregar curso</a>
+</div>

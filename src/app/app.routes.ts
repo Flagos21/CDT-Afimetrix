@@ -12,6 +12,9 @@ import { Component } from '@angular/core';
 import { VisualCursoComponent } from './modules/curso/visual-curso/visual-curso.component';
 import { VisualColeComponent } from './modules/colegio/visual-cole/visual-cole.component';
 import { LoginComponent } from './modules/ingresar/login/login.component';
+import { SidebarComponent } from './modules/sidebar/sidebar/sidebar.component';
+
+
 
 
 export const routes: Routes = [
@@ -56,4 +59,9 @@ export const routes: Routes = [
     { path: 'colegio/visual-cole', component: VisualColeComponent },
 
     { path: 'ingresar/login', component: LoginComponent},
-];
+
+    {path: 'colegio/agregar-colegio', component: SidebarComponent}
+
+]
+
+

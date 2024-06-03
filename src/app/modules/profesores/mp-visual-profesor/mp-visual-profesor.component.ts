@@ -3,13 +3,14 @@ import { Profesor, Colegio, Ciudad, Fundacion } from '../profesor';
 import { CommonModule } from '@angular/common';
 import { ProfesorService } from '../profesor.service';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
+import { SidebarComponent } from "../../sidebar/sidebar/sidebar.component";
 
 @Component({
-  selector: 'app-mp-visual-profesor',
-  standalone: true,
-  imports: [CommonModule, RouterModule],
-  templateUrl: './mp-visual-profesor.component.html',
-  styleUrls: ['./mp-visual-profesor.component.css']
+    selector: 'app-mp-visual-profesor',
+    standalone: true,
+    templateUrl: './mp-visual-profesor.component.html',
+    styleUrls: ['./mp-visual-profesor.component.css'],
+    imports: [CommonModule, RouterModule, SidebarComponent]
 })
 export class MpVisualProfesorComponent implements OnInit {
   profesores: Profesor[] = [];
