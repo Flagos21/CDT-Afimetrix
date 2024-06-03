@@ -144,8 +144,22 @@ form select {
     width: 100%;
 }
 
-.buttons {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
+.download-button {
+    padding: 10px 20px; /* Ajustar el padding para hacer el botón más grande */
+    background-color: #4CAF50; /* Color verde similar al botón de descarga */
+    color: white; /* Texto en color blanco */
+    border: none; /* Eliminar borde */
+    border-radius: 5px; /* Borde redondeado */
+    cursor: pointer; /* Cambiar el cursor al pasar sobre el botón */
+    transition: background-color 0.3s ease; /* Efecto de transición al pasar el cursor */
 }
+
+.download-button:hover {
+    background-color: #45a049; /* Cambiar el color al pasar el cursor */
+}
+.table-options {
+    text-align: center; /* Alinear horizontalmente */
+    vertical-align: middle; /* Alinear verticalmente */
+}
+
+

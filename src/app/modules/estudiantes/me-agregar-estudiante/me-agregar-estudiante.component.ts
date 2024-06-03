@@ -47,7 +47,7 @@ export class MeAgregarEstudianteComponent implements OnInit {
       Clave: new FormControl('', Validators.required),
       Anio: new FormControl('2024', Validators.required),
       idCurso: new FormControl(this.idCurso, Validators.required),
-      idMatricula: new FormControl('', Validators.required) 
+      
     });
   }
 

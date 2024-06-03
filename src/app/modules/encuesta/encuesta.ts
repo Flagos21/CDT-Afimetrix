@@ -1,9 +1,9 @@
 export interface Encuesta {
     idDetalleEncuesta: number,
     Tipo: string,
+    Nombre: string,
     FechaInicio: string,
     FechaFin: string,
-    idEncuesta: number,
     idCurso: number;
 }
 export interface Curso {

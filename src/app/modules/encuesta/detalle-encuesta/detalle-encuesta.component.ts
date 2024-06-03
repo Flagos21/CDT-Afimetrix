@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { EncuestaService } from '../encuesta.service';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http'; // Asegúrate de que esto está importado
+import moment from 'moment';
 @Component({
   selector: 'app-detalle-encuesta',
   standalone: true,
@@ -86,5 +87,9 @@ export class DetalleEncuestaComponent implements OnInit {
       link.download = fileName;
       link.click();
     });
+  }
+
+  formatDate(dateString: string): string {
+    return moment(dateString).format('DD-MM-YYYY');
   }
 }

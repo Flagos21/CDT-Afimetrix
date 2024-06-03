@@ -43,7 +43,6 @@ export class AgregarCursoComponent implements OnInit {
     });
 
     this.form = this.formBuilder.group({
-      idCurso: ['', [Validators.required]],
       idColegio: [this.colegioIdFromUrl, Validators.required],
       idProfesor: ['', Validators.required],
       Nombre: ['', Validators.required],

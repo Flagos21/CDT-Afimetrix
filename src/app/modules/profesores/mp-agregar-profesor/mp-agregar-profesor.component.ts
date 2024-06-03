@@ -2,7 +2,13 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { Router, ActivatedRoute } from '@angular/router';
-import { ReactiveFormsModule, FormGroup, FormControl, Validators,FormBuilder } from '@angular/forms';
+import {
+  ReactiveFormsModule,
+  FormGroup,
+  FormControl,
+  Validators,
+  FormBuilder,
+} from '@angular/forms';
 import { ProfesorService } from '../profesor.service';
 import { Colegio } from '../profesor';
 
@@ -11,10 +17,9 @@ import { Colegio } from '../profesor';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './mp-agregar-profesor.component.html',
-  styleUrl: './mp-agregar-profesor.component.css'
+  styleUrl: './mp-agregar-profesor.component.css',
 })
 export class MpAgregarProfesorComponent {
-
   form!: FormGroup;
   colegioIdFromUrl: number = 0;
 
@@ -22,11 +27,11 @@ export class MpAgregarProfesorComponent {
     public profesorService: ProfesorService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private formBuilder: FormBuilder,
-  ) { }
+    private formBuilder: FormBuilder
+  ) {}
 
   ngOnInit(): void {
-    this.activatedRoute.paramMap.subscribe(params => {
+    this.activatedRoute.paramMap.subscribe((params) => {
       if (params !== null && params.has('idColegio')) {
         const idColegioParam = params.get('idColegio');
         if (idColegioParam !== null) {
@@ -40,11 +45,9 @@ export class MpAgregarProfesorComponent {
       Nombre: ['', Validators.required],
       Clave: ['', Validators.required],
       idColegio: [this.colegioIdFromUrl, Validators.required],
-      Tipo: ['', Validators.required]
+      Tipo: ['', Validators.required],
     });
   }
-
-
 
   get f() {
     return this.form.controls;
@@ -56,7 +59,9 @@ export class MpAgregarProfesorComponent {
     this.profesorService.create(this.form.value).subscribe(
       (res: any) => {
         console.log('Profesor creado con éxito!');
-        this.router.navigateByUrl('/profesor/mp-visual-profesor'); // Poner Ruta
+        this.router.navigateByUrl(
+          '/profesor/mp-visual-profesor/' + this.colegioIdFromUrl
+        ); // Poner Ruta
       },
       (error: any) => {
         console.error('Error al crear el profesor:', error);

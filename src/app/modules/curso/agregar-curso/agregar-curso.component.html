@@ -15,7 +15,7 @@
             <div class="form-container">
                 <h2>AGREGAR CURSO</h2>
                 <form [formGroup]="form" (ngSubmit)="submit()">
-                    <input formControlName="idCurso" type="text" class="form-control" placeholder="IdCurso" >
+                    <!-- <input formControlName="idCurso" type="text" class="form-control" placeholder="IdCurso" > -->
                     <input formControlName="Nombre" type="text" class="form-control" placeholder="Nombre Curso" required>
                     <input formControlName="idColegio" type="text" class="form-control" id="idColegio" placeholder="idColegio" [value]="colegioIdFromUrl" readonly>
                     <select formControlName="idProfesor" class="form-control" id="idProfesor">

@@ -31,11 +31,10 @@ export class CrearEncuestaComponent {
     });
 
     this.form = this.formBuilder.group({
-      idDetalleEncuesta: ['', Validators.required],
       Tipo: ['', Validators.required],
+      Nombre: ['', Validators.required],
       FechaInicio: ['', [Validators.required, this.fechaInicioValidator()]], // Aplicar la validación personalizada
       FechaFin: ['', Validators.required],
-      idEncuesta: ['', Validators.required],
       idCurso: [this.cursoIdFromURL, Validators.required],
     });
 

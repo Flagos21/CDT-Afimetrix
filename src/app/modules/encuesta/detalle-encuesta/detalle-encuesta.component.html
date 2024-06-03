@@ -27,13 +27,14 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let encuesta of encuestas">
-                            <td>{{ encuesta.Tipo }}</td>
-                            <td>{{ encuesta.FechaInicio }}</td>
-                            <td>{{ encuesta.FechaFin }}</td>
+                            <td>{{ encuesta.Nombre }}</td>
+                            <td>{{ formatDate(encuesta.FechaInicio) }}</td>
+                            <td>{{ formatDate(encuesta.FechaFin) }}</td>
                             <td class="table-options"> 
-                                <button type="button" class="buttons mb-0"
+                                <button type="button" class="download-button"
                                     (click)="descargarConsentimientos()">Descargar</button>
                             </td>
+                            
                         </tr>
                     </tbody>
                 </table>
