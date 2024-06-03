@@ -372,7 +372,7 @@ app.get("/colegio", (req, res) => {
 app.post("/colegio/agregar-colegio", (req, res) => {
   const { Nombre, idFundacion, idCiudad } = req.body;
   db.query(
-    "INSERT INTO colegio (Nombre, idCiudad, idFundacion) VALUES (?, ?, ?, ?)",
+    "INSERT INTO colegio (Nombre, idCiudad, idFundacion) VALUES (?, ?, ?)",
     [Nombre, idCiudad, idFundacion],
     (err, result) => {
       if (err) {
