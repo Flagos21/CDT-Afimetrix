@@ -3,7 +3,7 @@ import { Encuesta, Curso } from '../encuesta';
 import { CommonModule } from '@angular/common';
 import { EncuestaService } from '../encuesta.service';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
-import { HttpClient } from '@angular/common/http'; // Asegúrate de que esto está importado
+import { HttpClient } from '@angular/common/http'; 
 import moment from 'moment';
 @Component({
   selector: 'app-detalle-encuesta',
@@ -70,15 +70,11 @@ export class DetalleEncuestaComponent implements OnInit {
       'Formulario_CEC_Asentimiento_informado.pdf',
     ];
     const basePath = '/assets/documents/';
-    const numCopies = 1; // Define the fixed number of copies
-    1;
+    
     pdfFiles.forEach((file) => {
-      for (let i = 0; i < numCopies; i++) {
-        const fileName = `${file.split('.pdf')[0]}_${i + 1}.pdf`;
-        this.downloadFile(`${basePath}${file}`, fileName);
-      }
+      this.downloadFile(`${basePath}${file}`, file);
     });
-  }
+  }  
 
   private downloadFile(url: string, fileName: string) {
     this.httpClient.get(url, { responseType: 'blob' }).subscribe((blob) => {

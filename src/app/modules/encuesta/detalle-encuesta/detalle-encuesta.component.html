@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <title>Ver Encuestas</title>
 </head>
+
 <body>
     <div class="container">
         <div class="container-top">
@@ -20,6 +22,7 @@
                     <thead>
                         <tr>
                             <th>Nombre</th>
+                            <th>Tipo</th>
                             <th>Incio</th>
                             <th>Termino</th>
                             <th>Consentimiento</th>
@@ -28,13 +31,14 @@
                     <tbody>
                         <tr *ngFor="let encuesta of encuestas">
                             <td>{{ encuesta.Nombre }}</td>
+                            <td>{{encuesta.Tipo}}</td>
                             <td>{{ formatDate(encuesta.FechaInicio) }}</td>
                             <td>{{ formatDate(encuesta.FechaFin) }}</td>
-                            <td class="table-options"> 
+                            <td class="table-options">
                                 <button type="button" class="download-button"
                                     (click)="descargarConsentimientos()">Descargar</button>
                             </td>
-                            
+
                         </tr>
                     </tbody>
                 </table>
@@ -42,4 +46,5 @@
         </div>
     </div>
 </body>
+
 </html>

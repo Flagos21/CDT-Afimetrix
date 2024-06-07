@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { Encuesta, Curso } from './encuesta';
+import { Encuesta, Curso, EncuestaPregunta } from './encuesta';
 
 @Injectable({
   providedIn: 'root'
@@ -49,5 +49,10 @@ export class EncuestaService {
       errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
     }
     return throwError(errorMessage);
+  }
+  getPreguntaEncuesta(): Observable<EncuestaPregunta[]> {
+    return this.httpClient
+      .get<EncuestaPregunta[]>(this.apiURL + '/encuesta/')
+      .pipe(catchError(this.errorHandler));
   }
 }
