@@ -65,8 +65,9 @@ export const routes: Routes = [
     { path: 'curso/detalle-encuesta/crear-encuesta', component: CrearEncuestaComponent },
     { path: 'curso/detalle-encuesta/crear-encuesta/:idCurso', component: CrearEncuestaComponent },
     { path: 'curso/detalle-encuesta', component: DetalleEncuestaComponent },
-    { path: 'curso/detalle-encuesta/:idCurso', component: DetalleEncuestaComponent }
+    { path: 'curso/detalle-encuesta/:idCurso', component: DetalleEncuestaComponent },
 
     //Preguntas frecuentes 
-    { path: 'preguntas-frecuentes/preguntas', component: PreguntasComponent}
+    { path: 'preguntas-frecuentes/preguntas', component: PreguntasComponent},
+    {path: 'dashboard/dashboard-visual' , component: DashboardVisualComponent}
 ];
