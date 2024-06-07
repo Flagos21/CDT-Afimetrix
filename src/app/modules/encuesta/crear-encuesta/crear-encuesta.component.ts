@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EncuestaService } from '../encuesta.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ReactiveFormsModule, FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { EncuestaPregunta } from '../encuesta';
 
 @Component({
   selector: 'app-crear-encuesta',
@@ -11,16 +12,20 @@ import { ReactiveFormsModule, FormGroup, Validators, FormBuilder } from '@angula
   templateUrl: './crear-encuesta.component.html',
   styleUrl: './crear-encuesta.component.css'
 })
-export class CrearEncuestaComponent {
-  form: FormGroup;
+export class CrearEncuestaComponent implements OnInit {
+
+  form!: FormGroup;
   cursoIdFromURL: number = 0;
+  encuestaslista: EncuestaPregunta[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
     private encuestaService: EncuestaService,
     private router: Router,
     private activatedRoute: ActivatedRoute
-  ) {
+  ) { }
+
+  ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(params => {
       if (params !== null && params.has('idCurso')) {
         const idCursoParam = params.get('idCurso');
@@ -36,6 +41,7 @@ export class CrearEncuestaComponent {
       FechaInicio: ['', [Validators.required, this.fechaInicioValidator()]], // Aplicar la validación personalizada
       FechaFin: ['', Validators.required],
       idCurso: [this.cursoIdFromURL, Validators.required],
+      idPreguntasEncuesta: ['', Validators.required]
     });
 
     this.form.get('FechaInicio')?.valueChanges.subscribe(() => {
@@ -46,20 +52,29 @@ export class CrearEncuestaComponent {
         this.form.get('FechaFin')?.setValue(fechaFin.toISOString().substring(0, 10)); // Formatear la fecha como YYYY-MM-DD
       }
     });
+    this.listarEncuestas();
+  }
+
+  listarEncuestas() {
+    this.encuestaService.getPreguntaEncuesta().subscribe((data: EncuestaPregunta[]) => {
+      this.encuestaslista = data;
+    })
   }
 
   fechaInicioValidator() {
     return (control: any) => {
       const fecha = new Date(control.value);
       const fechaActual = new Date();
-      if (fecha >= fechaActual || fecha.getTime() === fechaActual.getTime()) { 
+      if (fecha >= fechaActual || fecha.getTime() === fechaActual.getTime()) {
         return null;
       } else {
         return { fechaInvalida: true };
       }
     };
   }
-  
+  get f() {
+    return this.form.controls;
+  }
 
   submit() {
     if (this.form.valid) {

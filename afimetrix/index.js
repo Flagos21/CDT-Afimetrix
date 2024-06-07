@@ -10,8 +10,8 @@ const port = 3000;
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "",
-  database: "afimetrixprueba",
+  password: "Pato1596*-+",
+  database: "afimetrix_auto",
 });
 
 db.connect((err) => {
@@ -585,10 +585,11 @@ app.post("/detalleencuesta/crear-encuesta", (req, res) => {
     FechaFin,
     Nombre,
     idCurso,
+    idPreguntasEncuesta,
   } = req.body;
   db.query(
-    "INSERT INTO detalleencuesta (Tipo, FechaInicio, FechaFin, Nombre, idCurso) VALUES (?, ?, ?, ?, ?)",
-    [Tipo, FechaInicio, FechaFin, Nombre, idCurso],
+    "INSERT INTO detalleencuesta (Tipo, FechaInicio, FechaFin, Nombre, idCurso, idPreguntasEncuesta) VALUES (?, ?, ?, ?, ?, ?)",
+    [Tipo, FechaInicio, FechaFin, Nombre, idCurso,  idPreguntasEncuesta],
     (err, result) => {
       if (err) {
         res.status(500).send("Error creating DetalleEncuesta");
@@ -665,6 +666,17 @@ app.delete("/detalleencuesta/:idDetalleEncuesta", (req, res) => {
       res.status(200).json({ msg: "DetalleEncuesta deleted successfully" });
     }
   );
+});
+
+/* EndPoins PreguntaEncuestas */
+app.get("/encuesta", (req, res) => {
+  db.query("SELECT * FROM preguntasencuesta", (err, results) => {
+    if (err) {
+      res.status(500).send("Error fetching detalleencuesta");
+      return;
+    }
+    res.json(results);
+  });
 });
 
 /* Start server */

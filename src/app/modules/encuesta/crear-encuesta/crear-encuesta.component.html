@@ -13,26 +13,18 @@
         <div class="container-bottom">
             <div class="image-container"><img src="../../../../assets/img/LogoUnach.png" alt="" class="logo"></div>
             <div class="form-container">
-                <h2>CREAR ENCUESTA</h2>
+                <h2>ASIGNAR ENCUESTA</h2>
                 <form [formGroup]="form" (ngSubmit)="submit()">
-                    <select formControlName="Nombre" type="text" class="form-control" placeholder="Tipo" required>
-                        <option value="">Nombre</option>
-                        <option value="Hábitos Alimenticios y Nutrición">Hábitos Alimenticios y Nutrición</option>
-                        <option value="Actividad Física">Actividad Física</option>
-                        <option value="Sueño">Sueño</option>
-                        <option value="Higiene Personal">Higiene Personal</option>
-                        <option value="Bienestar Emocional">Bienestar Emocional</option>
-                        <option value="Acoso Escolar (Bullying)">Acoso Escolar (Bullying)</option>
-                        <option value="Apoyo Social">Apoyo Social</option>
-                        <option value="Conocimiento sobre Salud">Conocimiento sobre Salud</option>
-                        <option value="Uso de Servicios de Salud">Uso de Servicios de Salud</option>
-                        <option value="Condiciones Crónicas">Condiciones Crónicas</option>
-                        <option value="Uso de Tecnología">Uso de Tecnología</option>
+                    <select formControlName="idPreguntasEncuesta" class="form-control" required>
+                        <option value="">Encuestas</option>
+                        <option *ngFor="let encuesta of encuestaslista" [value]="encuesta.idPreguntasEncuesta">
+                            {{ encuesta.Nombre }}
+                        </option>
                     </select>
+                    <input formControlName="Nombre" type="text" class="form-control" placeholder="Nombre" required>
                     <input formControlName="FechaInicio" type="date" class="form-control" placeholder="" required>
                     <input formControlName="FechaFin" type="date" class="form-control" placeholder="" required>
-                    <select formControlName="Tipo" type="text" class="form-control" placeholder="Encuesta"
-                        required>
+                    <select formControlName="Tipo" type="text" class="form-control" placeholder="Encuesta" required>
                         <option value="">Tipo</option>
                         <option value="Inicial">Inicial</option>
                         <option value="Final">Final</option>
