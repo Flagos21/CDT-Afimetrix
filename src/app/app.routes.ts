@@ -11,10 +11,11 @@ import { VisualCursoComponent } from './modules/curso/visual-curso/visual-curso.
 import { VisualColeComponent } from './modules/colegio/visual-cole/visual-cole.component';
 import { CrearEncuestaComponent } from './modules/encuesta/crear-encuesta/crear-encuesta.component';
 import { DetalleEncuestaComponent } from './modules/encuesta/detalle-encuesta/detalle-encuesta.component';
+import { DashboardVisualComponent } from './modules/dashboard/dashboard-visual/dashboard-visual.component';
 
 export const routes: Routes = [
 
-    { path: '', pathMatch: 'full', redirectTo: 'colegio/visual-cole' },
+    { path: '', pathMatch: 'full', redirectTo: 'dashboard/dashboard-visual' },
 
     //Rutas Estudiante
 
@@ -62,6 +63,8 @@ export const routes: Routes = [
     { path: 'curso/detalle-encuesta/crear-encuesta', component: CrearEncuestaComponent },
     { path: 'curso/detalle-encuesta/crear-encuesta/:idCurso', component: CrearEncuestaComponent },
     { path: 'curso/detalle-encuesta', component: DetalleEncuestaComponent },
-    { path: 'curso/detalle-encuesta/:idCurso', component: DetalleEncuestaComponent }
+    { path: 'curso/detalle-encuesta/:idCurso', component: DetalleEncuestaComponent },
+
+    { path: 'dashboard/dashboard-visual', component: DashboardVisualComponent },
 
 ];
