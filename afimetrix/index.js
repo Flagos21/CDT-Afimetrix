@@ -10,8 +10,8 @@ const port = 3000;
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "",
-  database: "afimetrixcdt",
+  password: "completoitaliano1",
+  database: "afimetrix4",
 });
 
 db.connect((err) => {
