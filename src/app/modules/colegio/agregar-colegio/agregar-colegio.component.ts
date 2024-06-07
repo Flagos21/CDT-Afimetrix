@@ -5,13 +5,14 @@ import { ColegioService } from '../colegio.service';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Ciudad, Fundacion, } from '../colegio';
+import { SidebarComponent } from "../../sidebar/sidebar/sidebar.component";
 
 @Component({
-  selector: 'app-agregar-colegio',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './agregar-colegio.component.html',
-  styleUrl: './agregar-colegio.component.css'
+    selector: 'app-agregar-colegio',
+    standalone: true,
+    templateUrl: './agregar-colegio.component.html',
+    styleUrl: './agregar-colegio.component.css',
+    imports: [CommonModule, ReactiveFormsModule, SidebarComponent]
 })
 export class AgregarColegioComponent implements OnInit {
 

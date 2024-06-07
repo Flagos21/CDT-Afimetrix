@@ -6,12 +6,14 @@ import { CommonModule } from '@angular/common';
 import { Subject } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
+import { SidebarComponent } from "../../sidebar/sidebar/sidebar.component";
+
 @Component({
-  selector: 'app-visual-cole',
-  standalone: true,
-  imports: [CommonModule, RouterModule],
-  templateUrl: './visual-cole.component.html',
-  styleUrls: ['./visual-cole.component.css']
+    selector: 'app-visual-cole',
+    standalone: true,
+    templateUrl: './visual-cole.component.html',
+    styleUrls: ['./visual-cole.component.css'],
+    imports: [CommonModule, RouterModule, SidebarComponent]
 })
 export class VisualColeComponent implements OnInit {
   colegios: Colegio[] = [];

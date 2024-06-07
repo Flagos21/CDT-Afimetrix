@@ -4,9 +4,10 @@ export interface Estudiante {
     FechaNacimiento: string;
     Sexo: string;
     Clave: string;
-    idMatricula: number;
+    idMatricula?: any;
     Anio: number;
     idCurso: number;
+    [key: string]: any;
 }
 export interface Curso {
     idCurso: number;

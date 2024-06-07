@@ -4,6 +4,7 @@ import { CursoService } from '../curso.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { Colegio, Profesor } from '../curso';
+import { SidebarComponent } from "../../sidebar/sidebar/sidebar.component";
 
 @Component({
   selector: 'app-agregar-curso',

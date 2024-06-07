@@ -26,7 +26,8 @@
         </div>
         <div class="table-container">
             <div class="buttons">
-                <button type="button" class="agregar-button w-100">Sobrecarga De Estudiante</button>
+                <input type="file" id="fileUpload" (change)="Readexcel($event)" class="file-upload-input" hidden>
+                <button type="button" class="file-upload-label" (click)="triggerFileUpload()">Sobrecargar estudiante</button>
                 <button (click)=agregarEstudiante() type="button" class="agregar-button w-100">Agregar Estudiante</button>
             </div>
 
@@ -36,6 +37,7 @@
                 <tr *ngFor="let estudiante of estudiantes">
                     <td>{{ estudiante.Nombre }}</td>
                     <td class="table-options">
+                        
                         <button  type="button" class="agregar-button mb-0 " (click)="verEstudiante(estudiante.idEstudiante)">Ver Estudiante</button>    
                     </td>
                 </tr>

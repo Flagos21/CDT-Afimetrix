@@ -60,6 +60,31 @@ form select {
     box-sizing: content-box;
 }
 
+
+.file-upload-input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+    
+}
+
+.file-upload-label {
+    background-color: #007bff;
+    color: #ffffff;
+    border-radius: 5px;
+    padding: 10px 20%;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 25px;
+
+
+}
+
+
 .agregar-button {
     background-color: #007bff;
     color: #ffffff;

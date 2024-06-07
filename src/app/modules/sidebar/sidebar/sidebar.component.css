@@ -1,0 +1,114 @@
+/* sidebar.component.css */
+
+/* Fuente global */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4; /* Color de fondo suave */
+  color: #333; /* Color del texto */
+  margin: 0;
+  padding: 0;
+}
+
+/* Estilo para el sidebar */
+.w3-sidebar {
+  height: 100%;
+  width: 0; /* Inicialmente oculto */
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #003366;
+  overflow-x: hidden;
+  transition: width 1.5s, padding-top 1.5s; /* Transiciones suaves */
+  padding-top: 60px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.5);
+  font-family: 'Arial', sans-serif; /* Fuente Arial */
+}
+
+/* Aumenta el ancho del sidebar y ajusta el padding superior cuando esté abierto */
+.w3-sidebar.open {
+  width: 200px;
+  padding-top: 60px;
+}
+
+.w3-sidebar a {
+  padding: 10px 16px; /* Ajuste del padding */
+  text-decoration: none;
+  font-size: 18px;
+  color: white; /* Cambia el color del texto a blanco */
+  display: block;
+  transition: 0.3s;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Separadores */
+  font-weight: bold; /* Negritas */
+  font-family: 'Arial', sans-serif; /* Fuente Arial */
+}
+
+.w3-sidebar a:hover {
+  background-color: #575757;
+  color: white;
+}
+
+.w3-sidebar button {
+  padding: 10px 16px; /* Ajuste del padding */
+  font-size: 18px;
+  color: white; /* Cambia el color del texto a blanco */
+  background-color: #003366;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-weight: bold; /* Negritas */
+  font-family: 'Arial', sans-serif; /* Fuente Arial */
+}
+
+.w3-sidebar button:hover {
+  background-color: #575757;
+}
+
+/* Estilo para el contenedor principal */
+.w3-main {
+  margin-left: 0;
+  transition: margin-left 0.5s;
+  padding: 6px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  border-radius: 8px; /* Bordes redondeados */
+  font-family: 'Arial', sans-serif; /* Fuente Arial */
+}
+
+.w3-teal {
+  background-color: #003366;
+  color: white;
+  width: auto; /* Ajuste de ancho automático */
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Espacio entre los botones */
+  padding: 5px; /* Ajuste del padding */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  font-family: 'Arial', sans-serif; /* Fuente Arial */
+}
+
+/* Estilo para el botón */
+.w3-button {
+  border: none;
+  outline: none;
+  background-color: inherit;
+  cursor: pointer;
+  padding: 0; /* Ajuste del padding */
+  font-size: 24px; /* Tamaño del icono */
+  margin-top: 0;
+  color: white;
+  font-weight: bold; /* Negritas */
+  font-family: 'Arial', sans-serif; /* Fuente Arial */
+}
+
+/* Estilos responsivos */
+@media (max-width: 500px) {
+  .w3-sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .w3-main {
+    margin-left: 0;
+  }
+}
+  
