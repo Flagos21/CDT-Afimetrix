@@ -4,13 +4,14 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ProfesorService } from '../profesor.service';
 import { Profesor } from '../profesor';
+import { SidebarComponent } from "../../sidebar/sidebar/sidebar.component";
 
 @Component({
-  selector: 'app-mp-actualizar-profesor',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './mp-actualizar-profesor.component.html',
-  styleUrl: './mp-actualizar-profesor.component.css'
+    selector: 'app-mp-actualizar-profesor',
+    standalone: true,
+    templateUrl: './mp-actualizar-profesor.component.html',
+    styleUrl: './mp-actualizar-profesor.component.css',
+    imports: [CommonModule, ReactiveFormsModule, SidebarComponent]
 })
 export class MpActualizarProfesorComponent {
   idProfesor!: string;

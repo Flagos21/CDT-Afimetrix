@@ -4,14 +4,15 @@ import { EstudianteService } from '../estudiante.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 import { Estudiante, Curso } from '../estudiante';
+import { SidebarComponent } from "../../sidebar/sidebar/sidebar.component";
 
 
 @Component({
-  selector: 'app-me-agregar-estudiante',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './me-agregar-estudiante.component.html',
-  styleUrls: ['./me-agregar-estudiante.component.css']
+    selector: 'app-me-agregar-estudiante',
+    standalone: true,
+    templateUrl: './me-agregar-estudiante.component.html',
+    styleUrls: ['./me-agregar-estudiante.component.css'],
+    imports: [CommonModule, ReactiveFormsModule, SidebarComponent]
 })
 export class MeAgregarEstudianteComponent implements OnInit {
 

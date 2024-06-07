@@ -5,12 +5,13 @@ import { EncuestaService } from '../encuesta.service';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { HttpClient } from '@angular/common/http'; 
 import moment from 'moment';
+import { SidebarComponent } from "../../sidebar/sidebar/sidebar.component";
 @Component({
-  selector: 'app-detalle-encuesta',
-  standalone: true,
-  imports: [CommonModule, RouterModule],
-  templateUrl: './detalle-encuesta.component.html',
-  styleUrl: './detalle-encuesta.component.css',
+    selector: 'app-detalle-encuesta',
+    standalone: true,
+    templateUrl: './detalle-encuesta.component.html',
+    styleUrl: './detalle-encuesta.component.css',
+    imports: [CommonModule, RouterModule, SidebarComponent]
 })
 export class DetalleEncuestaComponent implements OnInit {
   encuestas: Encuesta[] = [];

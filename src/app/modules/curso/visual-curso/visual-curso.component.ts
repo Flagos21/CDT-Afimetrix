@@ -4,13 +4,14 @@ import { CommonModule } from '@angular/common';
 import { CursoService } from '../curso.service';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SidebarComponent } from "../../sidebar/sidebar/sidebar.component";
 
 @Component({
-  selector: 'app-visual-curso',
-  standalone: true,
-  imports: [CommonModule, RouterModule,  ReactiveFormsModule],
-  templateUrl: './visual-curso.component.html',
-  styleUrl: './visual-curso.component.css',
+    selector: 'app-visual-curso',
+    standalone: true,
+    templateUrl: './visual-curso.component.html',
+    styleUrl: './visual-curso.component.css',
+    imports: [CommonModule, RouterModule, ReactiveFormsModule, SidebarComponent]
 })
 export class VisualCursoComponent implements OnInit {
   cursos: Curso[] = [];

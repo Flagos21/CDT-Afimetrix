@@ -4,13 +4,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EstudianteService } from '../estudiante.service';
 import { Curso, Estudiante } from '../estudiante';
 import { CommonModule } from '@angular/common';
+import { SidebarComponent } from "../../sidebar/sidebar/sidebar.component";
 
 @Component({
-  selector: 'app-me-actualizar-estudiante',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './me-actualizar-estudiante.component.html',
-  styleUrls: ['./me-actualizar-estudiante.component.css']
+    selector: 'app-me-actualizar-estudiante',
+    standalone: true,
+    templateUrl: './me-actualizar-estudiante.component.html',
+    styleUrls: ['./me-actualizar-estudiante.component.css'],
+    imports: [CommonModule, ReactiveFormsModule, SidebarComponent]
 })
 export class MeActualizarEstudianteComponent implements OnInit {
   idEstudiante!: string;

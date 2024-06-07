@@ -4,13 +4,14 @@ import { EncuestaService } from '../encuesta.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ReactiveFormsModule, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { EncuestaPregunta } from '../encuesta';
+import { SidebarComponent } from "../../sidebar/sidebar/sidebar.component";
 
 @Component({
-  selector: 'app-crear-encuesta',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './crear-encuesta.component.html',
-  styleUrl: './crear-encuesta.component.css'
+    selector: 'app-crear-encuesta',
+    standalone: true,
+    templateUrl: './crear-encuesta.component.html',
+    styleUrl: './crear-encuesta.component.css',
+    imports: [CommonModule, ReactiveFormsModule, SidebarComponent]
 })
 export class CrearEncuestaComponent implements OnInit {
 

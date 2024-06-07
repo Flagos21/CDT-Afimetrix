@@ -11,13 +11,14 @@ import {
 } from '@angular/forms';
 import { ProfesorService } from '../profesor.service';
 import { Colegio } from '../profesor';
+import { SidebarComponent } from "../../sidebar/sidebar/sidebar.component";
 
 @Component({
-  selector: 'app-mp-agregar-profesor',
-  standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './mp-agregar-profesor.component.html',
-  styleUrl: './mp-agregar-profesor.component.css',
+    selector: 'app-mp-agregar-profesor',
+    standalone: true,
+    templateUrl: './mp-agregar-profesor.component.html',
+    styleUrl: './mp-agregar-profesor.component.css',
+    imports: [CommonModule, ReactiveFormsModule, SidebarComponent]
 })
 export class MpAgregarProfesorComponent {
   form!: FormGroup;

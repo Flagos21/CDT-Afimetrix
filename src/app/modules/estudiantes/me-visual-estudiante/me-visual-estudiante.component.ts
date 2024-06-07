@@ -4,13 +4,14 @@ import { CommonModule } from '@angular/common';
 import { EstudianteService } from '../estudiante.service';
 import { RouterModule, Router, ActivatedRoute } from '@angular/router';
 import * as XLSX from 'xlsx'
+import { SidebarComponent } from "../../sidebar/sidebar/sidebar.component";
 
 @Component({
-  selector: 'app-me-visual-estudiante',
-  standalone: true,
-  imports: [CommonModule, RouterModule],
-  templateUrl: './me-visual-estudiante.component.html',
-  styleUrls: ['./me-visual-estudiante.component.css']
+    selector: 'app-me-visual-estudiante',
+    standalone: true,
+    templateUrl: './me-visual-estudiante.component.html',
+    styleUrls: ['./me-visual-estudiante.component.css'],
+    imports: [CommonModule, RouterModule, SidebarComponent]
 })
 export class MeVisualEstudianteComponent implements OnInit {
   estudiantes: Estudiante[] = [];
