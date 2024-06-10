@@ -6,7 +6,6 @@ import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angula
 import { Estudiante, Curso } from '../estudiante';
 import { SidebarComponent } from "../../sidebar/sidebar/sidebar.component";
 
-
 @Component({
     selector: 'app-me-agregar-estudiante',
     standalone: true,
@@ -19,6 +18,7 @@ export class MeAgregarEstudianteComponent implements OnInit {
   form!: FormGroup;
   cursos: Curso[] = [];
   idCurso: number = 0;
+  submitDisabled: boolean = false;
 
   constructor(
     public estudianteService: EstudianteService,
@@ -48,12 +48,62 @@ export class MeAgregarEstudianteComponent implements OnInit {
       Clave: new FormControl('', Validators.required),
       Anio: new FormControl('2024', Validators.required),
       idCurso: new FormControl(this.idCurso, Validators.required),
-      
     });
   }
 
   get f() {
     return this.form.controls;
+  }
+
+  verificarRut(event: any) {
+    const rut = event.target.value;
+
+    if (!rut) {
+        return;
+    }
+
+    const partesRut = rut.split('-');
+    const numeroRut = partesRut[0];
+    const digitoVerificador = partesRut[1];
+
+    if (!numeroRut || !digitoVerificador) {
+      this.form.get('idEstudiante')!.setErrors({ required: true, rutInvalido: true });
+      return;
+    }
+
+    const valid = this.validateRutChileno(rut);
+
+    if (valid) {
+      this.submitDisabled = false;
+      this.form.get('idEstudiante')!.setErrors(null);
+    } else {
+      this.submitDisabled = true;
+      this.form.get('idEstudiante')!.setErrors({ rutInvalido: true });
+    }
+  }
+
+  validateRutChileno(rut: string): boolean {
+    if (!/^[0-9]+[-|‐]{1}[0-9kK]{1}$/.test(rut)) {
+        return false;
+    }
+
+    const rutSinGuion = rut.replace(/-/g, '');
+    const rutSinDigitoVerificador = rutSinGuion.substring(0, rutSinGuion.length - 1);
+    const digitoVerificador = rutSinGuion.substring(rutSinGuion.length - 1);
+
+    let suma = 0;
+    let multiplicador = 2;
+
+    for (let i = rutSinDigitoVerificador.length - 1; i >= 0; i--) {
+        const digito = parseInt(rutSinDigitoVerificador[i]);
+        suma += digito * multiplicador;
+        multiplicador = multiplicador === 7 ? 2 : multiplicador + 1;
+    }
+
+    const resto = suma % 11;
+    const digitoVerificadorCalculado = resto === 0 ? '0' : resto === 1 ? 'k' : String(11 - resto);
+
+    return digitoVerificadorCalculado === digitoVerificador.toLowerCase();
   }
 
   submit() {

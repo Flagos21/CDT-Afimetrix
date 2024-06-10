@@ -18,25 +18,25 @@
                 <h2>AGREGAR ESTUDIANTES</h2>
                 <form [formGroup]="form" (ngSubmit)="submit()">
                     <input formControlName="Nombre" type="text" class="form-control" placeholder="Nombre">
-                    <input formControlName="idEstudiante" type="text" class="form-control" placeholder="Rut" required>
+                    <input formControlName="idEstudiante" type="text" class="form-control" placeholder="Rut" (change)="verificarRut($event)" required>
+                    <div *ngIf="form.get('idEstudiante')?.hasError('rutInvalido')" class="error-message">
+                        El RUT ingresado no es válido.
+                    </div>
                     <input formControlName="FechaNacimiento" type="date" class="form-control" placeholder="" required>
                     <select formControlName="Sexo" name="genero" class="form-control" id="genero" required>
                         <option value="">Género</option>
                         <option value="masculino">Masculino</option>
                         <option value="femenino">Femenino</option>
-                        </select>
-                        <input formControlName="Clave" type="text" class="form-control" placeholder="Clave" required>
-                        <input formControlName="Anio" type="text" class="form-control" placeholder="Año Matrícula" required readonly hidden>
-                        <input formControlName="idCurso" type="text" class="form-control" placeholder="ID Curso" required readonly hidden>
-                        <!-- <input formControlName="idMatricula" type="text" class="form-control" placeholder="ID Matrícula" required> -->
-                        <button type="submit" class="agregar-button" [disabled]="!form.valid">Agregar</button>
-                    </form>
-
-
-
-                </div>
+                    </select>
+                    <input formControlName="Clave" type="text" class="form-control" placeholder="Clave" required>
+                    <input formControlName="Anio" type="text" class="form-control" placeholder="Año Matrícula" required readonly hidden>
+                    <input formControlName="idCurso" type="text" class="form-control" placeholder="ID Curso" required readonly hidden>
+                    <!-- <input formControlName="idMatricula" type="text" class="form-control" placeholder="ID Matrícula" required> -->
+                    <button type="submit" class="agregar-button" [disabled]="!form.valid || submitDisabled">Agregar</button>
+                </form>
             </div>
         </div>
+    </div>
 </body>
 
 </html>
