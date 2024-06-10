@@ -18,7 +18,7 @@
                 <h2>Agregar Profesor</h2>
                 <form [formGroup]="form" (ngSubmit)="submit()">
                     <input type="text" id="idColegio" formControlName="idColegio" class="form-control" placeholder="idColegio" [value]="colegioIdFromUrl" readonly hidden>
-                    <input formControlName="idProfesor" type="text" class="form-control" placeholder="RUN" (change)="verificarRut($event)" required>
+                    <input formControlName="idProfesor" type="text" class="form-control" placeholder="12345678-9" (change)="verificarRut($event)" required>
                     <div *ngIf="form.get('idProfesor')?.hasError('rutInvalido')" class="error-message">
                         El RUT ingresado no es válido.
                     </div>
