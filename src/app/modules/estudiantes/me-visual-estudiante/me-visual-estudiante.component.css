@@ -119,9 +119,13 @@ form select {
 }
 
 .blue-stripe {
-    height: 100%;
-    background-color: #003366;
+    position: fixed; /* Hace que la banda azul quede fija en la parte superior */
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 50px; /* Ajusta la altura según sea necesario */
+    background-color: #003366;
+    z-index: 1000; /* Asegura que la banda azul esté por encima de otros elementos */
 }
 
 .container-bottom {

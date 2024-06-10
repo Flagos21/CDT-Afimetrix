@@ -1,3 +1,6 @@
+
+
+
 h2 {
     color: #081322;
     font-size: 24px;
@@ -19,19 +22,19 @@ h2 {
     text-align: center;
     display: flex;
     flex-direction: column;
-    max-height: 50vh;
-    margin: auto;    
+    max-height: 50%;
+    
 }
 
 thead th { position: sticky; top: 0; }
 
 table {
-    overflow-y: auto;
     overflow-x: hidden;
     background-color: white;
     color: black;
     font-weight: bold;
-    height: 100%;
+    max-height: 50vh;
+    overflow-y: auto;
 }
 
 table td {
@@ -56,6 +59,31 @@ form select {
     font-size: 16px;
     box-sizing: content-box;
 }
+
+
+.file-upload-input {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+    
+}
+
+.file-upload-label {
+    background-color: #007bff;
+    color: #ffffff;
+    border-radius: 5px;
+    padding: 10px 20%;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 25px;
+
+
+}
+
 
 .agregar-button {
     background-color: #007bff;
@@ -91,9 +119,13 @@ form select {
 }
 
 .blue-stripe {
-    height: 100%;
-    background-color: #003366;
+    position: fixed; /* Hace que la banda azul quede fija en la parte superior */
+    top: 0;
+    left: 0;
     width: 100%;
+    height: 50px; /* Ajusta la altura según sea necesario */
+    background-color: #003366;
+    z-index: 1000; /* Asegura que la banda azul esté por encima de otros elementos */
 }
 
 .container-bottom {
@@ -141,3 +173,6 @@ form select {
     gap: 10px;
     justify-content: center;
 }
+
+
+
