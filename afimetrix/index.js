@@ -8,10 +8,10 @@ const port = 3000;
 
 /* MySQL Connection */
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "afimetrixcdt",
+  host: "144.22.57.157",
+  user: "afimetrix",
+  password: "UMMUVPfub3uV99BR",
+  database: "afimetrix",
 });
 
 db.connect((err) => {
