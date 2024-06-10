@@ -11,12 +11,25 @@
         <div class="container-top">
             <div class="blue-stripe">
                 <app-sidebar></app-sidebar>
+                <div class="image-container"><img src="../../../../assets/img/LogoUnach.png" alt="" class="logo"></div>
             </div>
         </div>
         <div class="container-bottom">
-            <div class="image-container"><img src="../../../../assets/img/LogoUnach.png" alt="" class="logo"></div>
+            
+            <div class="container">
+                <h1>Dashboard de Peso, Altura e IMC</h1>
+                <div class="chart-row">
+                    <div class="chart-container">
+                        <canvas id="lineChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="pieChart"></canvas>
+                    </div>
+                </div>
+            </div>                       
         </div>
     </div>
+
 </body>
 
 </html>
