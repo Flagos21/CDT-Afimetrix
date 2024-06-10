@@ -10,8 +10,8 @@ const port = 3000;
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "",
-  database: "afimetrixcdt",
+  password: "Pato1596*-+",
+  database: "afimetrix_auto",
 });
 
 db.connect((err) => {
@@ -653,26 +653,61 @@ app.put("/detalleencuesta/:idDetalleEncuesta", (req, res) => {
     }
   );
 });
-app.delete("/detalleencuesta/:idDetalleEncuesta", (req, res) => {
-  const idDetalleEncuesta = req.params.idDetalleEncuesta;
-  db.query(
-    "DELETE FROM detalleencuesta WHERE idDetalleEncuesta = ?",
-    idDetalleEncuesta,
-    (err) => {
-      if (err) {
-        res.status(500).send("Error deleting DetalleEncuesta");
-        return;
-      }
-      res.status(200).json({ msg: "DetalleEncuesta deleted successfully" });
-    }
-  );
-});
 
 /* EndPoins PreguntaEncuestas */
 app.get("/encuesta", (req, res) => {
   db.query("SELECT * FROM preguntasencuesta", (err, results) => {
     if (err) {
-      res.status(500).send("Error fetching detalleencuesta");
+      res.status(500).send("Error fetching preguntasencuesta");
+      return;
+    }
+    res.json(results);
+  });
+});
+
+/* EndPoins Preguntas */
+app.get("/pregutas", (req, res) => {
+  db.query("SELECT * FROM pregunta", (err, results) => {
+    if (err) {
+      res.status(500).send("Error fetching pregunta");
+      return;
+    }
+    res.json(results);
+  });
+});
+
+/* EndPoins Respuestas */ 
+app.post("/crear-respuestas", (req, res) => {
+  const { idRespuesta, idEstudiante, Respuesta, Fecha, idPregunta} = req.body;
+  db.query(
+    "INSERT INTO respuesta (idRespuesta, idEstudiante, Respuesta, Fecha, idPregunta) VALUES (?, ?, ?, ?, ?)",
+    [idRespuesta, idEstudiante, Respuesta, Fecha, idPregunta],
+    (err, result) => {
+      if (err) {
+        res.status(500).send("Error creating respuesta");
+        return;
+      }
+      const respuestaId = result.insertId;
+      db.query(
+        "SELECT * FROM colegio WHERE idrespuesta = ?",
+        [respuestaId],
+        (err, result) => {
+          if (err) {
+            res.status(500).send("Error fetching created respuesta");
+            return;
+          }
+          res.status(201).json(result[0]);
+        }
+      );
+    }
+  );
+});
+
+/* EndPoins Matricula */ 
+app.get("/matricula", (req, res) => {
+  db.query("SELECT * FROM matricula", (err, results) => {
+    if (err) {
+      res.status(500).send("Error fetching matricula");
       return;
     }
     res.json(results);

@@ -1,0 +1,150 @@
+h2 {
+    color: #081322;
+    font-size: 24px;
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+}
+
+.container {
+    flex-direction: column;
+    align-items: center;
+    height: 100%;
+    background-color: #f0f0f0;
+}
+
+.table-container {
+    background-color: #003366;
+    padding: 40px;
+    width: 50%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+}
+
+thead th {
+    position: sticky;
+    top: 0;
+}
+
+table {
+    overflow-y: auto;
+    overflow-x: hidden;
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    height: 100%;
+}
+
+table td {
+    border-bottom: 1px solid rgb(102, 102, 102);
+    padding-block: 10px;
+
+}
+
+.table-options {
+    text-align: end;
+
+}
+
+form input[type="text"],
+form input[type="date"],
+form select {
+    padding: 8px;
+    width: 75%;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    box-sizing: content-box;
+}
+
+.agregar-button {
+    background-color: #007bff;
+    color: #ffffff;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 25px;
+}
+
+.eliminar-button {
+    background-color: red;
+    color: #ffffff;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.image-add-user-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.logo {
+    width: 150px;
+}
+
+.container-top {
+    height: 50px;
+}
+
+.blue-stripe {
+    height: 100%;
+    background-color: #003366;
+    width: 100%;
+}
+
+.container-bottom {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px;
+}
+
+.encabezado {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.nombre {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+}
+
+.b-white {
+    background-color: white;
+    width: 100%;
+    margin: 4px;
+    padding: 8px;
+    font-weight: bold;
+}
+
+.pb-0 {
+    padding-bottom: 0;
+}
+
+.mb-0 {
+    margin-bottom: 0;
+}
+
+.w-auto {
+    width: auto;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}

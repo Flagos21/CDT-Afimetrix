@@ -11,6 +11,7 @@ import { VisualCursoComponent } from './modules/curso/visual-curso/visual-curso.
 import { VisualColeComponent } from './modules/colegio/visual-cole/visual-cole.component';
 import { CrearEncuestaComponent } from './modules/encuesta/crear-encuesta/crear-encuesta.component';
 import { DetalleEncuestaComponent } from './modules/encuesta/detalle-encuesta/detalle-encuesta.component';
+import { PreguntasEncuestaComponent } from './modules/encuesta/preguntas-encuesta/preguntas-encuesta.component';
 
 export const routes: Routes = [
 
@@ -62,6 +63,7 @@ export const routes: Routes = [
     { path: 'curso/detalle-encuesta/crear-encuesta', component: CrearEncuestaComponent },
     { path: 'curso/detalle-encuesta/crear-encuesta/:idCurso', component: CrearEncuestaComponent },
     { path: 'curso/detalle-encuesta', component: DetalleEncuestaComponent },
-    { path: 'curso/detalle-encuesta/:idCurso', component: DetalleEncuestaComponent }
+    { path: 'curso/detalle-encuesta/:idCurso', component: DetalleEncuestaComponent },
+    { path: 'preguntas-encuesta', component: PreguntasEncuestaComponent},
 
 ];
